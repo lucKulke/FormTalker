@@ -1,0 +1,12 @@
+{
+  "Batterie prüfen": {
+    "1": "in ordnung",
+    "2": "nicht in ordnung",
+    "3": "behoben"
+  },
+  "Frontbeleuchtung - alle Funktionen prüfen. Standlicht, Abblendlicht, Fernlicht, Nebelscheinwerfer, Blinkanlage, W arnblinkanlage": {
+    "4": "in ordnung",
+    "5": "nicht in ordnung",
+    "6": "behoben"
+  }
+}
