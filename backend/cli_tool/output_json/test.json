@@ -1,12 +1,18 @@
 {
-  "Batterie prüfen": {
-    "1": "in ordnung",
-    "2": "nicht in ordnung",
-    "3": "behoben"
+  "Reifenart eintragen": {
+    "1": { "name": "in ordnung", "form_input": "x" },
+    "2": { "name": "nicht in ordnung", "form_input": "x" },
+    "3": { "name": "behoben", "form_input": "x" },
+    "4": { "name": "reifen bezeichnung", "form_input": "text" }
   },
-  "Frontbeleuchtung - alle Funktionen prüfen. Standlicht, Abblendlicht, Fernlicht, Nebelscheinwerfer, Blinkanlage, W arnblinkanlage": {
-    "4": "in ordnung",
-    "5": "nicht in ordnung",
-    "6": "behoben"
+  "Reifendruck aller 4 Räder prüfen und bei Bedarf korrigieren": {
+    "5": { "name": "in ordnung", "form_input": "x" },
+    "6": { "name": "nicht in ordnung", "form_input": "x" },
+    "7": { "name": "behoben", "form_input": "x" }
+  },
+  "Frontklappe Fanghaken fetten": {
+    "8": { "name": "in ordnung", "form_input": "x" },
+    "9": { "name": "nicht in ordnung", "form_input": "x" },
+    "10": { "name": "behoben", "form_input": "x" }
   }
 }
