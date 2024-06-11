@@ -1,0 +1,18 @@
+{
+  "operation_match": {
+    "system": "You are an intent recognition tool. Only respond with the matching ID.",
+    "user": "Which operation doese the user want to make."
+  },
+  "keystring_match": {
+    "system": "Be a helpful assistant",
+    "user": "To which operation doese this sentence:"
+  },
+  "option_match": {
+    "system": "Be a helpful assistant",
+    "user": "To which operation doese this sentence:"
+  },
+  "substring_match": {
+    "system": "Be a helpful assistant",
+    "user": "To which operation doese this sentence:"
+  }
+}
