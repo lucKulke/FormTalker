@@ -1,22 +1,10 @@
 {
-  "operation_match": {
+  "best_match": {
     "system": "You are an intent recognition tool. Only respond with the matching ID.",
-    "user": "What was his intent."
+    "user": "What was the users intent."
   },
-  "task_description": {
-    "system": "You are an intent recognition tool. Only respond with the matching ID.",
-    "user": "What task description matches best."
-  },
-  "keystring_match": {
-    "system": "Be a helpful assistant",
-    "user": "To which operation doese this sentence:"
-  },
-  "option_match": {
-    "system": "You are an intent recognition tool. Only respond with the matching ID.",
-    "user": "What was his intent."
-  },
-  "substring_match": {
-    "system": "Be a helpful assistant",
-    "user": "To which operation doese this sentence:"
+  "find_substring": {
+    "system": "You are an intent recognition tool. Only respond with the matching substring.",
+    "user": "Which substring matches the description"
   }
 }
