@@ -1,8 +1,8 @@
 import os
 import json
-
 from library.llms import LLM
 from library.intent_recognition import IntentRecognition
+from library.pdf_annotations import Reader
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -20,7 +20,10 @@ intent_recognizer = IntentRecognition(llm=chatgpt, config=llm_prompt_config)
 
 filled_form_fields = {}
 
-while True:
+reader = Reader(path="../../example_pdfs/example2.pdf")
+print(reader.all_annotations())
+
+while False:
     text_message = input("enter text:")
     if text_message == "exit":
         break
