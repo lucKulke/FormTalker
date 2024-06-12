@@ -73,17 +73,17 @@ class IntentRecognition:
         print(messages)
         return self.llm.selected_model.chat_completation(messages=messages)
 
-    def operation_match(self, text: str, data: list):
+    def task_desc_match(self, text: str, data: list):
 
-        system_prompt = self.config["operation_match"]["system"]
-        user_message = self.config["operation_match"]["user"] + self.message_compiler(
+        system_prompt = self.config["task_description"]["system"]
+        user_message = self.config["task_description"]["user"] + self.message_compiler(
             user_text=text, data=data
         )
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_message},
         ]
-
+        print(messages)
         return self.llm.selected_model.chat_completation(messages=messages)
 
     # def keystring_match(self, text: str):
@@ -92,11 +92,17 @@ class IntentRecognition:
     #         {"role": "user", "content": "is this a test?"},
     #     ]
 
-    # def option_match(self, text: str):
-    #     test_messages = [
-    #         {"role": "system", "content": "Respond with yes."},
-    #         {"role": "user", "content": "is this a test?"},
-    #     ]
+    def option_match(self, text: str, data: list):
+        system_prompt = self.config["option_match"]["system"]
+        user_message = self.config["option_match"]["user"] + self.message_compiler(
+            user_text=text, data=data
+        )
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_message},
+        ]
+        print(messages)
+        return self.llm.selected_model.chat_completation(messages=messages)
 
     # def substring_match(self, text: str):
     #     test_messages = [
