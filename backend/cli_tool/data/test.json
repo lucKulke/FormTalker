@@ -23,21 +23,95 @@
     "13": { "name": "nicht in ordnung", "form_input": "x" },
     "14": { "name": "behoben", "form_input": "x" }
   },
-
-  "Reifenart eintragen": {
-    "10": { "name": "in ordnung", "form_input": "x" },
-    "11": { "name": "nicht in ordnung", "form_input": "x" },
-    "12": { "name": "behoben", "form_input": "x" },
-    "9": { "name": "reifen größe", "form_input": "text" }
+  "Scheinwerferreinigungsanlage Einstellung und Funktion prüfen": {
+    "15": { "name": "in ordnung", "form_input": "x" },
+    "16": { "name": "nicht in ordnung", "form_input": "x" },
+    "17": { "name": "behoben", "form_input": "x" }
+  },
+  "Scheibwischerblätter auf Beschädigung und Endablage prüfen": {
+    "18": { "name": "in ordnung", "form_input": "x" },
+    "19": { "name": "nicht in ordnung", "form_input": "x" },
+    "20": { "name": "behoben", "form_input": "x" }
+  },
+  "Türfeststeller und Scharniere: fetten": {
+    "21": { "name": "in ordnung", "form_input": "x" },
+    "22": { "name": "nicht in ordnung", "form_input": "x" },
+    "23": { "name": "behoben", "form_input": "x" }
+  },
+  "Frontklappe: Fanghaken: fetten": {
+    "24": { "name": "in ordnung", "form_input": "x" },
+    "25": { "name": "nicht in ordnung", "form_input": "x" },
+    "26": { "name": "behoben", "form_input": "x" }
+  },
+  "Schiebedach/Panoramadach/Verdeck Funktion prüfen und Gelenke nach Wartungsanleitung schmieren": {
+    "27": { "name": "in ordnung", "form_input": "x" },
+    "28": { "name": "nicht in ordnung", "form_input": "x" },
+    "29": { "name": "behoben", "form_input": "x" }
+  },
+  "Karosserie innen und außen: Sichtprüfung auf Korrosion bei geöffneten Türen und Klappen durchführen": {
+    "30": { "name": "in ordnung", "form_input": "x" },
+    "31": { "name": "nicht in ordnung", "form_input": "x" },
+    "32": { "name": "behoben", "form_input": "x" }
+  },
+  "Frontscheibe auf Verschleiß und Beschädigung prüfen": {
+    "33": { "name": "in ordnung", "form_input": "x" },
+    "34": { "name": "nicht in ordnung", "form_input": "x" },
+    "35": { "name": "behoben", "form_input": "x" }
+  },
+  "Reifenart eintragen:": {
+    "37": { "name": "in ordnung", "form_input": "x" },
+    "38": { "name": "nicht in ordnung", "form_input": "x" },
+    "39": { "name": "behoben", "form_input": "x" },
+    "69": { "name": "Ganzjahresreifen", "form_input": "x" },
+    "70": { "name": "Winterreifen", "form_input": "x" },
+    "71": { "name": "Sommerreifen", "form_input": "x" },
+    "36": { "name": "größe der Reifen", "form_input": "x" }
   },
   "Reifendruck aller 4 Räder prüfen und bei Bedarf korrigieren": {
-    "13": { "name": "in ordnung", "form_input": "x" },
-    "14": { "name": "nicht in ordnung", "form_input": "x" },
-    "15": { "name": "behoben", "form_input": "x" }
+    "40": { "name": "in ordnung", "form_input": "x" },
+    "41": { "name": "nicht in ordnung", "form_input": "x" },
+    "42": { "name": "behoben", "form_input": "x" }
   },
-  "Frontklappe Fanghaken fetten": {
-    "6": { "name": "in ordnung", "form_input": "x" },
-    "7": { "name": "nicht in ordnung", "form_input": "x" },
-    "8": { "name": "behoben", "form_input": "x" }
+  "Ludtdruck Reserverad prüfen, wenn vorhanden": {
+    "43": { "name": "in ordnung", "form_input": "x" },
+    "44": { "name": "nicht in ordnung", "form_input": "x" },
+    "45": { "name": "behoben", "form_input": "x" }
+  },
+  "Pannenset": {
+    "43": { "name": "in ordnung", "form_input": "x" },
+    "44": { "name": "nicht in ordnung", "form_input": "x" },
+    "45": { "name": "behoben", "form_input": "x" },
+    "46": { "name": "Mindesthaltbarkeitsdatum", "form_input": "x" }
+  },
+  "Reifendruck sensoren neu anlernen wenn fehlermeldung": {
+    "50": { "name": "in ordnung", "form_input": "x" },
+    "51": { "name": "nicht in ordnung", "form_input": "x" },
+    "52": { "name": "behoben", "form_input": "x" }
+  },
+  "Bereifung vorne links Zustand und Laufbild, Profiltiefe": {
+    "54": { "name": "in ordnung", "form_input": "x" },
+    "55": { "name": "nicht in ordnung", "form_input": "x" },
+    "56": { "name": "behoben", "form_input": "x" },
+    "53": { "name": "Profiltiefe", "form_input": "x" }
+  },
+  "Bereifung vorne rechts Zustand und Laufbild, Profiltiefe": {
+    "58": { "name": "in ordnung", "form_input": "x" },
+    "59": { "name": "nicht in ordnung", "form_input": "x" },
+    "60": { "name": "behoben", "form_input": "x" },
+    "57": { "name": "Profiltiefe", "form_input": "x" }
+  },
+  "Bereifung hinten links Zustand und Laufbild, Profiltiefe": {
+    "62": { "name": "in ordnung", "form_input": "x" },
+    "63": { "name": "nicht in ordnung", "form_input": "x" },
+    "64": { "name": "behoben", "form_input": "x" },
+    "61": { "name": "Profiltiefe", "form_input": "x" }
+  },
+  "Bereifung hinten rechts Zustand und Laufbild, Profiltiefe": {
+    "66": { "name": "in ordnung", "form_input": "x" },
+    "67": { "name": "nicht in ordnung", "form_input": "x" },
+    "68": { "name": "behoben", "form_input": "x" },
+    "65": { "name": "Profiltiefe", "form_input": "x" }
   }
+
+
 }
