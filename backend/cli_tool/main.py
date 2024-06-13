@@ -6,7 +6,7 @@ from library.pdf_annotations import Reader, Writer
 from dotenv import load_dotenv
 
 load_dotenv()
-file = open("output_json/test.json","r",encoding='utf-8')
+file = open("data/test.json","r",encoding='utf-8')
 API_KEY = os.getenv("CHATGPT_API_KEY")
 form_filling_data = json.loads(file.read())
 INITIAL_INTENT_OPTIONS = {
@@ -20,8 +20,8 @@ intent_recognizer = IntentRecognition(llm=chatgpt, config=llm_prompt_config)
 
 filled_form_fields = {}
 
-pdf_reader = Reader(path="../../example_pdfs/example2.pdf")
-pdf_writer = Writer(path="../../example_pdfs/example2.pdf")
+pdf_reader = Reader(path="input_pdfs/example2.pdf")
+pdf_writer = Writer(path="../../raw_example_pdfs/example.pdf")
 #print(pdf_reader.all_annotations())
 
 annotation_data = pdf_reader.all_annotations()
@@ -35,14 +35,12 @@ def mapping_form_field_locations_to_data(annotation_data: dict, form_filling_dat
 
 
     for id_test, task_name in temp_structure.items():
-        print(id_test + " " + task_name)
         form_filling_data[task_name][id_test]["location"] = annotation_data[id_test]
 
 
 mapping_form_field_locations_to_data(annotation_data=annotation_data, form_filling_data=form_filling_data)
 
-print(form_filling_data)
-    
+
 
 
 
@@ -104,9 +102,11 @@ while True:
         else:
             print("no correction possible")
 
-    print(data_to_write)
+    
     task_name = list(data_to_write)[0]
     id = data_to_write[task_name]["id"]
+    print(f">> New data to be written: {task_name} id: {id}")
+    
     value = filled_form_fields[task_name][id]["form_input"]
     if filled_form_fields[task_name][id]["form_input"] == "text":
         value = filled_form_fields[task_name][id]["text_value"]
