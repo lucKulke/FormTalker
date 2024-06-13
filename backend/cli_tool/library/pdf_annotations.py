@@ -37,11 +37,11 @@ class Writer:
             font="Arial",
             bold=True,
             italic=True,
-            font_size="20pt",
+            font_size="14pt",
             font_color="00ff00",
-            border_color="0000ff",
-            background_color="cdcdcd",
+            border_color="ffffff",
+            background_color="ffffff",
         )
         self.writer.add_annotation(page_number=0, annotation=annotation)
-        with open("annotated-pdf.pdf", "wb") as fp:
+        with open("output_pdfs/fillable_pdf.pdf", "wb") as fp:
             self.writer.write(fp)
