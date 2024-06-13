@@ -1,0 +1,18 @@
+{
+  "Reifenart eintragen": {
+    "10": { "name": "in ordnung", "form_input": "x" },
+    "11": { "name": "nicht in ordnung", "form_input": "x" },
+    "12": { "name": "behoben", "form_input": "x" },
+    "9": { "name": "reifen bezeichnung", "form_input": "text" }
+  },
+  "Reifendruck aller 4 Räder prüfen und bei Bedarf korrigieren": {
+    "13": { "name": "in ordnung", "form_input": "x" },
+    "14": { "name": "nicht in ordnung", "form_input": "x" },
+    "15": { "name": "behoben", "form_input": "x" }
+  },
+  "Frontklappe Fanghaken fetten": {
+    "6": { "name": "in ordnung", "form_input": "x" },
+    "7": { "name": "nicht in ordnung", "form_input": "x" },
+    "8": { "name": "behoben", "form_input": "x" }
+  }
+}
