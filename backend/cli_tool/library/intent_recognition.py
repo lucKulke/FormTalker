@@ -34,16 +34,17 @@ class IntentRecognition:
             {"role": "user", "content": user_message},
         ]
         print(f"input {messages[1]['content']}")
-        response = (
+        response_string = (
             self.llm.selected_model.chat_completation(messages=messages)
             .choices[0]
             .message.content
         )
-        if not self.is_valid_response_substring(substring=response, text=text):
+
+        if not self.is_valid_response_substring(substring=response_string, text=text):
             raise IntentRecognitionResponseTypeError(
-                message="Substring Intent Classification", errors=4
+                message=f"Substring Intent Classification. AI output: {response_string}", errors=4
             )
-        return response
+        return response_string
 
     def status_intent(self, data: dict, text: str):
         filterd_data = {}
@@ -54,7 +55,7 @@ class IntentRecognition:
         response_id = self.best_match(data=filterd_data, text=text)
         if not self.is_valid_response_id(id=response_id, data=filterd_data):
             raise IntentRecognitionResponseTypeError(
-                message="Status Intent Classification", errors=3
+                message=f"Status Intent Classification. AI output: {response_id}", errors=3
             )
         return response_id
 
@@ -68,7 +69,7 @@ class IntentRecognition:
         response_id = self.best_match(data=filterd_data, text=text)
         if not self.is_valid_response_id(id=response_id, data=filterd_data):
             raise IntentRecognitionResponseTypeError(
-                message="Task Intent Classification", errors=2
+                message=f"Task Intent Classification. AI output: {response_id}", errors=2
             )
         return filterd_data[response_id]
 

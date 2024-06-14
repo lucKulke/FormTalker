@@ -56,6 +56,7 @@ while True:
     )
 
     if response_id == "0":
+        print(">> normal")
         task_name, status_id = intent_recognizer.process(
             data=form_filling_data, text=text_message
         )
@@ -79,6 +80,7 @@ while True:
             data_to_write[task_name]["text_value"] = substring
 
     elif response_id == "1":
+        print(">> correction!")
         task_name, status_id = intent_recognizer.process(
             data=form_filling_data, text=text_message
         )
@@ -89,6 +91,11 @@ while True:
             filled_form_fields[task_name] = {
                 status_id: form_filling_data[task_name][status_id]
             }
+        else:
+            filled_form_fields[task_name] = {
+                status_id: form_filling_data[task_name][status_id]
+            }
+
              
 
         if form_filling_data[task_name][status_id]["form_input"] == "text":
@@ -99,8 +106,7 @@ while True:
             filled_form_fields[task_name][status_id]["text_value"] = substring
 
             data_to_write[task_name]["text_value"] = substring
-        else:
-            print("no correction possible")
+        
 
     
     task_name = list(data_to_write)[0]
