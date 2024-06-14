@@ -65,7 +65,7 @@
     "69": { "name": "Ganzjahresreifen", "form_input": "x" },
     "70": { "name": "Winterreifen", "form_input": "x" },
     "71": { "name": "Sommerreifen", "form_input": "x" },
-    "36": { "name": "größe der Reifen", "form_input": "x" }
+    "36": { "name": "größe der Reifen", "form_input": "text" }
   },
   "Reifendruck aller 4 Räder prüfen und bei Bedarf korrigieren": {
     "40": { "name": "in ordnung", "form_input": "x" },
@@ -81,7 +81,7 @@
     "43": { "name": "in ordnung", "form_input": "x" },
     "44": { "name": "nicht in ordnung", "form_input": "x" },
     "45": { "name": "behoben", "form_input": "x" },
-    "46": { "name": "Mindesthaltbarkeitsdatum", "form_input": "x" }
+    "46": { "name": "Mindesthaltbarkeitsdatum", "form_input": "text" }
   },
   "Reifendruck sensoren neu anlernen wenn fehlermeldung": {
     "50": { "name": "in ordnung", "form_input": "x" },
@@ -92,25 +92,25 @@
     "54": { "name": "in ordnung", "form_input": "x" },
     "55": { "name": "nicht in ordnung", "form_input": "x" },
     "56": { "name": "behoben", "form_input": "x" },
-    "53": { "name": "Profiltiefe", "form_input": "x" }
+    "53": { "name": "Profiltiefe", "form_input": "text" }
   },
   "Bereifung vorne rechts Zustand und Laufbild, Profiltiefe": {
     "58": { "name": "in ordnung", "form_input": "x" },
     "59": { "name": "nicht in ordnung", "form_input": "x" },
     "60": { "name": "behoben", "form_input": "x" },
-    "57": { "name": "Profiltiefe", "form_input": "x" }
+    "57": { "name": "Profiltiefe", "form_input": "text" }
   },
   "Bereifung hinten links Zustand und Laufbild, Profiltiefe": {
     "62": { "name": "in ordnung", "form_input": "x" },
     "63": { "name": "nicht in ordnung", "form_input": "x" },
     "64": { "name": "behoben", "form_input": "x" },
-    "61": { "name": "Profiltiefe", "form_input": "x" }
+    "61": { "name": "Profiltiefe", "form_input": "text" }
   },
   "Bereifung hinten rechts Zustand und Laufbild, Profiltiefe": {
     "66": { "name": "in ordnung", "form_input": "x" },
     "67": { "name": "nicht in ordnung", "form_input": "x" },
     "68": { "name": "behoben", "form_input": "x" },
-    "65": { "name": "Profiltiefe", "form_input": "x" }
+    "65": { "name": "Profiltiefe", "form_input": "text" }
   }
 
 

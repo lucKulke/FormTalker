@@ -5,6 +5,6 @@
   },
   "find_substring": {
     "system": "You are an intent recognition tool. Only respond with the matching substring.",
-    "user": "Which substring matches the description"
+    "user": "Description:"
   }
 }
