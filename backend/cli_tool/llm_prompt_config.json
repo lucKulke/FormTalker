@@ -1,6 +1,10 @@
 {
   "best_match": {
-    "system": "You are an intent recognition tool. Only respond with the matching ID.",
+    "system": "You are an intent recognition tool. Only respond with the matching ID that is included in the last given Options.",
+    "user": "What was the users intent."
+  },
+  "best_match_for_correction": {
+    "system": "You are an intent recognition tool. Only respond with the matching ID that is included in the last given Options.",
     "user": "What was the users intent."
   },
   "find_substring": {
