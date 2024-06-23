@@ -1,6 +1,7 @@
 import re
+import json
 from .llms import LLM
-from .data_components import FormData
+from .data_components import FormData, Field
 
 
 class IntentRecognitionResponseTypeError(Exception):
@@ -18,112 +19,127 @@ class IntentRecognition:
         self.config = config
         self.llm = llm
 
-    def process(self, form_data: FormData, text: str, conversation_history: dict):
-        task_name = self.task_intent(form_data=form_data, text=text)
-        response_id, user_message = self.status_intent(
-            form_data=form_data, task_name=task_name, text=text
+    def split(self, user_text_message: str) -> list:
+        static_system_prompt = self.config["split_message_into_itents"]["system"]
+        examples = "Examples:\n1. Input: 'Der reifenluftdruck ist nicht in ordnung, deswegen habe ich den reifenluftdruck angepasst.' Output: ['Reifenluftdruck ist nicht in ordnung', 'Reifenluftdruck wurde angepasst']\nInput: 'Ich habe die Fanghaken gefettet und die Batterie geprüft und sie ist in ordnung.' Output: ['Fanghaken gefettet', 'Batterie geprüft und sie ist in ordnung']\nInput: 'Die Profiltiefe beträgt 7 mm und der Reifendruck ist bei 2.5 bar.' Output: ['Profiltiefe beträgt 7 mm', 'Reifendruck ist bei 2.5 bar']\nInput: 'Ich habe den luftdruck aller reifen überprüft und er war in ordnung.' Output: ['Ich habe den luftdruck aller reifen überprüft und er war in ordnung']\n\n Your goal is to accurately and consistently identify and extract individual tasks from the user's input, whether it contains a single task or multiple tasks, and return them as a list of strings."
+        system_prompt = {"role": "system", "content": static_system_prompt + examples}
+        user_message = {"role": "user", "content": user_text_message}
+        messages = [system_prompt, user_message]
+        response = self.get_llm_response(messages=messages)
+        return response
+
+    def process(
+        self,
+        form_data: FormData,
+        user_text_message: str,
+    ):
+        task_name = self.intendet_task(form_data=form_data, text=user_text_message)
+        print("intendet_task response => " + task_name)
+        response_id = self.intended_field(
+            form_data=form_data, task_name=task_name, text=user_text_message
         )
+        print("intendet_field response => " + response_id)
 
-        if task_name in conversation_history:
-            correction_id, correction_message = self.correction_intent(
-                form_data=form_data,
-                task_name=task_name,
-                text=text,
-                conversation_history=conversation_history,
-            )
-            if correction_id == None:
-                return task_name, response_id, None
-            conversation_history[task_name].append(
-                {
-                    "user_message": correction_message,
-                    "response_id": correction_id,
-                }
+        if not form_data[task_name][response_id].form_input_type == "x":
+            relevant_information = self.find_relevant_information(
+                field=form_data[task_name][response_id], text=user_text_message
             )
 
-            return task_name, response_id, correction_id
-        else:
-            conversation_history[task_name] = [
-                {
-                    "user_message": user_message,
-                    "response_id": response_id,
-                }
-            ]
-            return task_name, response_id, None
+            fields = form_data[task_name].get_minimal_fields_information()
+            fields[response_id] = {
+                form_data[task_name][response_id].description: relevant_information
+            }
+            return task_name, fields
+
+        if form_data[task_name].is_at_least_one_field_filled():
+            if self.is_correction(
+                text=user_text_message, task_name=task_name, form_data=form_data
+            ):
+
+                corrected_fields = self.correction_intent(
+                    form_data=form_data,
+                    task_name=task_name,
+                    text=user_text_message,
+                )
+                print("correction_intent => " + str(corrected_fields))
+
+                return task_name, corrected_fields
+
+        fields = form_data[task_name].get_minimal_fields_information()
+        fields[response_id] = {form_data[task_name][response_id].description: "x"}
+
+        return task_name, fields
+
+    def find_relevant_information(self, field: Field, text: str) -> str:
+        static_system_prompt = self.config["find_matching_substring"]["system"]
+
+        dynamic_system_prompt = f"Instructions:\n1. Extract the relevant value: Based on the field type '{field.form_input_type}', isolate the relevant value from the user's input.\n2. Return the value: Provide the extracted value as a standalone string, formatted appropriately for the field type.\n\nExamples:\n{field.trainings_data}"
+        system_prompt = {
+            "role": "system",
+            "content": static_system_prompt + dynamic_system_prompt,
+        }
+        user_message = {"role": "user", "content": text}
+        messages = [system_prompt, user_message]
+        response = self.get_llm_response(messages=messages)
+
+        print("substring response = " + response)
+        return response
 
     def correction_intent(
         self,
         form_data: FormData,
         task_name: str,
         text: str,
-        conversation_history: dict,
     ):
 
-        if self.is_correction(
-            conversation_history=conversation_history,
-            text=text,
-            task_name=task_name,
-            form_data=form_data,
-        ):
-            messages = self.get_previous_conversation(
-                conversation_history=conversation_history, task_name=task_name
-            )
-            # for user_text in conversation_history[task_name].items()
-
-            options = {}
-            for message_data in conversation_history[task_name]:
-                response_id = message_data["response_id"]
-                options[response_id] = form_data[task_name][response_id].description
-
-            options["400"] = "nothing of the given options"
-            correction_message = (
-                self.config["best_match"]["user"]
-                + " Which is the opposite option of the one he wants to correct? Only select one of these options!"
-                + self.message_compiler(user_text=text, data=options)
-            )
-
-            messages.append({"role": "user", "content": correction_message})
-            response_id = self.best_match(messages=messages)
-            return response_id, correction_message
-        return None, None
-
-    def get_previous_conversation(self, conversation_history: dict, task_name: str):
-        system_prompt = self.config["best_match"]["system"]  # get system prompt for llm
-        messages = [{"role": "system", "content": system_prompt}]
-
-        for message_data in conversation_history[task_name]:
-            messages.append({"role": "user", "content": message_data["user_message"]})
-            messages.append(
-                {"role": "assistant", "content": message_data["response_id"]}
-            )
-
-        return messages
-
-    def is_correction(
-        self, conversation_history: dict, text: str, task_name: str, form_data: FormData
-    ):
-
-        messages = self.get_previous_conversation(
-            conversation_history=conversation_history,
-            task_name=task_name,
-        )
-
-        options = {}
-        options[task_name] = {
-            "1": "yes, he want to correct one of his previous statements",
-            "2": "no, he doese not want to correct one of his previous statements",
+        current_fields = form_data[task_name].get_minimal_fields_information()
+        messages = []
+        example = "Form fields: {'1': {'in ordnung': 'x'} '2': {'nicht in ordnung': 'None'} '3': {'behoben': 'None'}}\nUser Text: Die Reifenart ist doch nicht in ordnung\nSystem response: {'1': {'in ordnung': 'None'} '2': {'nicht in ordnung': 'x'} '3': {'behoben': 'None'}}"
+        additional_system_prompt_message = f"\nForm decription: {task_name}\n Form fields: {current_fields}\n\nYour response should be a JSON object\nExamples:\n{example}"
+        system_prompt = {
+            "role": "system",
+            "content": self.config["best_match_for_correction"]["system"]
+            + additional_system_prompt_message,
         }
+        messages.append(system_prompt)
 
-        correction_message = (
-            self.config["best_match"]["user"]
-            + " Doese the user want to correct one of his previous statements?"
-            + self.message_compiler(user_text=text, data=options)
-        )
+        messages.append({"role": "user", "content": text})
+        response = self.get_llm_response(messages=messages)
+        print("correction response = " + response)
+        response = self.extract_json_object(text=response)
+        return response
 
-        messages.append({"role": "user", "content": correction_message})
+    def extract_json_object(self, text: str):
+        pattern = r"\{\s*(?:[^{}]*\{\s*[^{}]*\}\s*)*\}"
 
-        response_id = self.best_match(messages=messages)
+        match = re.search(pattern, text, re.DOTALL)
 
-        response_id = response_id.strip()
+        if match:
+            json_string = match.group(0)
+            try:
+                json_object = json.loads(json_string)
+                return json_object  # This should print <class 'dict'>
+            except json.JSONDecodeError as e:
+                print("Error parsing JSON:", e)
+        else:
+            raise IntentRecognitionResponseTypeError(
+                message=f"Correction Intent Classification. AI output: {text}",
+                errors=2,
+            )
+
+    def is_correction(self, text: str, task_name: str, form_data: FormData):
+
+        fields = form_data[task_name].get_description_and_value()
+        system_message = self.config["correction_intend"]["system"] + str(fields)
+
+        system_prompt = {"role": "system", "content": system_message}
+        user_message = {"role": "user", "content": text}
+
+        messages = [system_prompt, user_message]
+
+        response_id = self.get_llm_response(messages=messages)
+
+        response_id = self.clean_response_id(response_id=response_id)
         if not self.is_valid_response_id(id=response_id, data=[]):
             raise IntentRecognitionResponseTypeError(
                 message=f"Correction Intent Classification. AI output: {response_id}",
@@ -133,52 +149,28 @@ class IntentRecognition:
             return True
         return False
 
-    def find_substring(self, substring_description: str, text: str):
-        system_prompt = self.config["find_substring"]["system"]
-        user_message = (
-            self.config["find_substring"]["user"]
-            + f" '{substring_description}'. Text: {text}."
-        )
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_message},
-        ]
-        print(f"input {messages[1]['content']}")
-        response_string = (
-            self.llm.selected_model.chat_completation(messages=messages)
-            .choices[0]
-            .message.content
-        )
+    def intended_field(self, form_data: FormData, task_name: str, text: str):
+        form_fields = form_data[task_name].get_field_id_and_description()
 
-        if not self.is_valid_response_substring(substring=response_string, text=text):
-            raise IntentRecognitionResponseTypeError(
-                message=f"Substring Intent Classification. AI output: {response_string}",
-                errors=4,
-            )
-        return response_string
-
-    def status_intent(self, form_data: FormData, task_name: str, text: str):
-        filterd_data = form_data[task_name].get_field_id_and_description()
-
-        system_prompt = self.config["best_match"]["system"]
-        user_message = self.config["best_match"]["user"] + self.message_compiler(
-            user_text=text, data=filterd_data
+        system_prompt = self.config["intended_field"]["system"]
+        user_message = self.config["intended_field"]["user"] + self.message_compiler(
+            user_text=text, data=form_fields
         )
         system_prompt = {"role": "system", "content": system_prompt}
         user_message = {"role": "user", "content": user_message}
 
         messages = [system_prompt, user_message]
 
-        response_id = self.best_match(messages=messages)
+        response_id = self.get_llm_response(messages=messages)
         response_id = self.clean_response_id(response_id=response_id)
-        if not self.is_valid_response_id(id=response_id, data=filterd_data):
+        if not self.is_valid_response_id(id=response_id, data=form_fields):
             raise IntentRecognitionResponseTypeError(
                 message=f"Status Intent Classification. AI output: {response_id}",
                 errors=3,
             )
-        return response_id, user_message["content"]
+        return response_id
 
-    def task_intent(self, form_data: FormData, text: str):
+    def intendet_task(self, form_data: FormData, text: str):
         filterd_data = {}
         id = 0
 
@@ -186,15 +178,15 @@ class IntentRecognition:
             filterd_data[str(id)] = key
             id += 1
 
-        system_prompt = self.config["best_match"]["system"]
-        user_message = self.config["best_match"]["user"] + self.message_compiler(
+        system_prompt = self.config["intended_task"]["system"]
+        user_message = self.config["intended_task"]["user"] + self.message_compiler(
             user_text=text, data=filterd_data
         )
         system_prompt = {"role": "system", "content": system_prompt}
         user_message = {"role": "user", "content": user_message}
         messages = [system_prompt, user_message]
 
-        response_id = self.best_match(messages=messages)
+        response_id = self.get_llm_response(messages=messages)
         response_id = self.clean_response_id(response_id=response_id)
         if not self.is_valid_response_id(id=response_id, data=filterd_data):
             raise IntentRecognitionResponseTypeError(
@@ -205,12 +197,10 @@ class IntentRecognition:
 
     def clean_response_id(self, response_id: str):
         response_id = response_id.strip()
-        id_char_list = list(response_id)
-        if id_char_list[0] == '"' or id_char_list[0] == "'":
-            response_id = "".join(id_char_list[1:-1])
-        return response_id
+        id = re.search("\d+", response_id)
+        return id.group(0)
 
-    def best_match(self, messages: list):
+    def get_llm_response(self, messages: list):
 
         print(">>--Messages--<<")
         print(messages)
