@@ -1,0 +1,86 @@
+{
+  "36": {
+    "1": {
+      "user_message": "Die Reifengröße ist 205/55 R16",
+      "system_response": "205/55 R16"
+    },
+    "2": {
+      "user_message": "Die Reifengröße ist gleich 205/60 R17",
+      "system_response": "205/60 R17"
+    },
+    "3": {
+      "user_message": "Die größe der Reifen lautet 195/50 R15",
+      "system_response": "205/60 R16 91H"
+    }
+  },
+  "46": {
+    "1": {
+      "user_message": "Das Mindesthaltbarkeits datum des Pannensets ist 22.06.2025",
+      "system_response": "22.06.2025"
+    },
+    "2": {
+      "user_message": "Das Pannenset läuft am 21.04.2026 ab",
+      "system_response": "21.04.2026"
+    },
+    "3": {
+      "user_message": "Ablaufdatum des Pannensets ist der 27.09.2023",
+      "system_response": "27.09.2023"
+    }
+  },
+  "65": {
+    "1": {
+      "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
+      "system_response": "22"
+    },
+    "2": {
+      "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
+      "system_response": "30"
+    },
+    "3": {
+      "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
+      "system_response": "26"
+    }
+  },
+  "61": {
+    "1": {
+      "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
+      "system_response": "22"
+    },
+    "2": {
+      "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
+      "system_response": "30"
+    },
+    "3": {
+      "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
+      "system_response": "26"
+    }
+  },
+  "57": {
+    "1": {
+      "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
+      "system_response": "22"
+    },
+    "2": {
+      "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
+      "system_response": "30"
+    },
+    "3": {
+      "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
+      "system_response": "26"
+    }
+  },
+  "53": {
+    "1": {
+      "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
+      "system_response": "22"
+    },
+    "2": {
+      "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
+      "system_response": "30"
+    },
+    "3": {
+      "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
+      "system_response": "26"
+    }
+  }
+}
