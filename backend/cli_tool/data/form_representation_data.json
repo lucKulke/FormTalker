@@ -59,14 +59,14 @@
     "34": { "option_name": "nicht in ordnung", "form_input": "x" },
     "35": { "option_name": "behoben", "form_input": "x" }
   },
-  "Reifenart eintragen:": {
+  "Reifenart eintragen": {
     "37": { "option_name": "in ordnung", "form_input": "x" },
     "38": { "option_name": "nicht in ordnung", "form_input": "x" },
     "39": { "option_name": "behoben", "form_input": "x" },
     "69": { "option_name": "Ganzjahresreifen", "form_input": "x" },
     "70": { "option_name": "Winterreifen", "form_input": "x" },
     "71": { "option_name": "Sommerreifen", "form_input": "x" },
-    "36": { "option_name": "größe der Reifen", "form_input": "text" }
+    "36": { "option_name": "größe der Reifen", "form_input": "reifen größe" }
   },
   "Reifendruck aller 4 Räder prüfen und bei Bedarf korrigieren": {
     "40": { "option_name": "in ordnung", "form_input": "x" },
@@ -82,7 +82,7 @@
     "43": { "option_name": "in ordnung", "form_input": "x" },
     "44": { "option_name": "nicht in ordnung", "form_input": "x" },
     "45": { "option_name": "behoben", "form_input": "x" },
-    "46": { "option_name": "Mindesthaltbarkeitsdatum", "form_input": "text" }
+    "46": { "option_name": "Mindesthaltbarkeitsdatum", "form_input": "date" }
   },
   "Reifendruck sensoren neu anlernen wenn fehlermeldung": {
     "50": { "option_name": "in ordnung", "form_input": "x" },
@@ -93,24 +93,24 @@
     "54": { "option_name": "in ordnung", "form_input": "x" },
     "55": { "option_name": "nicht in ordnung", "form_input": "x" },
     "56": { "option_name": "behoben", "form_input": "x" },
-    "53": { "option_name": "Profiltiefe", "form_input": "text" }
+    "53": { "option_name": "Profiltiefe in mm", "form_input": "number" }
   },
   "Bereifung vorne rechts Zustand und Laufbild, Profiltiefe": {
     "58": { "option_name": "in ordnung", "form_input": "x" },
     "59": { "option_name": "nicht in ordnung", "form_input": "x" },
     "60": { "option_name": "behoben", "form_input": "x" },
-    "57": { "option_name": "Profiltiefe", "form_input": "text" }
+    "57": { "option_name": "Profiltiefe in mm", "form_input": "number" }
   },
   "Bereifung hinten links Zustand und Laufbild, Profiltiefe": {
     "62": { "option_name": "in ordnung", "form_input": "x" },
     "63": { "option_name": "nicht in ordnung", "form_input": "x" },
     "64": { "option_name": "behoben", "form_input": "x" },
-    "61": { "option_name": "Profiltiefe", "form_input": "text" }
+    "61": { "option_name": "Profiltiefe in mm", "form_input": "number" }
   },
   "Bereifung hinten rechts Zustand und Laufbild, Profiltiefe": {
     "66": { "option_name": "in ordnung", "form_input": "x" },
     "67": { "option_name": "nicht in ordnung", "form_input": "x" },
     "68": { "option_name": "behoben", "form_input": "x" },
-    "65": { "option_name": "Profiltiefe", "form_input": "text" }
+    "65": { "option_name": "Profiltiefe in mm", "form_input": "number" }
   }
 }
