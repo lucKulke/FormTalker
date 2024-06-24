@@ -21,12 +21,20 @@ class IntentRecognition:
 
     def split(self, user_text_message: str) -> list:
         static_system_prompt = self.config["split_message_into_itents"]["system"]
-        examples = "Examples:\n1. Input: 'Der reifenluftdruck ist nicht in ordnung, deswegen habe ich den reifenluftdruck angepasst.' Output: ['Reifenluftdruck ist nicht in ordnung', 'Reifenluftdruck wurde angepasst']\nInput: 'Ich habe die Fanghaken gefettet und die Batterie geprüft und sie ist in ordnung.' Output: ['Fanghaken gefettet', 'Batterie geprüft und sie ist in ordnung']\nInput: 'Die Profiltiefe beträgt 7 mm und der Reifendruck ist bei 2.5 bar.' Output: ['Profiltiefe beträgt 7 mm', 'Reifendruck ist bei 2.5 bar']\nInput: 'Ich habe den luftdruck aller reifen überprüft und er war in ordnung.' Output: ['Ich habe den luftdruck aller reifen überprüft und er war in ordnung']\n\n Your goal is to accurately and consistently identify and extract individual tasks from the user's input, whether it contains a single task or multiple tasks, and return them as a list of strings."
+        examples = "Examples:\n1. Input: 'Der reifenluftdruck ist nicht in ordnung, deswegen habe ich den reifenluftdruck angepasst.' Output: ['Reifenluftdruck ist nicht in ordnung', 'Reifenluftdruck wurde angepasst']\nInput: 'Ich habe die Fanghaken gefettet und die Batterie geprüft und sie ist in ordnung.' Output: ['Fanghaken gefettet', 'Batterie geprüft und sie ist in ordnung']\nInput: 'Die Profiltiefe beträgt 7 mm und der Reifendruck ist bei 2.5 bar.' Output: ['Profiltiefe beträgt 7 mm', 'Reifendruck ist bei 2.5 bar']\nInput: 'Ich habe den luftdruck aller reifen überprüft und er war in ordnung.' Output: ['Ich habe den luftdruck aller reifen überprüft und er war in ordnung']\n\n Your goal is to accurately and consistently identify and extract individual tasks from the user's input, whether it contains multiple tasks, and return them as a list of strings. If there is only a single task return the string 'None'."
         system_prompt = {"role": "system", "content": static_system_prompt + examples}
         user_message = {"role": "user", "content": user_text_message}
         messages = [system_prompt, user_message]
         response = self.get_llm_response(messages=messages)
+        if self.check_if_more_than_one_intent(message=response):
+            return str([user_text_message])
         return response
+    
+    def check_if_more_than_one_intent(self, message: str):
+        response = re.match(pattern='(None|null)', string=message)
+        if response:
+            return True
+        return False
 
     def process(
         self,
@@ -138,7 +146,6 @@ class IntentRecognition:
         messages = [system_prompt, user_message]
 
         response_id = self.get_llm_response(messages=messages)
-
         response_id = self.clean_response_id(response_id=response_id)
         if not self.is_valid_response_id(id=response_id, data=[]):
             raise IntentRecognitionResponseTypeError(
@@ -177,16 +184,16 @@ class IntentRecognition:
         for key in form_data.list_of_task_names():
             filterd_data[str(id)] = key
             id += 1
-
+        
+        
         system_prompt = self.config["intended_task"]["system"]
-        user_message = self.config["intended_task"]["user"] + self.message_compiler(
-            user_text=text, data=filterd_data
-        )
+        user_message = f" User Text: '{text}' Tasks: {filterd_data}" 
         system_prompt = {"role": "system", "content": system_prompt}
         user_message = {"role": "user", "content": user_message}
         messages = [system_prompt, user_message]
 
         response_id = self.get_llm_response(messages=messages)
+        print(f"response id intendet task: {response_id}")
         response_id = self.clean_response_id(response_id=response_id)
         if not self.is_valid_response_id(id=response_id, data=filterd_data):
             raise IntentRecognitionResponseTypeError(
@@ -198,7 +205,10 @@ class IntentRecognition:
     def clean_response_id(self, response_id: str):
         response_id = response_id.strip()
         id = re.search("\d+", response_id)
-        return id.group(0)
+        if id:
+            return id.group(0)
+        else:
+            return None
 
     def get_llm_response(self, messages: list):
 
@@ -221,4 +231,4 @@ class IntentRecognition:
         return len(list(substring)) < len(list(text))
 
     def message_compiler(self, user_text: str, data: dict):
-        return f" Sentence: '{user_text}' Options: {data}"
+        return f" User Text: '{user_text}' Options: {data}"
