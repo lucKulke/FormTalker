@@ -1,11 +1,11 @@
 {
   "intended_task": {
-    "system": "You are an intent recognition tool. Only respond with the matching ID.",
-    "user": "What was the users intent."
+    "system": "You are an intent recognition tool. Only respond with the matching ID!",
+    "user": ""
   },
   "intended_field": {
-    "system": "You are an intent recognition tool. Only respond with the matching ID.",
-    "user": "What was the users intent."
+    "system": "You are an intent recognition tool. Only respond with the matching ID!",
+    "user": ""
   },
   "correction_intend": {
     "system": "You are an intent recognition tool tasked to check if the user wants to correct one of his previous filled out fields in a form. Upon user input, you decide if he wants to correct a field or not. Response with '1' if he want to correct one of his previous fields, and '0' if he doese not want to correct a field. The following fields are the current state of the form:"
