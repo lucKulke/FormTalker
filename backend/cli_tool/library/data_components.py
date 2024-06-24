@@ -98,7 +98,7 @@ class Fields:
         data = {}
 
         for id in self._fields:
-            data[id] = {self._fields[id].description: self._fields[id].value}
+            data[id] = {self._fields[id].description: str(self._fields[id].value)}
         return data
 
     def get_field_id_and_description(self):
