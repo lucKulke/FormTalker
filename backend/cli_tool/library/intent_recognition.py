@@ -12,6 +12,19 @@ class IntentRecognitionResponseTypeError(Exception):
         # Now for your custom code...
         self.errors = errors
 
+class IntentRecognitionIntendedTaskResponseTypeError(IntentRecognitionResponseTypeError):
+    pass
+class IntentRecognitionIntendedFieldResponseTypeError(IntentRecognitionResponseTypeError):
+    pass
+class IntentRecognitionSplitIntentsResponseTypeError(IntentRecognitionResponseTypeError):
+    pass
+class IntentRecognitionCorrectionIntendResponseTypeError(IntentRecognitionResponseTypeError):
+    pass
+class IntentRecognitionFindRelevantInformationResponseTypeError(IntentRecognitionResponseTypeError):
+    pass
+
+
+
 
 class IntentRecognition:
 
