@@ -7,9 +7,25 @@ from library import intent_recognition
 from library.pdf_annotations import Reader, Writer
 from library.data_components import DataMapper, FormData, Fields, Field
 from dotenv import load_dotenv
+from library.voice_recorder import VoiceRecorder
 
 load_dotenv()
 API_KEY = os.getenv("CHATGPT_API_KEY")
+
+import argparse
+
+# Create the parser
+parser = argparse.ArgumentParser(description='A simple example script.')
+
+# Add arguments
+parser.add_argument('--annotated_pdf', type=str, help='Path for annotated pdf', default="input_pdfs/example2.pdf")
+parser.add_argument('--output_pdf', type=str, help='Path of output pdf', default="output_pdfs/filled_pdf.pdf")
+parser.add_argument('--form_representation_data',type=str, help='Path to json file that represents form data', default="data/form_representation_data.json")
+parser.add_argument('--form_trainings_data',type=str, help='Path to json file that contains trainings data for specific fields in form', default="data/trainings_data.json")
+parser.add_argument('--llm_config',type=str, help='Path to json file that contains llm config information', default="configs/llm_prompt_config.json")
+
+# Parse the arguments
+args = parser.parse_args()
 
 
 def setup_logging():
@@ -36,8 +52,6 @@ def setup_logging():
 
 
 def handle_intent_recognition_error(e):
-    # if isinstance(e, intent_recognition.IntentRecognitionError):
-    #     logging.error(f"IntentRecognitionError: {e}")
     if isinstance(e, intent_recognition.IntentRecognitionIntendedTaskResponseTypeError):
         logging.error(f"IntentRecognitionIntendedTaskResponseTypeError: {e}")
     elif isinstance(
@@ -80,14 +94,15 @@ def main():
     logger = setup_logging()
     logger.info("Programm Started")
 
+
     # form_representation_data, form_trainings_data, llm_prompt_config = {}
 
     try:
-        with open("data/form_representation_data.json", "r", encoding="utf-8") as file:
+        with open(args.form_representation_data, "r", encoding="utf-8") as file:
             form_representation_data = json.load(file)
         logger.info("Successfully loaded form_representation_data.json")
 
-        with open("data/trainings_data.json", "r", encoding="utf-8") as file:
+        with open(args.form_trainings_data, "r", encoding="utf-8") as file:
             form_trainings_data = json.load(file)
         logger.info("Successfully loaded trainings_data.json")
 
@@ -115,13 +130,16 @@ def main():
     )
 
     try:
-        pdf_reader = Reader(path="input_pdfs/example2.pdf")
+        pdf_reader = Reader(path=args.annotated_pdf)
         pdf_writer = Writer(path="../../raw_example_pdfs/example.pdf")
     except Exception as e:
         logger.error(
             "Error is thrown during initialization of PDF Reader and Writer! Programm exits now.."
         )
         return 1
+
+    recorder = VoiceRecorder()
+
 
     annotation_data = pdf_reader.all_annotations()
 
