@@ -20,7 +20,6 @@ class Reader:
         return annotations
 
 
-
 class Writer:
     def __init__(self, path: str) -> None:
         self.path = path
