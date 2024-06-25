@@ -2,3 +2,8 @@ requests
 openai
 python-dotenv
 pypdf
+keyboard
+sounddevice
+numpy
+pyaudio
+runpod
