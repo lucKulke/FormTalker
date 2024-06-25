@@ -2,27 +2,57 @@ import os
 import json
 import ast
 import logging
+import keyboard
+import time
+import argparse
 from library.llms import LLM, ChatGPTInitializationError
 from library import intent_recognition
 from library.pdf_annotations import Reader, Writer
 from library.data_components import DataMapper, FormData, Fields, Field
 from dotenv import load_dotenv
 from library.voice_recorder import VoiceRecorder
+from library.speech_recognition import SpeechRecognizer
 
 load_dotenv()
 API_KEY = os.getenv("CHATGPT_API_KEY")
+RUNPOD_API_KEY = os.getenv("RUNPOD_API_KEY")
+RUNPOD_ENDPOINT_ID = os.getenv("RUNPOD_ENDPOINT_ID")
 
-import argparse
 
 # Create the parser
-parser = argparse.ArgumentParser(description='A simple example script.')
+parser = argparse.ArgumentParser(description="A simple example script.")
 
 # Add arguments
-parser.add_argument('--annotated_pdf', type=str, help='Path for annotated pdf', default="input_pdfs/example2.pdf")
-parser.add_argument('--output_pdf', type=str, help='Path of output pdf', default="output_pdfs/filled_pdf.pdf")
-parser.add_argument('--form_representation_data',type=str, help='Path to json file that represents form data', default="data/form_representation_data.json")
-parser.add_argument('--form_trainings_data',type=str, help='Path to json file that contains trainings data for specific fields in form', default="data/trainings_data.json")
-parser.add_argument('--llm_config',type=str, help='Path to json file that contains llm config information', default="configs/llm_prompt_config.json")
+parser.add_argument(
+    "--annotated_pdf",
+    type=str,
+    help="Path for annotated pdf",
+    default="input_pdfs/example2.pdf",
+)
+parser.add_argument(
+    "--output_pdf",
+    type=str,
+    help="Path of output pdf",
+    default="output_pdfs/filled_pdf.pdf",
+)
+parser.add_argument(
+    "--form_representation_data",
+    type=str,
+    help="Path to json file that represents form data",
+    default="data/form_representation_data.json",
+)
+parser.add_argument(
+    "--form_trainings_data",
+    type=str,
+    help="Path to json file that contains trainings data for specific fields in form",
+    default="data/trainings_data.json",
+)
+parser.add_argument(
+    "--llm_config",
+    type=str,
+    help="Path to json file that contains llm config information",
+    default="configs/llm_prompt_config.json",
+)
 
 # Parse the arguments
 args = parser.parse_args()
@@ -94,7 +124,6 @@ def main():
     logger = setup_logging()
     logger.info("Programm Started")
 
-
     # form_representation_data, form_trainings_data, llm_prompt_config = {}
 
     try:
@@ -138,9 +167,6 @@ def main():
         )
         return 1
 
-    recorder = VoiceRecorder()
-
-
     annotation_data = pdf_reader.all_annotations()
 
     DataMapper.mapp_data_to_form_representation_data(
@@ -150,12 +176,29 @@ def main():
     )
 
     form_data = FormData(data=form_representation_data)
+    speechrecognizer = SpeechRecognizer(
+        api_key=RUNPOD_API_KEY, endpoint_id=RUNPOD_ENDPOINT_ID
+    )
 
+    recorder = VoiceRecorder()
     while True:
-        text_message = input("enter text:")
-        if text_message == "exit":
-            logger.info("Programm ended")
-            break
+
+        try:
+
+            recorder.start_recording()
+
+            # Wait for user to stop recording
+            input("Press Enter to stop recording...")
+
+            # Stop recording and get Base64-encoded audio
+            base64_audio = recorder.stop_recording()
+            user_text = speechrecognizer.request(base64_audio)
+
+            time.sleep(0.5)  # Debounce key press
+        except KeyboardInterrupt:
+            recorder.stop_recording()
+            recorder.close()
+            print("Exiting...")
 
         intents = intent_recognizer.split(user_text_message=text_message)
         intents_list = ast.literal_eval(intents)
@@ -177,6 +220,11 @@ def main():
                     form_data[name].get_minimal_fields_information().items()
                 ):
                     print(id + " " + str(value))
+
+        text_message = input("save to pdf and exit? (y):")
+        if text_message == "y":
+            logger.info("Programm ended")
+            break
 
 
 if __name__ == "__main__":
