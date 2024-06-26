@@ -79,9 +79,9 @@
     "45": { "option_name": "behoben", "form_input": "x" }
   },
   "Pannenset": {
-    "43": { "option_name": "in ordnung", "form_input": "x" },
-    "44": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "45": { "option_name": "behoben", "form_input": "x" },
+    "47": { "option_name": "in ordnung", "form_input": "x" },
+    "48": { "option_name": "nicht in ordnung", "form_input": "x" },
+    "49": { "option_name": "behoben", "form_input": "x" },
     "46": { "option_name": "Mindesthaltbarkeitsdatum", "form_input": "date" }
   },
   "Reifendruck sensoren neu anlernen wenn fehlermeldung": {
@@ -112,5 +112,15 @@
     "67": { "option_name": "nicht in ordnung", "form_input": "x" },
     "68": { "option_name": "behoben", "form_input": "x" },
     "65": { "option_name": "Profiltiefe in mm", "form_input": "number" }
+  },
+  "Motoröl: Ablassen oder absaugen je nach Intervall 15.000 oder 30.000 KM, Ölfilter ersetzen": {
+    "72": { "option_name": "in ordnung", "form_input": "x" },
+    "73": { "option_name": "nicht in ordnung", "form_input": "x" },
+    "74": { "option_name": "behoben", "form_input": "x" }
+  },
+  "Getriebeöl, Ölstand prüfen - Wechselintervall beachten": {
+    "75": { "option_name": "in ordnung", "form_input": "x" },
+    "76": { "option_name": "nicht in ordnung", "form_input": "x" },
+    "77": { "option_name": "behoben", "form_input": "x" }
   }
 }
