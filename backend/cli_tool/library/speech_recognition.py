@@ -17,6 +17,6 @@ class SpeechRecognizer:
                 timeout=60,  # Timeout in seconds.
             )
 
-            print(run_request["segments"][0]["text"])
+            return run_request["segments"][0]["text"]
         except TimeoutError:
             print("Job timed out.")

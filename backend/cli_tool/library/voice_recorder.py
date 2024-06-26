@@ -57,28 +57,33 @@ class VoiceRecorder:
                 input_device_index=self.input_device_index,
                 frames_per_buffer=self.chunk,
             )
-            self.animation_thread = threading.Thread(target=self.show_animation)
-            self.animation_thread.start()
+
             threading.Thread(target=self.record).start()
         except Exception as e:
             print(f"Error starting recording: {e}")
 
     def record(self):
         while self.recording:
-            data = self.stream.read(self.chunk)
-            self.frames.append(data)
+            try:
+                data = self.stream.read(self.chunk)
+                self.frames.append(data)
+            except Exception as e:
+                print(f"Error recording audio: {e}")
+                break
 
     def stop_recording(self):
         self.recording = False
         if self.stream is not None:
             self.stream.stop_stream()
             self.stream.close()
-
+            self.stream = None
         if self.animation_thread is not None:
             self.animation_thread.join()
-        print(f"Recording stopped. File saved as '{self.filename}'.")
+            self.animation_thread = None
 
-        return self.encode_recording_to_base64()
+        base64_audio = self.encode_recording_to_base64()
+        self.frames = []
+        return base64_audio
 
     def save_recording(self):
         try:
@@ -101,7 +106,9 @@ class VoiceRecorder:
         sys.stdout.write("\r \r")  # Clear the animation
 
     def close(self):
-        self.pyaudio_instance.terminate()
+        if self.pyaudio_instance is not None:
+            self.pyaudio_instance.terminate()
+            self.pyaudio_instance = None
 
     def encode_recording_to_base64(self):
         try:
