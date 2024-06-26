@@ -24,17 +24,25 @@ parser = argparse.ArgumentParser(description="A simple example script.")
 
 # Add arguments
 parser.add_argument(
-    "--annotated_pdf",
+    "--base_pdf_path",
     type=str,
-    help="Path for annotated pdf",
+    help="Path for raw pdf",
+    default="../../raw_example_pdfs/example.pdf",
+)
+
+parser.add_argument(
+    "--annotated_pdf_path",
+    type=str,
+    help="Path for preped pdf",
     default="input_pdfs/example2.pdf",
 )
 parser.add_argument(
-    "--output_pdf",
+    "--output_pdf_path",
     type=str,
     help="Path of output pdf",
-    default="output_pdfs/filled_pdf.pdf",
+    default="output_pdfs/filled_pdf_.pdf",
 )
+
 parser.add_argument(
     "--form_representation_data",
     type=str,
@@ -119,15 +127,13 @@ def handle_intent_recognition_error(e):
     else:
         logging.exception("An unexpected error occurred")
 
+
 def print_filled_sections(form_data: FormData) -> None:
     for name in form_data.get_data():
-            if form_data[name].is_at_least_one_field_filled():
-                print(f"FORM_FIELDS of {name}:")
-                for id, value in (
-                    form_data[name].get_minimal_fields_information().items()
-                ):
-                    print(id + " " + str(value))
-
+        if form_data[name].is_at_least_one_field_filled():
+            print(f"FORM_FIELDS of {name}:")
+            for id, value in form_data[name].get_minimal_fields_information().items():
+                print(id + " " + str(value))
 
 
 def main():
@@ -169,8 +175,11 @@ def main():
     )
 
     try:
-        pdf_reader = Reader(path=args.annotated_pdf)
-        pdf_writer = Writer(path="../../raw_example_pdfs/example.pdf")
+        pdf_reader = Reader(path=args.annotated_pdf_path)
+        pdf_writer = Writer(
+            output_pdf_path=args.output_pdf_path,
+            base_pdf_path=args.base_pdf_path,
+        )
     except Exception as e:
         logger.error(
             "Error is thrown during initialization of PDF Reader and Writer! Programm exits now.."
@@ -184,33 +193,18 @@ def main():
     )
 
     form_data = FormData(data=form_representation_data)
-    # speechrecognizer = SpeechRecognizer(
-    #     api_key=RUNPOD_API_KEY, endpoint_id=RUNPOD_ENDPOINT_ID
-    # )
+    speechrecognizer = SpeechRecognizer(
+        api_key=RUNPOD_API_KEY, endpoint_id=RUNPOD_ENDPOINT_ID
+    )
 
-    # recorder = VoiceRecorder()
     while True:
 
-        # try:
+        text_message = input(">> Enter Text: ")
 
-        #     recorder.start_recording()
-        #     input("Press Enter to stop recording...")
+        # intents = intent_recognizer.split(user_text_message=text_message)
+        # intents_list = ast.literal_eval(intents)
 
-        #     # Stop recording and get Base64-encoded audio
-        #     base64_audio = recorder.stop_recording()
-        #     user_text = speechrecognizer.request(base64_audio)
-
-        #     time.sleep(0.5)  # Debounce key press
-        # except KeyboardInterrupt:
-        #     recorder.stop_recording()
-        #     recorder.close()
-        #     break
-        #     print("Exiting...")
-
-        intents = intent_recognizer.split(user_text_message="die Batterie ist in ordnung")
-        intents_list = ast.literal_eval(intents)
-
-        for intent in intents_list:
+        for intent in [text_message]:
             try:
                 task_name, fields = intent_recognizer.process(
                     form_data=form_data,
