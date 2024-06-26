@@ -34,7 +34,7 @@ parser.add_argument(
     "--annotated_pdf_path",
     type=str,
     help="Path for preped pdf",
-    default="input_pdfs/example2.pdf",
+    default="annotated_pdfs/annotated.pdf",
 )
 parser.add_argument(
     "--output_pdf_path",

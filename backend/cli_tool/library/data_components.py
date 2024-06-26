@@ -8,11 +8,14 @@ class DataMapper:
         form_trainings_data: dict,
     ):
 
-        for annotaition_id, location in annotation_data.items():
+        for annotaition_id, data in annotation_data.items():
             for task_name, fields in form_representation_data.items():
                 for id in fields:
                     if id == annotaition_id:
-                        form_representation_data[task_name][id]["location"] = location
+                        form_representation_data[task_name][id]["location"] = data[
+                            "location"
+                        ]
+                        form_representation_data[task_name][id]["page"] = data["page"]
 
         for id, examples in form_trainings_data.items():
             for task_name, fields in form_representation_data.items():
@@ -32,6 +35,7 @@ class Field:
         location: list,
         trainings_data=dict,
         value=str,
+        page=int,
     ) -> None:
         self.id = id
         self.description = description
@@ -39,6 +43,7 @@ class Field:
         self.location = location
         self.value = value
         self.trainings_data = trainings_data
+        self.page = page
 
     def __repr__(self):
         return str(
@@ -49,6 +54,7 @@ class Field:
                 "location": self.location,
                 "value": self.value,
                 "trainings_data": self.trainings_data,
+                "page": self.page,
             }
         )
 
@@ -76,6 +82,7 @@ class Fields:
                 location=propertys["location"],
                 value=value,
                 trainings_data=trainings_data,
+                page=propertys["page"],
             )
 
     def update(self, json_data: dict) -> None:
@@ -93,14 +100,17 @@ class Fields:
             data[field.description] = field.value
 
         return data
-    
-    def get_ids_and_locations_and_values(self):
+
+    def data_for_annotations(self):
         data = {}
         for id in self._fields:
             field = self._fields[id]
-            data[id] = {"location": field.location, "value": field.value}
+            data[id] = {
+                "location": field.location,
+                "value": field.value,
+                "page": field.page,
+            }
         return data
-
 
     def get_minimal_fields_information(self):
         data = {}
