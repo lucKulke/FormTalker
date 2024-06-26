@@ -57,7 +57,6 @@ class VoiceRecorder:
                 input_device_index=self.input_device_index,
                 frames_per_buffer=self.chunk,
             )
-            print("Recording started... Press 'R' to stop.")
             self.animation_thread = threading.Thread(target=self.show_animation)
             self.animation_thread.start()
             threading.Thread(target=self.record).start()

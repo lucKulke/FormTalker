@@ -119,6 +119,16 @@ def handle_intent_recognition_error(e):
     else:
         logging.exception("An unexpected error occurred")
 
+def print_filled_sections(form_data: FormData) -> None:
+    for name in form_data.get_data():
+            if form_data[name].is_at_least_one_field_filled():
+                print(f"FORM_FIELDS of {name}:")
+                for id, value in (
+                    form_data[name].get_minimal_fields_information().items()
+                ):
+                    print(id + " " + str(value))
+
+
 
 def main():
     logger = setup_logging()
@@ -167,40 +177,37 @@ def main():
         )
         return 1
 
-    annotation_data = pdf_reader.all_annotations()
-
     DataMapper.mapp_data_to_form_representation_data(
-        annotation_data=annotation_data,
+        annotation_data=pdf_reader.all_annotations(),
         form_representation_data=form_representation_data,
         form_trainings_data=form_trainings_data,
     )
 
     form_data = FormData(data=form_representation_data)
-    speechrecognizer = SpeechRecognizer(
-        api_key=RUNPOD_API_KEY, endpoint_id=RUNPOD_ENDPOINT_ID
-    )
+    # speechrecognizer = SpeechRecognizer(
+    #     api_key=RUNPOD_API_KEY, endpoint_id=RUNPOD_ENDPOINT_ID
+    # )
 
-    recorder = VoiceRecorder()
+    # recorder = VoiceRecorder()
     while True:
 
-        try:
+        # try:
 
-            recorder.start_recording()
+        #     recorder.start_recording()
+        #     input("Press Enter to stop recording...")
 
-            # Wait for user to stop recording
-            input("Press Enter to stop recording...")
+        #     # Stop recording and get Base64-encoded audio
+        #     base64_audio = recorder.stop_recording()
+        #     user_text = speechrecognizer.request(base64_audio)
 
-            # Stop recording and get Base64-encoded audio
-            base64_audio = recorder.stop_recording()
-            user_text = speechrecognizer.request(base64_audio)
+        #     time.sleep(0.5)  # Debounce key press
+        # except KeyboardInterrupt:
+        #     recorder.stop_recording()
+        #     recorder.close()
+        #     break
+        #     print("Exiting...")
 
-            time.sleep(0.5)  # Debounce key press
-        except KeyboardInterrupt:
-            recorder.stop_recording()
-            recorder.close()
-            print("Exiting...")
-
-        intents = intent_recognizer.split(user_text_message=text_message)
+        intents = intent_recognizer.split(user_text_message="die Batterie ist in ordnung")
         intents_list = ast.literal_eval(intents)
 
         for intent in intents_list:
@@ -213,16 +220,11 @@ def main():
             except intent_recognition.IntentRecognitionError as e:
                 handle_intent_recognition_error(e)
 
-        for name in form_data.get_data():
-            if form_data[name].is_at_least_one_field_filled():
-                print(f"FORM_FIELDS of {name}:")
-                for id, value in (
-                    form_data[name].get_minimal_fields_information().items()
-                ):
-                    print(id + " " + str(value))
+        print_filled_sections(form_data=form_data)
 
-        text_message = input("save to pdf and exit? (y):")
+        text_message = input("save to pdf and exit? (y/enter to continue):")
         if text_message == "y":
+            pdf_writer.write_to_pdf(form_data=form_data)
             logger.info("Programm ended")
             break
 

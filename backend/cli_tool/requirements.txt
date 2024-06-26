@@ -7,3 +7,4 @@ sounddevice
 numpy
 pyaudio
 runpod
+reportlab

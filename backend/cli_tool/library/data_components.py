@@ -93,6 +93,14 @@ class Fields:
             data[field.description] = field.value
 
         return data
+    
+    def get_ids_and_locations_and_values(self):
+        data = {}
+        for id in self._fields:
+            field = self._fields[id]
+            data[id] = {"location": field.location, "value": field.value}
+        return data
+
 
     def get_minimal_fields_information(self):
         data = {}
