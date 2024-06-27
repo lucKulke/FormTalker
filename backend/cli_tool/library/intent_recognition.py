@@ -62,25 +62,42 @@ class IntentRecognition:
         self.config = config
         self.llm = llm
 
-    def split(self, user_text_message: str) -> str:
+    def split(self, user_text_message: str, trainings_data: dict) -> str:
+        messages = []
+
         static_system_prompt = self.config["split_message_into_itents"]["system"]
-        examples = "Examples:\n1. Input: 'Der reifenluftdruck ist nicht in ordnung, deswegen habe ich den reifenluftdruck angepasst.' Output: ['Reifenluftdruck ist nicht in ordnung', 'Reifenluftdruck wurde angepasst']\nInput: 'Ich habe die Fanghaken gefettet und die Batterie geprüft und sie ist in ordnung.' Output: ['Fanghaken gefettet', 'Batterie ist in ordnung']\nInput: 'Die Profiltiefe beträgt 7 mm und der Reifendruck ist bei 2.5 bar.' Output: ['Profiltiefe beträgt 7 mm', 'Reifendruck ist bei 2.5 bar']\nInput: 'Ich habe den luftdruck aller reifen überprüft und er war in ordnung.' Output: ['Luftdruck aller reifen ist in ordnung']\nInput: 'Ich habe die Batterie geprüft aber sie war nicht in ordnung.' Output: ['Batterie nicht in ordnung']\n Your goal is to accurately and consistently identify and extract individual tasks from the user's input. It is possible that there is only one task in the user's input."
-        system_prompt = {"role": "system", "content": static_system_prompt + examples}
-        user_message = {"role": "user", "content": user_text_message}
-        messages = [system_prompt, user_message]
+        system_training = "Examples:\n"
+        for number, system_prompt_training in trainings_data[
+            "system_prompt_training"
+        ].items():
+            system_training += f"{number}. Input: '{system_prompt_training['user_message']}' Output: '{system_prompt_training['system_response']}'\n "
+
+        system_prompt = {
+            "role": "system",
+            "content": static_system_prompt + system_training,
+        }
+        messages.append(system_prompt)
+
+        for number, additional_conversation_training in trainings_data[
+            "additional_conversation_training"
+        ].items():
+            messages.append(
+                {
+                    "role": "user",
+                    "content": additional_conversation_training["user_message"],
+                }
+            )
+            messages.append(
+                {
+                    "role": "assistant",
+                    "content": additional_conversation_training["system_response"],
+                }
+            )
+
+        messages.append({"role": "user", "content": user_text_message})
         response = self.get_llm_response(messages=messages)
         response = self.extract_list_out_of_string(text=response)
-        if self.check_if_only_one_intent(message=response):
-            self.logger.info(f"Only one intent: {user_message}")
-            return str([user_text_message])
-        self.logger.info(f"More than one intents: {response}")
         return response
-
-    def check_if_only_one_intent(self, message: str):
-        response = re.match(pattern="(None|null|none)", string=message)
-        if response:
-            return True
-        return False
 
     def extract_list_out_of_string(self, text: str):
         pattern = r'\[\s*(?:"(?:[^"]|\\")*"|\'(?:[^\']|\\\')*\')\s*(?:,\s*(?:"(?:[^"]|\\")*"|\'(?:[^\']|\\\')*\')\s*)*\]'

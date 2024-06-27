@@ -1,99 +1,122 @@
 {
-  "multi_intent_splitting":{
-   "1" :{
-    "user_message": "Die Batterie ist in Ordnung und das Motoröl auch",
-    "system_response": "['Batterie prüfen (Ladezustand, Kontrollzelle) in ordnung']"
+  "multi_intent_splitting": {
+    "system_prompt_training": {
+      "1": {
+        "user_message": "Die Batterie ist in Ordnung und das Motoröl auch",
+        "system_response": "['Batterie ist in ordnung', 'Motoröl ist in ordnung']"
+      },
+      "2": {
+        "user_message": "Das Licht funktioniert und die Reifen sind in gutem Zustand",
+        "system_response": "['Licht ist in ordnung', 'Reifen sind in ordnung']"
+      },
+      "3": {
+        "user_message": "Der reifenluftdruck ist nicht in ordnung, deswegen habe ich den druck angepasst.",
+        "system_response": "['Reifenluftdruck ist nicht in ordnung', 'Reifenluftdruck wurde angepasst']"
+      },
+      "4": {
+        "user_message": "Ich habe die Fanghaken gefettet und die Batterie geprüft und sie ist in ordnung.",
+        "system_response": "['Fanghaken gefettet', 'Batterie ist in ordnung']"
+      }
     },
-    "2":{
-      "user_message": "Das Licht funktioniert und die Reifen sind in gutem Zustand",
-    "system_response": "['Frontbeleuchtung - alle Funktionen prüfen. Standlicht, Abblendlicht, Fernlicht, Nebelscheinwerfer, Blinkanlage, Warnblinkanlage in ordnung', 'Heckbeleuchtung - alle Funktionen prüfen. 3. Bremslicht, Bremslichter, Rücklichter, Nebelschlussleuchte, Kennzeichenbeleuchtung in ordnung']"
-    }
-
-  },
-  "indevidual_fields" :{
-  "36": {
-    "1": {
-      "user_message": "Die Reifengröße ist 205/55 R16",
-      "system_response": "205/55 R16"
-    },
-    "2": {
-      "user_message": "Die Reifengröße ist gleich 205/60 R17",
-      "system_response": "205/60 R17"
-    },
-    "3": {
-      "user_message": "Die größe der Reifen lautet 195/50 R15",
-      "system_response": "205/60 R16 91H"
-    }
-  },
-  "46": {
-    "1": {
-      "user_message": "Das Mindesthaltbarkeits datum des Pannensets ist 22.06.2025",
-      "system_response": "22.06.2025"
-    },
-    "2": {
-      "user_message": "Das Pannenset läuft am 21.04.2026 ab",
-      "system_response": "21.04.2026"
-    },
-    "3": {
-      "user_message": "Ablaufdatum des Pannensets ist der 27.09.2023",
-      "system_response": "27.09.2023"
+    "additional_conversation_training": {
+      "5": {
+        "user_message": "Die Profiltiefe beträgt 7 mm und der Reifendruck ist bei 2.5 bar.",
+        "system_response": "['Profiltiefe beträgt 7 mm', 'Reifendruck ist bei 2.5 bar']"
+      },
+      "6": {
+        "user_message": "Ich habe den luftdruck aller reifen überprüft und er war in ordnung.",
+        "system_response": "['Luftdruck aller reifen ist in ordnung']"
+      },
+      "7": {
+        "user_message": "Ich habe die Batterie geprüft aber sie war nicht in ordnung.",
+        "system_response": "['Batterie war nicht in ordnung']"
+      }
     }
   },
-  "65": {
-    "1": {
-      "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
-      "system_response": "22"
+  "individual_fields": {
+    "36": {
+      "1": {
+        "user_message": "Die Reifengröße ist 205/55 R16",
+        "system_response": "205/55 R16"
+      },
+      "2": {
+        "user_message": "Die Reifengröße ist gleich 205/60 R17",
+        "system_response": "205/60 R17"
+      },
+      "3": {
+        "user_message": "Die größe der Reifen lautet 195/50 R15",
+        "system_response": "205/60 R16 91H"
+      }
     },
-    "2": {
-      "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
-      "system_response": "30"
+    "46": {
+      "1": {
+        "user_message": "Das Mindesthaltbarkeits datum des Pannensets ist 22.06.2025",
+        "system_response": "22.06.2025"
+      },
+      "2": {
+        "user_message": "Das Pannenset läuft am 21.04.2026 ab",
+        "system_response": "21.04.2026"
+      },
+      "3": {
+        "user_message": "Ablaufdatum des Pannensets ist der 27.09.2023",
+        "system_response": "27.09.2023"
+      }
     },
-    "3": {
-      "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
-      "system_response": "26"
-    }
-  },
-  "61": {
-    "1": {
-      "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
-      "system_response": "22"
+    "65": {
+      "1": {
+        "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
+        "system_response": "22"
+      },
+      "2": {
+        "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
+        "system_response": "30"
+      },
+      "3": {
+        "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
+        "system_response": "26"
+      }
     },
-    "2": {
-      "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
-      "system_response": "30"
+    "61": {
+      "1": {
+        "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
+        "system_response": "22"
+      },
+      "2": {
+        "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
+        "system_response": "30"
+      },
+      "3": {
+        "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
+        "system_response": "26"
+      }
     },
-    "3": {
-      "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
-      "system_response": "26"
-    }
-  },
-  "57": {
-    "1": {
-      "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
-      "system_response": "22"
+    "57": {
+      "1": {
+        "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
+        "system_response": "22"
+      },
+      "2": {
+        "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
+        "system_response": "30"
+      },
+      "3": {
+        "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
+        "system_response": "26"
+      }
     },
-    "2": {
-      "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
-      "system_response": "30"
-    },
-    "3": {
-      "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
-      "system_response": "26"
-    }
-  },
-  "53": {
-    "1": {
-      "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
-      "system_response": "22"
-    },
-    "2": {
-      "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
-      "system_response": "30"
-    },
-    "3": {
-      "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
-      "system_response": "26"
+    "53": {
+      "1": {
+        "user_message": "Die tiefe des Reifenprofiels ist nur noch 22 mm",
+        "system_response": "22"
+      },
+      "2": {
+        "user_message": "Profielteife des Reifens vorne rechts ist 30 Millimeter",
+        "system_response": "30"
+      },
+      "3": {
+        "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
+        "system_response": "26"
+      }
     }
   }
-}
 }

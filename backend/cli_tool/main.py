@@ -193,18 +193,19 @@ def main():
     )
 
     form_data = FormData(data=form_representation_data)
-    speechrecognizer = SpeechRecognizer(
-        api_key=RUNPOD_API_KEY, endpoint_id=RUNPOD_ENDPOINT_ID
-    )
 
     while True:
 
         text_message = input(">> Enter Text: ")
 
-        # intents = intent_recognizer.split(user_text_message=text_message)
-        # intents_list = ast.literal_eval(intents)
+        intents = intent_recognizer.split(
+            user_text_message=text_message,
+            trainings_data=form_trainings_data["multi_intent_splitting"],
+        )
+        logger.info(intents)
+        intents_list = ast.literal_eval(intents)
 
-        for intent in [text_message]:
+        for intent in intents_list:
             try:
                 task_name, fields = intent_recognizer.process(
                     form_data=form_data,

@@ -17,7 +17,7 @@ class DataMapper:
                         ]
                         form_representation_data[task_name][id]["page"] = data["page"]
 
-        for id, examples in form_trainings_data.items():
+        for id, examples in form_trainings_data["individual_fields"].items():
             for task_name, fields in form_representation_data.items():
                 for field_id in fields:
                     if field_id == id:
