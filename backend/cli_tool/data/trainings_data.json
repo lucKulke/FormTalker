@@ -1,4 +1,16 @@
 {
+  "multi_intent_splitting":{
+   "1" :{
+    "user_message": "Die Batterie ist in Ordnung und das Motoröl auch",
+    "system_response": "['Batterie prüfen (Ladezustand, Kontrollzelle) in ordnung']"
+    },
+    "2":{
+      "user_message": "Das Licht funktioniert und die Reifen sind in gutem Zustand",
+    "system_response": "['Frontbeleuchtung - alle Funktionen prüfen. Standlicht, Abblendlicht, Fernlicht, Nebelscheinwerfer, Blinkanlage, Warnblinkanlage in ordnung', 'Heckbeleuchtung - alle Funktionen prüfen. 3. Bremslicht, Bremslichter, Rücklichter, Nebelschlussleuchte, Kennzeichenbeleuchtung in ordnung']"
+    }
+
+  },
+  "indevidual_fields" :{
   "36": {
     "1": {
       "user_message": "Die Reifengröße ist 205/55 R16",
@@ -83,4 +95,5 @@
       "system_response": "26"
     }
   }
+}
 }
