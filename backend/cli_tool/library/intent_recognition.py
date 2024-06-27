@@ -317,8 +317,6 @@ class IntentRecognition:
             return None
 
     def get_llm_response(self, messages: list):
-
-        # self.logger.info(f"LLM request: {messages}")
         return (
             self.llm.selected_model.chat_completation(messages=messages)
             .choices[0]

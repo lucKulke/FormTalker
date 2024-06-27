@@ -140,8 +140,6 @@ def main():
     logger = setup_logging()
     logger.info("Programm Started")
 
-    # form_representation_data, form_trainings_data, llm_prompt_config = {}
-
     try:
         with open(args.form_representation_data, "r", encoding="utf-8") as file:
             form_representation_data = json.load(file)
@@ -157,10 +155,13 @@ def main():
 
     except FileNotFoundError as e:
         logger.error(f"File not found: {e.filename}")
+        return 1
     except json.JSONDecodeError as e:
         logger.error(f"Error decoding JSON from file: {e.msg}")
+        return 1
     except Exception as e:
         logger.exception("An unexpected error occurred")
+        return 1
 
     try:
         chatgpt = LLM(logger=logger, llm_type="chatgpt", model="gpt-4", api_key=API_KEY)
@@ -197,7 +198,6 @@ def main():
     while True:
 
         text_message = input(">> Enter Text: ")
-
         intents = intent_recognizer.split(
             user_text_message=text_message,
             trainings_data=form_trainings_data["multi_intent_splitting"],
@@ -217,7 +217,7 @@ def main():
 
         print_filled_sections(form_data=form_data)
 
-        text_message = input("save to pdf and exit? (y/enter to continue):")
+        text_message = input("save to pdf and exit? (y/enter to continue): ")
         if text_message == "y":
             pdf_writer.write_to_pdf(form_data=form_data)
             logger.info("Programm ended")
