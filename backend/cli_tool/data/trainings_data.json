@@ -117,6 +117,62 @@
         "user_message": "Profieltiefe von Reifen hinten rechts gleich 26",
         "system_response": "26"
       }
+    },
+    "108": {
+      "1": {
+        "user_message": "Der Motor braucht 11 Liter Öl",
+        "system_response": "11"
+      },
+      "2": {
+        "user_message": "Die Motorölmenge beträgt 5 Liter",
+        "system_response": "5"
+      },
+      "3": {
+        "user_message": "7 Liter ist die Öl Menge für den Motor",
+        "system_response": "7"
+      }
+    },
+    "109": {
+      "1": {
+        "user_message": "Die Motoröl Spezifikation ist 5W30",
+        "system_response": "5W30"
+      },
+      "2": {
+        "user_message": "Die Spezifikation des Motoröls ist 10 W40",
+        "system_response": "10W40"
+      },
+      "3": {
+        "user_message": "5W40 ist die Spezifikation des Motoröls",
+        "system_response": "5W40"
+      }
+    },
+    "119": {
+      "1": {
+        "user_message": "Der Frostschutz des Kühlmittels ist bei -40 Grad Celsius",
+        "system_response": "-40"
+      },
+      "2": {
+        "user_message": "Die Kühlflüssigkeit hat einen Frostschutz von -30 C",
+        "system_response": "-30"
+      },
+      "3": {
+        "user_message": "Der Istwert des Frostschutzes des Kühlmittels ist bei minus 45 Grad",
+        "system_response": "-45"
+      }
+    },
+    "135": {
+      "1": {
+        "user_message": "Der Verbandskasten läuft am 12.05.2024 ab",
+        "system_response": "12.05.2024"
+      },
+      "2": {
+        "user_message": "Ablaufdatum des Verbandkastens ist der 30.02.2023",
+        "system_response": "30.02.2023"
+      },
+      "3": {
+        "user_message": "Der Verbandskasten ist nur noch bis zum 21.07.25 haltbar",
+        "system_response": "21.07.25"
+      }
     }
   }
 }

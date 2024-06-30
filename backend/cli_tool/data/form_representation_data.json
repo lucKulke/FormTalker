@@ -122,5 +122,112 @@
     "75": { "option_name": "in ordnung", "form_input": "X" },
     "76": { "option_name": "nicht in ordnung", "form_input": "X" },
     "77": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Motor und Bauteile im Motorraum (unten) Sichtprüfung auf Undichtigkeiten und Beschädigungen durchführen": {
+    "78": { "option_name": "in ordnung", "form_input": "X" },
+    "79": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "80": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Keilrippenriemen: Prüfung des Zustands": {
+    "81": { "option_name": "in ordnung", "form_input": "X" },
+    "82": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "83": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Getriebe, Achsantrieb und Gelenkschutzhüllen: Prüfen auf Beschädigung und Undichtigkeiten": {
+    "84": { "option_name": "in ordnung", "form_input": "X" },
+    "85": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "86": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Achsgelenke, Achslager, Koppelstangenlager und Stabilisatorgummiaufhängungen auf Beschädigungen prüfen": {
+    "87": { "option_name": "in ordnung", "form_input": "X" },
+    "88": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "89": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Spurstangenköpfe auf Spiel und korrekte Befestigung und Beschädigung prüfen": {
+    "90": { "option_name": "in ordnung", "form_input": "X" },
+    "91": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "92": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Abgasanlage: Sichtprüfung auf Beschädigung und Undichtihkeiten. Befestigungen prüfen": {
+    "93": { "option_name": "in ordnung", "form_input": "X" },
+    "94": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "95": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Bremsanlage und Stoßdämpfer / Fahrwerk: Sichtprüfung auf Undichtkeit und Beschädigungen": {
+    "96": { "option_name": "in ordnung", "form_input": "X" },
+    "97": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "98": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Unterboden: Sichtprüfung auf Beschädigungen des Korrosionsschutzes und Unterbodenverkleidung": {
+    "99": { "option_name": "in ordnung", "form_input": "X" },
+    "100": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "101": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Dicke der Bremsbeläge / Bremsscheiben prüfen - Zustand bewerten (vorne und hinten)": {
+    "102": { "option_name": "in ordnung", "form_input": "X" },
+    "103": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "104": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Schraubenfedern und Anschlagpuffer vorn und hinten: Prüfen auf Beschädigung": {
+    "105": { "option_name": "in ordnung", "form_input": "X" },
+    "106": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "107": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Motoröl: Auffüllen bei Ölwechsel - bei Prüfung nur korrigieren. Füllmenge und Spezifikation beachten": {
+    "110": { "option_name": "in ordnung", "form_input": "X" },
+    "111": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "112": { "option_name": "behoben", "form_input": "X" },
+    "108": { "option_name": "Füllmenge", "form_input": "number" },
+    "109": { "option_name": "Spezifikation", "form_input": "Oil specification" }
+  },
+  "Motor und Bauteile im Motorraum (obere Ansicht): Sichtprüfung auf Undichtigkeiten und Beschädigungen": {
+    "113": { "option_name": "in ordnung", "form_input": "X" },
+    "114": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "115": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Scheibenwisch-/waschanlage: Prüfen Frostschutgehalt und Füllmenge (Kundenwunsch)": {
+    "116": { "option_name": "in ordnung", "form_input": "X" },
+    "117": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "118": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Kühlsystem Motor: Füllstand und Frostschutz prüfen. Mindestens bis -25°": {
+    "120": { "option_name": "in ordnung", "form_input": "X" },
+    "121": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "122": { "option_name": "behoben", "form_input": "X" },
+    "119": {
+      "option_name": "Istwert in Grad Celsius",
+      "form_input": "number"
+    }
+  },
+  "Kraftstofffilter je nach Wechselintervall ersetzen": {
+    "123": { "option_name": "in ordnung", "form_input": "X" },
+    "124": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "125": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Staub und Pollenfilter / Innenraumfilter ersetzen (12-24 Monate)": {
+    "126": { "option_name": "in ordnung", "form_input": "X" },
+    "127": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "128": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Bremsflüssigkeitsstand prüfen - Wechselintervall alle 24 Monate": {
+    "129": { "option_name": "in ordnung", "form_input": "X" },
+    "130": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "131": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Zahnriemen: Zustand bewerten: Wechselintervall beachten": {
+    "132": { "option_name": "in ordnung", "form_input": "X" },
+    "133": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "134": { "option_name": "behoben", "form_input": "X" }
+  },
+  "Verbandkasten (Ablaufdatum)": {
+    "136": { "option_name": "in ordnung", "form_input": "X" },
+    "137": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "138": { "option_name": "behoben", "form_input": "X" },
+    "135": { "option_name": "Ablaufdatum", "form_input": "date" }
+  },
+  "Fussräume reinigen": {
+    "136": { "option_name": "in ordnung", "form_input": "X" },
+    "137": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "138": { "option_name": "behoben", "form_input": "X" }
   }
 }
