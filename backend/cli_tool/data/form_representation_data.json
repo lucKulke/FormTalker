@@ -1,126 +1,126 @@
 {
   "Batterie prüfen (Ladezustand, Kontrollzelle)": {
-    "0": { "option_name": "in ordnung", "form_input": "x" },
-    "1": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "2": { "option_name": "behoben", "form_input": "x" }
+    "0": { "option_name": "in ordnung", "form_input": "X" },
+    "1": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "2": { "option_name": "behoben", "form_input": "X" }
   },
   "Frontbeleuchtung - alle Funktionen prüfen. Standlicht, Abblendlicht, Fernlicht, Nebelscheinwerfer, Blinkanlage, Warnblinkanlage": {
-    "3": { "option_name": "in ordnung", "form_input": "x" },
-    "4": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "5": { "option_name": "behoben", "form_input": "x" }
+    "3": { "option_name": "in ordnung", "form_input": "X" },
+    "4": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "5": { "option_name": "behoben", "form_input": "X" }
   },
   "Heckbeleuchtung - alle Funktinen prüfen. 3. Bremslicht, Bremslichter, Rücklichter, Nebelschlussleuchte, Kennzeichenbeleuchtung": {
-    "6": { "option_name": "in ordnung", "form_input": "x" },
-    "7": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "8": { "option_name": "behoben", "form_input": "x" }
+    "6": { "option_name": "in ordnung", "form_input": "X" },
+    "7": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "8": { "option_name": "behoben", "form_input": "X" }
   },
   "Innenraumleuchten, Leseleuchten, Make-Up-Leuchten, Einstiegsleuchten, Handschuhkastenbeleuchtung, Zigarettenanzünder, Steckdosen, Signalhorn und alle Kontrolllampen prüfen": {
-    "9": { "option_name": "in ordnung", "form_input": "x" },
-    "10": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "11": { "option_name": "behoben", "form_input": "x" }
+    "9": { "option_name": "in ordnung", "form_input": "X" },
+    "10": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "11": { "option_name": "behoben", "form_input": "X" }
   },
   "Scheibenwisch-/Waschanlage, Funktion, Spritz- und Waschdüseneinstellung": {
-    "12": { "option_name": "in ordnung", "form_input": "x" },
-    "13": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "14": { "option_name": "behoben", "form_input": "x" }
+    "12": { "option_name": "in ordnung", "form_input": "X" },
+    "13": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "14": { "option_name": "behoben", "form_input": "X" }
   },
   "Scheinwerferreinigungsanlage Einstellung und Funktion prüfen": {
-    "15": { "option_name": "in ordnung", "form_input": "x" },
-    "16": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "17": { "option_name": "behoben", "form_input": "x" }
+    "15": { "option_name": "in ordnung", "form_input": "X" },
+    "16": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "17": { "option_name": "behoben", "form_input": "X" }
   },
   "Scheibwischerblätter auf Beschädigung und Endablage prüfen": {
-    "18": { "option_name": "in ordnung", "form_input": "x" },
-    "19": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "20": { "option_name": "behoben", "form_input": "x" }
+    "18": { "option_name": "in ordnung", "form_input": "X" },
+    "19": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "20": { "option_name": "behoben", "form_input": "X" }
   },
   "Türfeststeller und Scharniere: fetten": {
-    "21": { "option_name": "in ordnung", "form_input": "x" },
-    "22": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "23": { "option_name": "behoben", "form_input": "x" }
+    "21": { "option_name": "in ordnung", "form_input": "X" },
+    "22": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "23": { "option_name": "behoben", "form_input": "X" }
   },
   "Frontklappe: Fanghaken: fetten": {
-    "24": { "option_name": "in ordnung", "form_input": "x" },
-    "25": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "26": { "option_name": "behoben", "form_input": "x" }
+    "24": { "option_name": "in ordnung", "form_input": "X" },
+    "25": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "26": { "option_name": "behoben", "form_input": "X" }
   },
   "Schiebedach/Panoramadach/Verdeck Funktion prüfen und Gelenke nach Wartungsanleitung schmieren": {
-    "27": { "option_name": "in ordnung", "form_input": "x" },
-    "28": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "29": { "option_name": "behoben", "form_input": "x" }
+    "27": { "option_name": "in ordnung", "form_input": "X" },
+    "28": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "29": { "option_name": "behoben", "form_input": "X" }
   },
   "Karosserie innen und außen: Sichtprüfung auf Korrosion bei geöffneten Türen und Klappen durchführen": {
-    "30": { "option_name": "in ordnung", "form_input": "x" },
-    "31": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "32": { "option_name": "behoben", "form_input": "x" }
+    "30": { "option_name": "in ordnung", "form_input": "X" },
+    "31": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "32": { "option_name": "behoben", "form_input": "X" }
   },
   "Frontscheibe auf Verschleiß und Beschädigung prüfen": {
-    "33": { "option_name": "in ordnung", "form_input": "x" },
-    "34": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "35": { "option_name": "behoben", "form_input": "x" }
+    "33": { "option_name": "in ordnung", "form_input": "X" },
+    "34": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "35": { "option_name": "behoben", "form_input": "X" }
   },
   "Reifenart eintragen": {
-    "37": { "option_name": "in ordnung", "form_input": "x" },
-    "38": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "39": { "option_name": "behoben", "form_input": "x" },
-    "69": { "option_name": "Ganzjahresreifen", "form_input": "x" },
-    "70": { "option_name": "Winterreifen", "form_input": "x" },
-    "71": { "option_name": "Sommerreifen", "form_input": "x" },
+    "37": { "option_name": "in ordnung", "form_input": "X" },
+    "38": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "39": { "option_name": "behoben", "form_input": "X" },
+    "69": { "option_name": "Ganzjahresreifen", "form_input": "X" },
+    "70": { "option_name": "Winterreifen", "form_input": "X" },
+    "71": { "option_name": "Sommerreifen", "form_input": "X" },
     "36": { "option_name": "größe der Reifen", "form_input": "reifen größe" }
   },
   "Reifendruck aller 4 Räder prüfen und bei Bedarf korrigieren": {
-    "40": { "option_name": "in ordnung", "form_input": "x" },
-    "41": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "42": { "option_name": "behoben", "form_input": "x" }
+    "40": { "option_name": "in ordnung", "form_input": "X" },
+    "41": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "42": { "option_name": "behoben", "form_input": "X" }
   },
   "Luftdruck Reserverad prüfen, wenn vorhanden": {
-    "43": { "option_name": "in ordnung", "form_input": "x" },
-    "44": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "45": { "option_name": "behoben", "form_input": "x" }
+    "43": { "option_name": "in ordnung", "form_input": "X" },
+    "44": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "45": { "option_name": "behoben", "form_input": "X" }
   },
   "Pannenset": {
-    "47": { "option_name": "in ordnung", "form_input": "x" },
-    "48": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "49": { "option_name": "behoben", "form_input": "x" },
+    "47": { "option_name": "in ordnung", "form_input": "X" },
+    "48": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "49": { "option_name": "behoben", "form_input": "X" },
     "46": { "option_name": "Mindesthaltbarkeitsdatum", "form_input": "date" }
   },
   "Reifendruck sensoren neu anlernen wenn fehlermeldung": {
-    "50": { "option_name": "in ordnung", "form_input": "x" },
-    "51": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "52": { "option_name": "behoben", "form_input": "x" }
+    "50": { "option_name": "in ordnung", "form_input": "X" },
+    "51": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "52": { "option_name": "behoben", "form_input": "X" }
   },
   "Bereifung vorne links Zustand und Laufbild, Profiltiefe": {
-    "54": { "option_name": "in ordnung", "form_input": "x" },
-    "55": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "56": { "option_name": "behoben", "form_input": "x" },
+    "54": { "option_name": "in ordnung", "form_input": "X" },
+    "55": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "56": { "option_name": "behoben", "form_input": "X" },
     "53": { "option_name": "Profiltiefe in mm", "form_input": "number" }
   },
   "Bereifung vorne rechts Zustand und Laufbild, Profiltiefe": {
-    "58": { "option_name": "in ordnung", "form_input": "x" },
-    "59": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "60": { "option_name": "behoben", "form_input": "x" },
+    "58": { "option_name": "in ordnung", "form_input": "X" },
+    "59": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "60": { "option_name": "behoben", "form_input": "X" },
     "57": { "option_name": "Profiltiefe in mm", "form_input": "number" }
   },
   "Bereifung hinten links Zustand und Laufbild, Profiltiefe": {
-    "62": { "option_name": "in ordnung", "form_input": "x" },
-    "63": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "64": { "option_name": "behoben", "form_input": "x" },
+    "62": { "option_name": "in ordnung", "form_input": "X" },
+    "63": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "64": { "option_name": "behoben", "form_input": "X" },
     "61": { "option_name": "Profiltiefe in mm", "form_input": "number" }
   },
   "Bereifung hinten rechts Zustand und Laufbild, Profiltiefe": {
-    "66": { "option_name": "in ordnung", "form_input": "x" },
-    "67": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "68": { "option_name": "behoben", "form_input": "x" },
+    "66": { "option_name": "in ordnung", "form_input": "X" },
+    "67": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "68": { "option_name": "behoben", "form_input": "X" },
     "65": { "option_name": "Profiltiefe in mm", "form_input": "number" }
   },
   "Motoröl: Ablassen oder absaugen je nach Intervall 15.000 oder 30.000 KM, Ölfilter ersetzen": {
-    "72": { "option_name": "in ordnung", "form_input": "x" },
-    "73": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "74": { "option_name": "behoben", "form_input": "x" }
+    "72": { "option_name": "in ordnung", "form_input": "X" },
+    "73": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "74": { "option_name": "behoben", "form_input": "X" }
   },
   "Getriebeöl, Ölstand prüfen - Wechselintervall beachten": {
-    "75": { "option_name": "in ordnung", "form_input": "x" },
-    "76": { "option_name": "nicht in ordnung", "form_input": "x" },
-    "77": { "option_name": "behoben", "form_input": "x" }
+    "75": { "option_name": "in ordnung", "form_input": "X" },
+    "76": { "option_name": "nicht in ordnung", "form_input": "X" },
+    "77": { "option_name": "behoben", "form_input": "X" }
   }
 }

@@ -124,7 +124,7 @@ class IntentRecognition:
             f"intendet field: {form_data[task_name][response_id].description}"
         )
 
-        if not form_data[task_name][response_id].form_input_type == "x":
+        if not form_data[task_name][response_id].form_input_type == "X":
             relevant_information = self.find_relevant_information(
                 field=form_data[task_name][response_id], text=user_text_message
             )
@@ -157,7 +157,7 @@ class IntentRecognition:
         )
 
         fields = form_data[task_name].get_minimal_fields_information()
-        fields[response_id] = {form_data[task_name][response_id].description: "x"}
+        fields[response_id] = {form_data[task_name][response_id].description: "X"}
 
         return task_name, fields
 
@@ -193,7 +193,7 @@ class IntentRecognition:
         current_fields = form_data[task_name].get_minimal_fields_information()
 
         messages = []
-        example = "Form fields: {'1': {'in ordnung': 'x'} '2': {'nicht in ordnung': 'None'} '3': {'behoben': 'None'}}\nUser Text: Die Reifenart ist doch nicht in ordnung\nSystem response: {'1': {'in ordnung': 'None'} '2': {'nicht in ordnung': 'x'} '3': {'behoben': 'None'}}"
+        example = "Form fields: {'1': {'in ordnung': 'X'} '2': {'nicht in ordnung': 'None'} '3': {'behoben': 'None'}}\nUser Text: Die Reifenart ist doch nicht in ordnung\nSystem response: {'1': {'in ordnung': 'None'} '2': {'nicht in ordnung': 'X'} '3': {'behoben': 'None'}}"
         additional_system_prompt_message = f"\nForm decription: {task_name}\n Form fields: {current_fields}\n\nYour response should be a JSON object\nExamples:\n{example}"
         system_prompt = {
             "role": "system",
