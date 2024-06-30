@@ -1,13 +1,23 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import { Button } from "@/components/ui/button";
+import FormTalkerIcon from "@/assets/formtalker.png";
+import { NavigationBar } from "@/components/share/navbar";
+import { Hero } from "@/components/home/hero.tsx";
 
 function App() {
   return (
-    <div>
-      <Button>test me</Button>
+    <div className="container">
+      <div className="mt-10">
+        <ul className="flex space-x-12">
+          <li>
+            <img src={FormTalkerIcon} alt="icon" className="h-16 w-16"></img>
+          </li>
+          <li className="mt-3">
+            <NavigationBar></NavigationBar>
+          </li>
+          <li></li>
+        </ul>
+        <Hero></Hero>
+      </div>
     </div>
   );
 }
