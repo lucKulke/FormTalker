@@ -89,25 +89,25 @@
     "51": { "option_name": "nicht in ordnung", "form_input": "X" },
     "52": { "option_name": "behoben", "form_input": "X" }
   },
-  "Bereifung vorne links Zustand und Laufbild, Profiltiefe": {
+  "Bereifung VL/vorne links Zustand und Laufbild, Profiltiefe": {
     "54": { "option_name": "in ordnung", "form_input": "X" },
     "55": { "option_name": "nicht in ordnung", "form_input": "X" },
     "56": { "option_name": "behoben", "form_input": "X" },
     "53": { "option_name": "Profiltiefe in mm", "form_input": "number" }
   },
-  "Bereifung vorne rechts Zustand und Laufbild, Profiltiefe": {
+  "Bereifung VR/vorne rechts Zustand und Laufbild, Profiltiefe": {
     "58": { "option_name": "in ordnung", "form_input": "X" },
     "59": { "option_name": "nicht in ordnung", "form_input": "X" },
     "60": { "option_name": "behoben", "form_input": "X" },
     "57": { "option_name": "Profiltiefe in mm", "form_input": "number" }
   },
-  "Bereifung hinten links Zustand und Laufbild, Profiltiefe": {
+  "Bereifung HL/hinten links Zustand und Laufbild, Profiltiefe": {
     "62": { "option_name": "in ordnung", "form_input": "X" },
     "63": { "option_name": "nicht in ordnung", "form_input": "X" },
     "64": { "option_name": "behoben", "form_input": "X" },
     "61": { "option_name": "Profiltiefe in mm", "form_input": "number" }
   },
-  "Bereifung hinten rechts Zustand und Laufbild, Profiltiefe": {
+  "Bereifung HR/hinten rechts Zustand und Laufbild, Profiltiefe": {
     "66": { "option_name": "in ordnung", "form_input": "X" },
     "67": { "option_name": "nicht in ordnung", "form_input": "X" },
     "68": { "option_name": "behoben", "form_input": "X" },
