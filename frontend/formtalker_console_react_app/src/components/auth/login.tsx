@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { Link, Navigate } from "react-router-dom";
-import { getCurrentUser, signIn } from "@/services/supabase";
+import { getCurrentUser, signIn } from "@/services/supabase/auth";
 import AlertBox from "@/components/share/alert";
-
+import { pageLinks } from "@/utils/pageLinks";
 interface LoginProps {
   loggedIn: boolean;
   setUser: React.Dispatch<React.SetStateAction<any>>;
@@ -32,7 +32,7 @@ export function Login({ loggedIn, setUser }: LoginProps) {
   return (
     <>
       {error && <AlertBox title="SignIn error!" description={error} />}
-      {loggedIn && <Navigate to="/"></Navigate>}
+      {loggedIn && <Navigate to={pageLinks.home}></Navigate>}
       <div className="flex h-screen">
         <div className="m-auto">
           <ul className=" space-y-5">
@@ -61,7 +61,7 @@ export function Login({ loggedIn, setUser }: LoginProps) {
                   <Button onClick={handleSignIn}>login</Button>
                 </li>
                 <li className="flex justify-center">
-                  <Link to="/signup" className="font-mono text-sm">
+                  <Link to={pageLinks.signUp} className="font-mono text-sm">
                     SignUp
                   </Link>
                 </li>

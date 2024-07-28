@@ -16,7 +16,7 @@ export function Filter() {
   const carNames = ["RS7", "Swith", "X5"];
   const [carBrand, setCarBrand] = useState<string>("");
   const [carName, setCarName] = useState<string>("");
-  console.log(carBrand);
+
   return (
     <ul className="flex space-x-5">
       <li>
@@ -31,8 +31,10 @@ export function Filter() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {carBrands.map((brand) => (
-                <SelectItem value={brand}>{brand}</SelectItem>
+              {carBrands.map((brand, index) => (
+                <SelectItem key={index} value={brand}>
+                  {brand}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>

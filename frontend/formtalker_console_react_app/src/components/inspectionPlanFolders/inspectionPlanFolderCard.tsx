@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,19 +21,23 @@ import {
 
 interface inspectionPlanFolderCardProps {
   carName: string;
-  id: string;
-  carBrand: string;
+  id: number;
+  brand: string;
   manufacturerCode: string;
   typeCode: string;
 }
 
-export function InspectionPlanFolderCard({
-  carName,
-  id,
-  carBrand,
-  manufacturerCode,
-  typeCode,
-}: inspectionPlanFolderCardProps) {
+export function InspectionPlanFolderCard(
+  params: inspectionPlanFolderCardProps
+) {
+  const [cardId, setCardId] = useState<number>(params.id);
+  const [carName, setCarName] = useState<string>(params.carName);
+  const [brand, setCarBrand] = useState<string>(params.brand);
+  const [manufacturerCode, setManufacturerCode] = useState<string>(
+    params.manufacturerCode
+  );
+  const [typeCode, setTypeCode] = useState<string>(params.typeCode);
+
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -44,7 +48,7 @@ export function InspectionPlanFolderCard({
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Brand</Label>
-              <p className="text-sm">{carBrand}</p>
+              <p className="text-sm">{brand}</p>
             </div>
             <div className="">
               <Label htmlFor="vehicleTypes">Vehicle Type Codes</Label>

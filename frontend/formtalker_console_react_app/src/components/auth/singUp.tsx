@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
-import { signUp } from "@/services/supabase";
+import { signUp } from "@/services/supabase/auth";
 import AlertBox from "@/components/share/alert";
 
 export function SingUp() {
