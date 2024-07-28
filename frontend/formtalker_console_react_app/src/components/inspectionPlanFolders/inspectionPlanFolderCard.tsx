@@ -12,15 +12,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import { MoreHorizontal } from "lucide-react";
+import { deleteInspectionPlanFolder } from "@/services/supabase/inspectionPlanFolders";
+import { useNavigate } from "react-router-dom";
+import { pageLinks } from "@/utils/pageLinks";
 
 interface inspectionPlanFolderCardProps {
-  carName: string;
+  model: string;
   id: number;
   brand: string;
   manufacturerCode: string;
@@ -30,18 +36,56 @@ interface inspectionPlanFolderCardProps {
 export function InspectionPlanFolderCard(
   params: inspectionPlanFolderCardProps
 ) {
-  const [cardId, setCardId] = useState<number>(params.id);
-  const [carName, setCarName] = useState<string>(params.carName);
+  const navigate = useNavigate();
+  const [model, setCarName] = useState<string>(params.model);
   const [brand, setCarBrand] = useState<string>(params.brand);
   const [manufacturerCode, setManufacturerCode] = useState<string>(
     params.manufacturerCode
   );
   const [typeCode, setTypeCode] = useState<string>(params.typeCode);
 
+  const handleDelete = () => {
+    console.log(`delete ${params.id}`);
+    const deleteFolder = async () => {
+      const fetchedFolders = await deleteInspectionPlanFolder(params.id);
+      if (fetchedFolders) {
+      } else {
+        console.log("error");
+      }
+    };
+
+    deleteFolder();
+  };
+  const handleEdit = () => {
+    console.log("edit");
+  };
+
+  const handleNavigateToFolder = () => {
+    navigate(pageLinks.inspectionPlanFolder + `${params.id}`);
+  };
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[300px]">
       <CardHeader>
-        <CardTitle>{carName}</CardTitle>
+        <ul className="flex justify-between">
+          <li>
+            <CardTitle>{model}</CardTitle>
+          </li>
+          <li>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <MoreHorizontal />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Options</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleDelete}>
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </li>
+        </ul>
       </CardHeader>
       <CardContent>
         <form>
@@ -60,8 +104,8 @@ export function InspectionPlanFolderCard(
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline">Cancel</Button>
-        <Button>Inspection Plans</Button>
+        <div></div>
+        <Button onClick={handleNavigateToFolder}>Inspection Plans</Button>
       </CardFooter>
     </Card>
   );

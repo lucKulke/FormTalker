@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { pageLinks } from "@/utils/pageLinks";
 
 interface NewInspectionPlanFolderCardProps {
-  carName: string;
+  model: string;
   brand: string;
   hsn: string;
   tsn: string;
@@ -37,18 +37,18 @@ export function NewInspectionPlanFolderCard(
         <CardHeader>
           <CardTitle>New Folder</CardTitle>
           <CardDescription>
-            Create a new Car Folder that holds inspectionplans.
+            Create a new folder for a specific car model.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Name of car</Label>
+                <Label htmlFor="model">Car model</Label>
                 <Input
-                  id="name"
-                  placeholder="car name"
-                  value={params.carName}
+                  id="model"
+                  placeholder="e.g. x5"
+                  value={params.model}
                   onChange={(e) => params.setCarName(e.target.value)}
                 />
               </div>
@@ -56,7 +56,7 @@ export function NewInspectionPlanFolderCard(
                 <Label htmlFor="brand">Brand</Label>
                 <Input
                   id="brand"
-                  placeholder="car brand"
+                  placeholder="e.g. BMW"
                   value={params.brand}
                   onChange={(e) => params.setBrand(e.target.value)}
                 />

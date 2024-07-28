@@ -25,7 +25,7 @@ import { useNavigate } from "react-router-dom";
 export function CreateInspectionPlanFolder() {
   const navigate = useNavigate();
   const [canceld, setCanceld] = useState<boolean>(false);
-  const [carName, setCarName] = useState<string>("");
+  const [model, setCarName] = useState<string>("");
   const [brand, setBrand] = useState<string>("");
   const [hsn, setHsn] = useState<string>("");
   const [tsn, setTsn] = useState<string>("");
@@ -36,7 +36,7 @@ export function CreateInspectionPlanFolder() {
 
   const handleCreate = async () => {
     const newFolderData: AddInspectionPlanFolder = {
-      car_name: carName,
+      model: model,
       brand: brand,
       manufacturer_code: hsn,
       type_code: tsn,
@@ -57,7 +57,7 @@ export function CreateInspectionPlanFolder() {
           {alert && (
             <AlertBox
               title="New Folder"
-              description={`New Folder with car name ${carName} was created succesfully!`}
+              description={`New Folder with car name ${model} was created succesfully!`}
             />
           )}
           <Dialog
@@ -69,6 +69,7 @@ export function CreateInspectionPlanFolder() {
                 <DialogTitle>
                   Do you want to add your first Inspection Plan?
                 </DialogTitle>
+                <DialogDescription></DialogDescription>
               </DialogHeader>
               <ul className="flex justify-evenly mt-5">
                 <li>
@@ -99,7 +100,7 @@ export function CreateInspectionPlanFolder() {
       )}
 
       <NewInspectionPlanFolderCard
-        carName={carName}
+        model={model}
         setCarName={setCarName}
         brand={brand}
         setBrand={setBrand}

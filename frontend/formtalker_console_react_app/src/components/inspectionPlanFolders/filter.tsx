@@ -13,9 +13,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 export function Filter() {
   const carBrands = ["Merceds", "Audi", "BMW"];
-  const carNames = ["RS7", "Swith", "X5"];
   const [carBrand, setCarBrand] = useState<string>("");
-  const [carName, setCarName] = useState<string>("");
+  const [model, setModel] = useState<string>("");
 
   return (
     <ul className="flex space-x-5">
@@ -41,7 +40,7 @@ export function Filter() {
         </Select>
       </li>
       <li>
-        <Input type="carName" placeholder="Car Name" />
+        <Input type="model" placeholder="Car model" />
       </li>
       <li>
         <Button>Filter</Button>

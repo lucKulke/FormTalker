@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Navigate } from "react-router-dom";
 import { pageLinks } from "@/utils/pageLinks";
+import { supabase } from "@/utils/supabaseCleint";
+import { IoMdAdd } from "react-icons/io";
 
 export function InspectionPlanFolders() {
   const [folders, setFolders] = useState<InspectionPlanFolder[] | null>(null);
@@ -23,30 +25,47 @@ export function InspectionPlanFolders() {
     setStartCreatingNewFolder(true);
   };
 
-  useEffect(() => {
-    const loadFolders = async () => {
-      try {
-        const fetchedFolders = await fetchInspectionPlanFolders();
-        setProgress(90);
-        if (fetchedFolders) {
-          setFolders(fetchedFolders);
+  const loadFolders = async () => {
+    try {
+      const fetchedFolders = await fetchInspectionPlanFolders();
+      setProgress(90);
+      if (fetchedFolders) {
+        setFolders(fetchedFolders);
 
-          setLoading(false);
-        } else {
-          console.log("error");
-          setError("No folders found");
-        }
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
+        setLoading(false);
+      } else {
+        console.log("error");
+        setError("No folders found");
       }
-    };
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "An unknown error occurred"
+      );
+    }
+  };
+  useEffect(() => {
+    const subscription = supabase
+      .channel("custom-all-channel")
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "folders" },
+        (payload) => {
+          console.log("Change received!", payload);
+
+          loadFolders();
+        }
+      )
+      .subscribe();
+
     setLoading(true);
     setProgress(30);
     loadFolders();
 
     setStartCreatingNewFolder(false);
+    return () => {
+      // Cleanup subscription on component unmount
+      supabase.removeChannel(subscription);
+    };
   }, []);
 
   return (
@@ -54,39 +73,47 @@ export function InspectionPlanFolders() {
       {startCreatingNewFolder && (
         <Navigate to={pageLinks.inspectionPlanFolderCreate} />
       )}
-      <div className="mt-7">
-        <ul className="space-y-6">
-          <li>
-            <div className="flex justify-center">
-              <Button onClick={addButton}>Add</Button>
+      <div className="mt-14">
+        <ul className="space-y-8">
+          <li className="felx justify-center">
+            <div className="w-full">
+              <ul className="flex justify-evenly">
+                <div></div>
+                <li>
+                  <Filter></Filter>
+                </li>
+                <li>
+                  <Button className="rounded-full" onClick={addButton}>
+                    <IoMdAdd className="w-7 h-7" />
+                  </Button>
+                </li>
+              </ul>
             </div>
           </li>
           <li>
             <div className="flex justify-center">
-              <Filter></Filter>
-            </div>
-          </li>
-          <li>
-            <div className="flex justify-center">
-              {loading && (
+              {loading ? (
                 <Progress value={progress} className="mt-[150px] w-[40%]" />
+              ) : (
+                <>
+                  {folders && folders.length > 0 ? (
+                    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                      {folders.map((folder) => (
+                        <InspectionPlanFolderCard
+                          key={folder.id}
+                          model={folder.model}
+                          brand={folder.brand}
+                          id={folder.id}
+                          manufacturerCode={folder.manufacturer_code}
+                          typeCode={folder.type_code}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div>No folders</div>
+                  )}
+                </>
               )}
-              <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-                {folders && folders.length > 0 ? (
-                  folders.map((folder, index) => (
-                    <InspectionPlanFolderCard
-                      key={index}
-                      carName={folder.car_name}
-                      brand={folder.brand}
-                      id={folder.id}
-                      manufacturerCode={folder.manufacturer_code}
-                      typeCode={folder.type_code}
-                    />
-                  ))
-                ) : (
-                  <div>No folders</div>
-                )}
-              </div>
             </div>
           </li>
         </ul>
