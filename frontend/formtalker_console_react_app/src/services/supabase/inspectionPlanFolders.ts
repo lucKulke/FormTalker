@@ -1,6 +1,7 @@
 import { supabase } from "@/utils/supabaseCleint";
 
-const inspection_plan_folders_name = "folders";
+const inspection_plan_folders_table_name = "folders";
+const inspection_plan_heads_table_name = "inspection_plan_heads";
 
 export interface AddInspectionPlanFolder {
   model: string;
@@ -10,7 +11,7 @@ export interface AddInspectionPlanFolder {
 }
 
 export interface InspectionPlanFolder {
-  id: number; // Assuming there's an 'id' field for the folder
+  id: string; // Assuming there's an 'id' field for the folder
   model: string;
   brand: string;
   manufacturer_code: string;
@@ -18,19 +19,30 @@ export interface InspectionPlanFolder {
   // Add any other fields that might be returned by the Supabase query
 }
 
+export interface InspectionPlanFolderItems {
+  id: string; // Assuming there's an 'id' field for the folder
+  created_at: string;
+  milage: string;
+  inspection_type: string;
+  created_from: string;
+  folder_id: string;
+  status: string;
+  // Add any other fields that might be returned by the Supabase query
+}
+
 export async function fetchInspectionPlanFolders(): Promise<
   InspectionPlanFolder[] | null
 > {
   try {
-    let { data: inspection_plans, error } = await supabase
-      .from(inspection_plan_folders_name)
+    let { data: inspection_plan_folders, error } = await supabase
+      .from(inspection_plan_folders_table_name)
       .select("*");
 
     if (error) {
       console.error(error);
       throw new Error(error.message);
     }
-    return inspection_plans;
+    return inspection_plan_folders;
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error fetching inspection plan folders: " + error.message);
@@ -46,7 +58,7 @@ export async function addInspectionPlanFolder(
 ): Promise<InspectionPlanFolder[]> {
   try {
     const { data, error } = await supabase
-      .from(inspection_plan_folders_name)
+      .from(inspection_plan_folders_table_name)
       .insert([
         {
           model: params.model,
@@ -68,10 +80,12 @@ export async function addInspectionPlanFolder(
   }
 }
 
-export async function deleteInspectionPlanFolder(id: number): Promise<boolean> {
+export async function deleteInspectionPlanFolder(id: string): Promise<boolean> {
   try {
+    await deleteAllInspectionPlan(id);
+    console.log("deleted all inspection plans");
     const { error } = await supabase
-      .from(inspection_plan_folders_name)
+      .from(inspection_plan_folders_table_name)
       .delete()
       .eq("id", id);
 
@@ -87,5 +101,74 @@ export async function deleteInspectionPlanFolder(id: number): Promise<boolean> {
       console.error("An unknown error occurred");
     }
     return false;
+  }
+}
+
+export async function deleteAllInspectionPlan(
+  folder_id: string
+): Promise<boolean> {
+  try {
+    const { error } = await supabase
+      .from(inspection_plan_heads_table_name)
+      .delete()
+      .eq("folder_id", folder_id);
+
+    if (error) {
+      console.error(error);
+      throw new Error(error.message);
+    }
+    return true;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error fetching inspection plan folders: " + error.message);
+    } else {
+      console.error("An unknown error occurred");
+    }
+    return false;
+  }
+}
+
+export async function deleteInspectionPlan(id: string): Promise<boolean> {
+  try {
+    const { error } = await supabase
+      .from(inspection_plan_heads_table_name)
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      throw new Error(error.message);
+    }
+    return true;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error fetching inspection plan folders: " + error.message);
+    } else {
+      console.error("An unknown error occurred");
+    }
+    return false;
+  }
+}
+
+export async function fetchInspectionPlanFolderItems(): Promise<
+  InspectionPlanFolderItems[] | null
+> {
+  try {
+    let { data: inspection_plans, error } = await supabase
+      .from(inspection_plan_heads_table_name)
+      .select("*");
+
+    if (error) {
+      console.error(error);
+      throw new Error(error.message);
+    }
+    return inspection_plans;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error fetching inspection plan folders: " + error.message);
+    } else {
+      console.error("An unknown error occurred");
+    }
+    return null;
   }
 }

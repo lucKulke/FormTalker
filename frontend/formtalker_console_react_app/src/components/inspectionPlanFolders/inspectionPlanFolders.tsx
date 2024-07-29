@@ -27,6 +27,7 @@ export function InspectionPlanFolders() {
 
   const loadFolders = async () => {
     try {
+      setProgress(60);
       const fetchedFolders = await fetchInspectionPlanFolders();
       setProgress(90);
       if (fetchedFolders) {

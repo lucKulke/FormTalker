@@ -27,7 +27,7 @@ import { pageLinks } from "@/utils/pageLinks";
 
 interface inspectionPlanFolderCardProps {
   model: string;
-  id: number;
+  id: string;
   brand: string;
   manufacturerCode: string;
   typeCode: string;

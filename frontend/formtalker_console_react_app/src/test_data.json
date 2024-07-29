@@ -1,0 +1,55 @@
+{
+  "Elektrik und elektronische Fahrzeugsysteme": {
+    "Frontbeleuchtung": {
+      "checkbox": {
+        "tasks": [
+          "standlicht prüfen",
+          "Abblendlicht prüfen",
+          "Fernlicht prüfen"
+        ],
+        "fields": {
+          "3": "in ordnung",
+          "4": "nicht in ordnung",
+          "5": "behoben"
+        },
+        "indevidual": {}
+      },
+      "text": {}
+    },
+    "Heckbeleuchtung": {
+      "checkbox": {
+        "tasks": [
+          "Bremslicht prüfen",
+          "Rücklichter prüfen",
+          "Kennzeichenbeleuchtung prüfen"
+        ],
+        "fields": {
+          "6": "in ordnung",
+          "7": "nicht in ordnung",
+          "8": "behoben"
+        },
+        "indevidual": {}
+      },
+      "text": {}
+    }
+  },
+  "Bereifung": {
+    "Reifenart": {
+      "checkbox": {
+        "tasks": ["Reifenart prüfen"],
+        "fields": {
+          "3": "in ordnung",
+          "4": "nicht in ordnung",
+          "5": "behoben"
+        },
+        "indevidual": {
+          "7": "Sommerreifen",
+          "8": "Winterreifen"
+        }
+      },
+      "text": {
+        "3": "Reifen größe"
+      }
+    }
+  }
+}

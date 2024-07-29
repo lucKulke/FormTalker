@@ -29,7 +29,7 @@ export function CreateInspectionPlanFolder() {
   const [brand, setBrand] = useState<string>("");
   const [hsn, setHsn] = useState<string>("");
   const [tsn, setTsn] = useState<string>("");
-  const [folderId, setFolderId] = useState<number | null>(null);
+  const [folderId, setFolderId] = useState<string | null>(null);
   const [successfullyCreatedNewFolder, setSuccessfullyCreatedNewFolder] =
     useState<boolean>(false);
   const [alert, setAlert] = useState<boolean>(false);

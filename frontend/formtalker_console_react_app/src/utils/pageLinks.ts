@@ -5,4 +5,5 @@ export const pageLinks = {
   signIn: "/login",
   signUp: "/signIn",
   inspectionPlanFolder: "/inspection-plan-folder/",
+  inspectionPlan: "/inspection-plan/",
 };

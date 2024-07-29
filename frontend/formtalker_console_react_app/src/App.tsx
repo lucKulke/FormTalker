@@ -11,6 +11,7 @@ import { CreateInspectionPlanFolder } from "@/components/inspectionPlanFolders/c
 import { pageLinks } from "@/utils/pageLinks";
 import { InspectionPlanFolder } from "@/components/inspectionPlanFolders/inspectionPlanFolder";
 import { NotFound } from "@/components/notFound";
+import { InspectionPlan } from "@/components/inspectionPlans/inspectionPlan";
 
 function App() {
   const [user, setUser] = useState<any>(null);
@@ -53,6 +54,10 @@ function App() {
         <Route
           path={pageLinks.inspectionPlanFolder + ":id"}
           element={<InspectionPlanFolder />}
+        />
+        <Route
+          path={pageLinks.inspectionPlan + ":id"}
+          element={<InspectionPlan />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
