@@ -12,20 +12,24 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-interface AddCategoryDialogProps {
-  children: ReactNode;
+interface EditCategoryDialogProps {
+  openDialog: boolean;
+  prevName: string;
+  setOpenChange: React.Dispatch<React.SetStateAction<any>>;
   onSave: (name: string) => void;
 }
 
-export const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
-  children,
+export const EditCategoryDialog: React.FC<EditCategoryDialogProps> = ({
+  setOpenChange,
+  openDialog,
+  prevName,
   onSave,
 }) => {
   const [categoryName, setCategoryName] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string | null>("");
   const handleSave = () => {
     onSave(categoryName); // Call the onSave function passed as a prop with the input value
-    setSuccessMessage(`successfully saved ${categoryName}`);
+    setSuccessMessage(`successfully edited and saved ${categoryName}`);
   };
 
   useEffect(() => {
@@ -36,13 +40,12 @@ export const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
     }
   }, [successMessage]);
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={openDialog} onOpenChange={setOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create new category</DialogTitle>
+          <DialogTitle>Edit category name</DialogTitle>
           <DialogDescription>
-            Create a new category and save it.
+            Edit the category name. Previous name was: '{prevName}'
           </DialogDescription>
         </DialogHeader>
         <div className="h-3 flex justify-center ">
@@ -51,7 +54,7 @@ export const AddCategoryDialog: React.FC<AddCategoryDialogProps> = ({
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Name
+              New name
             </Label>
             <Input
               id="name"

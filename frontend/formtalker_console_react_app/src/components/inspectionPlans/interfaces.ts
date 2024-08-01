@@ -8,3 +8,20 @@ export interface SubCategoryInterface {
   name: string;
   category_id: string;
 }
+
+export interface TaskInterface {
+  fieldset_id: string;
+  description: string;
+}
+
+export interface FormFieldInterface {
+  formField_id: string;
+  description: string;
+}
+
+export interface FieldsetInterface {
+  id: string;
+  category: string;
+  subcategory_id: string;
+  formField_ids: string[];
+}

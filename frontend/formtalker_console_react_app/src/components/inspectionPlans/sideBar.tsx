@@ -1,21 +1,10 @@
-import React, { useState, ReactNode } from "react";
-import { MoreHorizontal } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { AddCategoryDialog } from "./dialogs/addCategoryDialog";
+import React from "react";
+
+import { AddMainCategoryDialog } from "./dialogs/addMainCategoryDialog";
 
 import { MainCategoryInterface, SubCategoryInterface } from "./interfaces";
-import {
-  SubCategoryInSidebar,
-  CategoryInSidebar,
-} from "./sideBarComponents/categorys";
+import { MainCategoryInSidebar } from "./sidebarComponents/mainCategorys";
+import { SubCategoryInSidebar } from "./sidebarComponents/subCategorys";
 import { IoAddCircle } from "react-icons/io5";
 interface SidebarProps {
   categorys: MainCategoryInterface[] | null;
@@ -24,6 +13,8 @@ interface SidebarProps {
   onDeleteCategory: (id: string) => void;
   onDeleteSubcategory: (id: string) => void;
   onAddSubcategory: (category_id: string, name: string) => void;
+  onEditCategoryName: (category_id: string, newName: string) => void;
+  onEditSubCategoryName: (category_id: string, newName: string) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -33,30 +24,33 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onDeleteCategory,
   onDeleteSubcategory,
   onAddSubcategory,
+  onEditCategoryName,
+  onEditSubCategoryName,
 }) => {
   return (
-    <div className="h-full bg-gray-100 w-1/4 min:1/4 p-4 overflow-y-auto">
+    <div className="h-full w-1/4 bg-gray-100  p-4 overflow-y-auto">
       <div className="mb-2">
         <button>Head data:</button>
       </div>
       <div className="mb-2 flex">
         <h3 className="mr-2">Categorys</h3>
-        <AddCategoryDialog onSave={onAddCategory}>
+        <AddMainCategoryDialog onSave={onAddCategory}>
           <button>
             <IoAddCircle className="h-7 w-7 text-gray-400 hover:text-black" />
           </button>
-        </AddCategoryDialog>
+        </AddMainCategoryDialog>
       </div>
       <div className="ml-3">
         {categorys?.map((category) => (
           <div key={category.id}>
-            <CategoryInSidebar
+            <MainCategoryInSidebar
               id={category.id}
               onDelete={onDeleteCategory}
               onAddSubcategory={onAddSubcategory}
+              onEditCategoryName={onEditCategoryName}
             >
               {category.name}
-            </CategoryInSidebar>
+            </MainCategoryInSidebar>
             {subcategorys?.map((subcategory) => (
               <div key={subcategory.id}>
                 {subcategory.category_id === category.id && (
@@ -65,6 +59,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     id={subcategory.id}
                     category_id={subcategory.category_id}
                     onDelete={onDeleteSubcategory}
+                    onEditSubCategoryName={onEditSubCategoryName}
                   >
                     {subcategory.name}
                   </SubCategoryInSidebar>
