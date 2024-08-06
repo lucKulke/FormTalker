@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Sidebar } from "@/components/inspectionPlans/sidebar";
 import { InspectionPlanConfig } from "@/components/inspectionPlans/inspectionPlanConfig";
 import {
@@ -10,6 +10,7 @@ import {
 } from "./interfaces";
 import { v4 as uuidv4 } from "uuid";
 import { Transition } from "@headlessui/react";
+
 const exampleData = {
   "Elektrik und elektronische Fahrzeugsysteme": {
     Frontbeleuchtung: {
@@ -85,38 +86,38 @@ const tasksData = [
 const fieldsetsData = [
   {
     id: "23",
-    category: "checkbox",
+    fieldsetType: "Checkbox",
     subcategory_id: "10",
     formField_ids: ["30", "31", "32"],
   },
   {
     id: "24",
-    category: "text",
+    fieldsetType: "Text",
     subcategory_id: "10",
     formField_ids: ["36"],
   },
   {
     id: "25",
-    category: "individualcheckbox",
+    fieldsetType: "Individual checkbox",
     subcategory_id: "10",
     formField_ids: ["37", "38", "88"],
   },
 
   {
     id: "26",
-    category: "checkbox",
+    fieldsetType: "Checkbox",
     subcategory_id: "11",
     formField_ids: ["33", "34", "35"],
   },
   {
     id: "27",
-    category: "checkbox",
+    fieldsetType: "Checkbox",
     subcategory_id: "12",
     formField_ids: ["39", "40", "41"],
   },
   {
     id: "28",
-    category: "text",
+    fieldsetType: "Text",
     subcategory_id: "12",
     formField_ids: ["42"],
   },
@@ -169,6 +170,8 @@ const formFieldsData = [
     description: "Profieltiefe in mm",
   },
 ];
+
+const availableFieldsetTypesData = ["Checkbox", "Individual checkbox", "Text"];
 
 export const InspectionPlan: React.FC = () => {
   const [tasks, setTasks] = useState<TaskInterface[] | null>(tasksData);
@@ -250,9 +253,68 @@ export const InspectionPlan: React.FC = () => {
       setSubcategorys(subcategorysCopy);
     }
   };
+
+  const handleAddFieldset = (typesToAdd: string[], subcategoryId: string) => {
+    if (fieldsets) {
+      let copyOfFieldsets = [...fieldsets];
+      typesToAdd.forEach((fieldsetTypeName) => {
+        copyOfFieldsets.push({
+          id: uuidv4(),
+          fieldsetType: fieldsetTypeName,
+          formField_ids: [],
+          subcategory_id: subcategoryId,
+        });
+      });
+      setFieldsets(copyOfFieldsets);
+    }
+  };
+
+  const [allAvailableFieldsetTypes, setAllAvailableFieldsetTypes] = useState(
+    availableFieldsetTypesData
+  );
+
+  function getAddableFieldsetTypes(subcategory_id: string) {
+    let addableFieldsetTypes = [...allAvailableFieldsetTypes];
+    fieldsets?.forEach((fieldset) => {
+      if (fieldset.subcategory_id === subcategory_id) {
+        addableFieldsetTypes = addableFieldsetTypes.filter(function (
+          fieldsetTypeName
+        ) {
+          return fieldsetTypeName !== fieldset.fieldsetType;
+        });
+      }
+    });
+
+    return addableFieldsetTypes;
+  }
+
+  const [
+    availableFieldsetTypesForSubcategorys,
+    setAvailableFieldsetTypesForSubcategorys,
+  ] = useState({});
+
+  useEffect(() => {
+    let data: any = {};
+    subcategorys?.forEach((subcategory) => {
+      data[subcategory.id] = getAddableFieldsetTypes(subcategory.id);
+    });
+    setAvailableFieldsetTypesForSubcategorys(data);
+  }, []);
+
+
+
+  useEffect(() => {
+    let data: any = {};
+    subcategorys?.forEach((subcategory) => {
+      data[subcategory.id] = getAddableFieldsetTypes(subcategory.id);
+    });
+    setAvailableFieldsetTypesForSubcategorys(data);
+  }, [fieldsets]);
+
+  //
   return (
-    <div>
-      <div className="flex h-[calc(100vh-5rem)]">
+    <div className="mt-5 border-2 rounded-xl shadow-md border-black p-2">
+      <div className="flex h-[calc(100vh-9rem)]">
         <Sidebar
           categorys={categorys}
           subcategorys={subcategorys}
@@ -263,13 +325,17 @@ export const InspectionPlan: React.FC = () => {
           onEditCategoryName={handleEditCategoryName}
           onEditSubCategoryName={handleEditSubCategoryName}
         />
-        <div className="flex-1 p-4 overflow-auto h-full">
+        <div className="flex-1 ml-3 overflow-auto h-full">
           <InspectionPlanConfig
             categorys={categorys}
             subcategorys={subcategorys}
             tasks={tasks}
             fieldsets={fieldsets}
             formFields={formFields}
+            availableFieldsetTypesForSubcategorys={
+              availableFieldsetTypesForSubcategorys
+            }
+            onAddFieldset={handleAddFieldset}
           />
         </div>
       </div>

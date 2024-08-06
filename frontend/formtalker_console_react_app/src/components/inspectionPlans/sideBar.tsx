@@ -6,6 +6,7 @@ import { MainCategoryInterface, SubCategoryInterface } from "./interfaces";
 import { MainCategoryInSidebar } from "./sidebarComponents/mainCategorys";
 import { SubCategoryInSidebar } from "./sidebarComponents/subCategorys";
 import { IoAddCircle } from "react-icons/io5";
+import { HeadData } from "./inspectionPlanConfigComponents/headData";
 interface SidebarProps {
   categorys: MainCategoryInterface[] | null;
   subcategorys: SubCategoryInterface[] | null;
@@ -28,12 +29,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onEditSubCategoryName,
 }) => {
   return (
-    <div className="h-full w-1/4 bg-gray-100  p-4 overflow-y-auto">
-      <div className="mb-2">
-        <button>Head data:</button>
+    <div className="h-full w-1/4 shadow-md border-2 rounded-xl p-4 border-black overflow-y-auto">
+      <div className="mb-5 font-mono">
+        <h3>HeadData</h3>
+        <HeadData></HeadData>
       </div>
       <div className="mb-2 flex">
-        <h3 className="mr-2">Categorys</h3>
+        <h3 className="mr-2 font-mono">Categorys</h3>
         <AddMainCategoryDialog onSave={onAddCategory}>
           <button>
             <IoAddCircle className="h-7 w-7 text-gray-400 hover:text-black" />

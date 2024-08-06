@@ -21,7 +21,7 @@ export interface FormFieldInterface {
 
 export interface FieldsetInterface {
   id: string;
-  category: string;
+  fieldsetType: string;
   subcategory_id: string;
   formField_ids: string[];
 }
