@@ -16,6 +16,7 @@ interface SidebarProps {
   onAddSubcategory: (category_id: string, name: string) => void;
   onEditCategoryName: (category_id: string, newName: string) => void;
   onEditSubCategoryName: (category_id: string, newName: string) => void;
+  scrollToSection: (id: string) => void; // Add this prop
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -27,9 +28,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onAddSubcategory,
   onEditCategoryName,
   onEditSubCategoryName,
+  scrollToSection, // Destructure this prop
 }) => {
   return (
-    <div className="h-full w-1/4 shadow-md border-2 rounded-xl p-4 border-black overflow-y-auto">
+    <div className="h-full w-1/4 shadow-xl border-2 rounded-xl p-4 border-black overflow-y-auto">
       <div className="mb-5 font-mono">
         <h3>HeadData</h3>
         <HeadData></HeadData>
@@ -44,7 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
       <div className="ml-3">
         {categorys?.map((category) => (
-          <div key={category.id}>
+          <div key={category.id} onClick={() => scrollToSection(category.id)}>
             <MainCategoryInSidebar
               id={category.id}
               onDelete={onDeleteCategory}
@@ -54,7 +56,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
               {category.name}
             </MainCategoryInSidebar>
             {subcategorys?.map((subcategory) => (
-              <div key={subcategory.id}>
+              <div
+                key={subcategory.id}
+                onClick={() => scrollToSection(subcategory.id)}
+              >
                 {subcategory.category_id === category.id && (
                   <SubCategoryInSidebar
                     key={subcategory.id}

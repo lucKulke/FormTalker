@@ -17,6 +17,8 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import { IoAddCircle } from "react-icons/io5";
 import { AddFieldset } from "./dialogs/addFieldset";
+import { FaMinusCircle } from "react-icons/fa";
+import { AddNewFormField } from "./dialogs/addNewField";
 
 interface InspectionPlanConfigProps {
   categorys: MainCategoryInterface[] | null;
@@ -26,6 +28,14 @@ interface InspectionPlanConfigProps {
   formFields: FormFieldInterface[] | null;
   availableFieldsetTypesForSubcategorys: any;
   onAddFieldset: (typesToAdd: string[], subcategoryId: string) => void;
+  onDeleteFieldset: (fieldsetId: string) => void;
+  sectionRefs: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>;
+  allAvailableFormFieldIds: string[];
+  onAddFormField: (
+    fieldsetId: string,
+    formFieldDescription: string,
+    formFieldId: string
+  ) => void;
 }
 
 export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
@@ -36,6 +46,10 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
   formFields,
   availableFieldsetTypesForSubcategorys,
   onAddFieldset,
+  onDeleteFieldset,
+  sectionRefs,
+  allAvailableFormFieldIds,
+  onAddFormField,
 }) => {
   const filterSubcategoryIds = (id: string) => {
     const filteredFieldsets = fieldsets?.filter((fieldset) => {
@@ -57,14 +71,21 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
   return (
     <div>
       {categorys?.map((category) => (
-        <div key={category.id}>
+        <div
+          key={category.id}
+          ref={(el) => (sectionRefs.current[category.id] = el)}
+        >
           <h1 className="underline text-3xl">{category.name}</h1>
           {subcategorys?.map((subcategory) => (
             <div>
               {subcategory.category_id === category.id && (
                 <>
                   <div className="flex group">
-                    <h2 className="underline text-2xl" key={subcategory.id}>
+                    <h2
+                      className="underline text-2xl"
+                      ref={(el) => (sectionRefs.current[subcategory.id] = el)}
+                      key={subcategory.id}
+                    >
                       {subcategory.name}
                     </h2>
                     {availableFieldsetTypesForSubcategorys[subcategory.id] &&
@@ -86,17 +107,34 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                       )}
                   </div>
                   {fieldsets?.sort(sortFieldsets).map((fieldset) => (
-                    <div>
+                    <div key={fieldset.id}>
                       {fieldset.subcategory_id == subcategory.id && (
-                        <div>
-                          <div className="flex">
+                        <div className="mt-2">
+                          <div className="flex group">
                             <h3 className="ml-2 underline">
                               {fieldset.fieldsetType}
                             </h3>
+                            <button
+                              className="ml-1 mt-1"
+                              onClick={() => onDeleteFieldset(fieldset.id)}
+                            >
+                              <FaMinusCircle className="h-4 w-4 text-gray-400 hover:text-black hidden group-hover:block" />
+                            </button>
                           </div>
-                          <div className="flex">
+                          <div className="flex mt-2">
                             <div className="ml-7">
-                              <p className="font-bold">Fields</p>
+                              <div className="flex group">
+                                <p className="font-bold">Fields</p>
+                                <AddNewFormField
+                                  fieldsetId={fieldset.id}
+                                  onSave={onAddFormField}
+                                  availableIds={allAvailableFormFieldIds}
+                                >
+                                  <button className="ml-1">
+                                    <IoAddCircle className="h-5 w-5 text-gray-400 hover:text-black hidden group-hover:block" />
+                                  </button>
+                                </AddNewFormField>
+                              </div>
                               {fieldset?.formField_ids.map((formField_id) => (
                                 <div>
                                   {formFields
@@ -106,7 +144,7 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                                       );
                                     })
                                     .map((formField) => (
-                                      <div className="border-2 pl-2 pr-2 flex mb-2 rounded-lg">
+                                      <div className="border-2 pl-2 pr-2 flex mb-2 border-black  shadow-xl rounded-lg">
                                         <p className="mr-2 font-bold">
                                           {formField.formField_id}
                                         </p>
@@ -125,7 +163,7 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                                   return task.fieldset_id === fieldset.id;
                                 })
                                 .map((task) => (
-                                  <div>{task.description}</div>
+                                  <p>- {task.description}</p>
                                 ))}
                             </div>
                           </div>

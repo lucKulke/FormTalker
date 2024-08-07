@@ -10,6 +10,8 @@ import {
 } from "./interfaces";
 import { v4 as uuidv4 } from "uuid";
 import { Transition } from "@headlessui/react";
+import { FormField } from "../ui/form";
+import { Description } from "@radix-ui/react-dialog";
 
 const exampleData = {
   "Elektrik und elektronische Fahrzeugsysteme": {
@@ -169,6 +171,9 @@ const formFieldsData = [
     formField_id: "42",
     description: "Profieltiefe in mm",
   },
+  { formField_id: "55", description: "" },
+  { formField_id: "66", description: "" },
+  { formField_id: "77", description: "" },
 ];
 
 const availableFieldsetTypesData = ["Checkbox", "Individual checkbox", "Text"];
@@ -189,6 +194,14 @@ export const InspectionPlan: React.FC = () => {
   const [subcategorys, setSubcategorys] = useState<
     SubCategoryInterface[] | null
   >(subCategorysData);
+
+  const [allAvailableFormFieldIds, setAllAvailableFormFieldIds] = useState(
+    formFieldsData
+      .filter((fieldset) => {
+        return fieldset.description === "";
+      })
+      .map((fieldset) => fieldset.formField_id)
+  );
 
   const handleAddCategory = (name: string) => {
     const newItem: MainCategoryInterface = { name: name, id: uuidv4() };
@@ -269,6 +282,40 @@ export const InspectionPlan: React.FC = () => {
     }
   };
 
+  const handleDeleteFieldset = (fieldsetId: string) => {
+    if (fieldsets) {
+      let copyOfFieldsets = [...fieldsets];
+      copyOfFieldsets = copyOfFieldsets.filter(function (fieldset) {
+        return fieldset.id !== fieldsetId;
+      });
+
+      setFieldsets(copyOfFieldsets);
+    }
+  };
+
+  const handleAddFormField = (
+    fieldsetId: string,
+    formFieldDescription: string,
+    formFieldId: string
+  ) => {
+    if (formFields && fieldsets) {
+      let copyOfFormFields = [...formFields];
+      copyOfFormFields.forEach((formField) => {
+        if (formField.formField_id === formFieldId) {
+          formField.description = formFieldDescription;
+        }
+      });
+      setFormFields(copyOfFormFields);
+      let copyOfFieldsets = [...fieldsets];
+      copyOfFieldsets.forEach((fieldset) => {
+        if (fieldset.id === fieldsetId) {
+          fieldset.formField_ids.push(formFieldId);
+        }
+      });
+      setFieldsets(copyOfFieldsets);
+    }
+  };
+
   const [allAvailableFieldsetTypes, setAllAvailableFieldsetTypes] = useState(
     availableFieldsetTypesData
   );
@@ -301,16 +348,32 @@ export const InspectionPlan: React.FC = () => {
     setAvailableFieldsetTypesForSubcategorys(data);
   }, []);
 
-
-
   useEffect(() => {
     let data: any = {};
     subcategorys?.forEach((subcategory) => {
       data[subcategory.id] = getAddableFieldsetTypes(subcategory.id);
     });
     setAvailableFieldsetTypesForSubcategorys(data);
-  }, [fieldsets]);
+  }, [fieldsets, subcategorys]);
 
+  useEffect(() => {
+    setAllAvailableFormFieldIds(
+      formFieldsData
+        .filter((fieldset) => {
+          return fieldset.description === "";
+        })
+        .map((fieldset) => fieldset.formField_id)
+    );
+  }, [formFields]);
+
+  const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  const scrollToSection = (id: string) => {
+    const section = sectionRefs.current[id];
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   //
   return (
     <div className="mt-5 border-2 rounded-xl shadow-md border-black p-2">
@@ -324,6 +387,7 @@ export const InspectionPlan: React.FC = () => {
           onAddSubcategory={handleAddSubcategory}
           onEditCategoryName={handleEditCategoryName}
           onEditSubCategoryName={handleEditSubCategoryName}
+          scrollToSection={scrollToSection}
         />
         <div className="flex-1 ml-3 overflow-auto h-full">
           <InspectionPlanConfig
@@ -336,6 +400,10 @@ export const InspectionPlan: React.FC = () => {
               availableFieldsetTypesForSubcategorys
             }
             onAddFieldset={handleAddFieldset}
+            onDeleteFieldset={handleDeleteFieldset}
+            sectionRefs={sectionRefs}
+            allAvailableFormFieldIds={allAvailableFormFieldIds}
+            onAddFormField={handleAddFormField}
           />
         </div>
       </div>
