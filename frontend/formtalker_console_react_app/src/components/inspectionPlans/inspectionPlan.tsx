@@ -66,127 +66,78 @@ const exampleData = {
 };
 
 const categorysData = [
-  { id: "1", name: "Elektrik" },
-  { id: "2", name: "Bereifung" },
+  // { id: "1", name: "Elektrik" },
+  // { id: "2", name: "Bereifung" },
 ];
 
 const subCategorysData = [
-  { id: "2", name: "Frontbeleuchtung", category_id: "1", fieldset_id: "23" },
-  { id: "1", name: "Heckbeleuchtung", category_id: "1" },
-  { id: "10", name: "Reifenart", category_id: "2" },
-  { id: "11", name: "Luftdruck", category_id: "2" },
-  { id: "12", name: "Bereifung VR", category_id: "2" },
+  // { id: "2", name: "Frontbeleuchtung", category_id: "1", fieldset_id: "23" },
+  // { id: "1", name: "Heckbeleuchtung", category_id: "1" },
+  // { id: "10", name: "Reifenart", category_id: "2" },
+  // { id: "11", name: "Luftdruck", category_id: "2" },
+  // { id: "12", name: "Bereifung VR", category_id: "2" },
 ];
 
 const tasksData = [
-  { fieldset_id: "23", description: "Reifenart eintragen", id: "34" },
-
-  {
-    fieldset_id: "26",
-    description: "Luftdruck aller 4 räder prüfen",
-    id: "32",
-  },
-  { fieldset_id: "27", description: "Zustand", id: "14" },
-  { fieldset_id: "27", description: "Laufbild", id: "44" },
+  // { fieldset_id: "23", description: "Reifenart eintragen", id: "34" },
+  // {
+  //   fieldset_id: "26",
+  //   description: "Luftdruck aller 4 räder prüfen",
+  //   id: "32",
+  // },
+  // { fieldset_id: "27", description: "Zustand", id: "14" },
+  // { fieldset_id: "27", description: "Laufbild", id: "44" },
 ];
 const fieldsetsData = [
-  {
-    id: "23",
-    fieldsetType: "Checkbox",
-    subcategory_id: "10",
-    formField_ids: ["30", "31", "32"],
-  },
-  {
-    id: "24",
-    fieldsetType: "Text",
-    subcategory_id: "10",
-    formField_ids: ["36"],
-  },
-  {
-    id: "25",
-    fieldsetType: "Individual checkbox",
-    subcategory_id: "10",
-    formField_ids: ["37", "38", "88"],
-  },
-
-  {
-    id: "26",
-    fieldsetType: "Checkbox",
-    subcategory_id: "11",
-    formField_ids: ["33", "34", "35"],
-  },
-  {
-    id: "27",
-    fieldsetType: "Checkbox",
-    subcategory_id: "12",
-    formField_ids: ["39", "40", "41"],
-  },
-  {
-    id: "28",
-    fieldsetType: "Text",
-    subcategory_id: "12",
-    formField_ids: ["42"],
-  },
+  // {
+  //   id: "23",
+  //   fieldsetType: "Checkbox",
+  //   subcategory_id: "10",
+  // },
+  // {
+  //   id: "24",
+  //   fieldsetType: "Text",
+  //   subcategory_id: "10",
+  // },
+  // {
+  //   id: "25",
+  //   fieldsetType: "Individual checkbox",
+  //   subcategory_id: "10",
+  // },
 ];
 
 const formFieldsData = [
-  {
-    formField_id: "30",
-    description: "in ordung",
-  },
-  {
-    formField_id: "31",
-    description: "nicht ordung",
-  },
-  {
-    formField_id: "32",
-    description: "behoben",
-  },
-  {
-    formField_id: "33",
-    description: "in ordung",
-  },
-  {
-    formField_id: "34",
-    description: "nicht ordung",
-  },
-  {
-    formField_id: "35",
-    description: "behoben",
-  },
-
-  { formField_id: "36", description: "Reifengröße" },
-  { formField_id: "37", description: "Sommerreifen" },
-  { formField_id: "38", description: "Winterreifen" },
-  { formField_id: "88", description: "Ganzjahresreifen" },
-  {
-    formField_id: "39",
-    description: "in ordung",
-  },
-  {
-    formField_id: "40",
-    description: "nicht ordung",
-  },
-  {
-    formField_id: "41",
-    description: "behoben",
-  },
-  {
-    formField_id: "42",
-    description: "Profieltiefe in mm",
-  },
-  { formField_id: "55", description: "" },
-  { formField_id: "66", description: "" },
-  { formField_id: "73", description: "" },
-  { formField_id: "74", description: "" },
-  { formField_id: "75", description: "" },
-  { formField_id: "76", description: "" },
-  { formField_id: "77", description: "" },
-  { formField_id: "78", description: "" },
-  { formField_id: "79", description: "" },
-  { formField_id: "80", description: "" },
-  { formField_id: "81", description: "" },
-  { formField_id: "82", description: "" },
+  // {
+  //   fieldset_id: "23",
+  //   id: "30",
+  //   description: "in ordung",
+  // },
+  // {
+  //   fieldset_id: "23",
+  //   id: "31",
+  //   description: "nicht ordung",
+  // },
+  // {
+  //   fieldset_id: "23",
+  //   id: "32",
+  //   description: "behoben",
+  // },
+  // { id: "36", description: "Reifengröße", fieldset_id: "24" },
+  // { id: "37", description: "Sommerreifen", fieldset_id: "25" },
+  // { id: "38", description: "Winterreifen", fieldset_id: "25" },
+  // { id: "88", description: "Ganzjahresreifen", fieldset_id: "25" },
+  { id: "55", description: "", fieldset_id: "" },
+  { id: "66", description: "", fieldset_id: "" },
+  { id: "73", description: "", fieldset_id: "" },
+  { id: "74", description: "", fieldset_id: "" },
+  { id: "75", description: "", fieldset_id: "" },
+  { id: "76", description: "", fieldset_id: "" },
+  { id: "77", description: "", fieldset_id: "" },
+  { id: "78", description: "", fieldset_id: "" },
+  { id: "79", description: "", fieldset_id: "" },
+  { id: "80", description: "", fieldset_id: "" },
+  { id: "81", description: "", fieldset_id: "" },
+  { id: "82", description: "", fieldset_id: "" },
 ];
 
 const availableFieldsetTypesData = ["Checkbox", "Individual checkbox", "Text"];
@@ -213,7 +164,7 @@ export const InspectionPlan: React.FC = () => {
       .filter((fieldset) => {
         return fieldset.description === "";
       })
-      .map((fieldset) => fieldset.formField_id)
+      .map((fieldset) => fieldset.id)
   );
 
   const handleAddCategory = (name: string) => {
@@ -287,7 +238,6 @@ export const InspectionPlan: React.FC = () => {
         copyOfFieldsets.push({
           id: uuidv4(),
           fieldsetType: fieldsetTypeName,
-          formField_ids: [],
           subcategory_id: subcategoryId,
         });
       });
@@ -314,18 +264,12 @@ export const InspectionPlan: React.FC = () => {
     if (formFields && fieldsets) {
       let copyOfFormFields = [...formFields];
       copyOfFormFields.forEach((formField) => {
-        if (formField.formField_id === formFieldId) {
+        if (formField.id === formFieldId) {
           formField.description = formFieldDescription;
+          formField.fieldset_id = fieldsetId;
         }
       });
       setFormFields(copyOfFormFields);
-      let copyOfFieldsets = [...fieldsets];
-      copyOfFieldsets.forEach((fieldset) => {
-        if (fieldset.id === fieldsetId) {
-          fieldset.formField_ids.push(formFieldId);
-        }
-      });
-      setFieldsets(copyOfFieldsets);
     }
   };
 
@@ -333,19 +277,10 @@ export const InspectionPlan: React.FC = () => {
     if (formFields && fieldsets) {
       let copyOfFormFields = [...formFields];
       copyOfFormFields = copyOfFormFields.filter((formField) => {
-        return formField.formField_id !== formFieldId;
+        return formField.id !== formFieldId;
       });
 
-      let copyOfFieldsets = [...fieldsets];
-      copyOfFieldsets.forEach((fieldset) => {
-        if (fieldset.id === fieldsetId) {
-          fieldset.formField_ids = fieldset.formField_ids.filter((id) => {
-            return id !== formFieldId;
-          });
-        }
-      });
       setFormFields(copyOfFormFields);
-      setFieldsets(copyOfFieldsets);
     }
   };
 
@@ -356,7 +291,7 @@ export const InspectionPlan: React.FC = () => {
     if (formFields) {
       let copyOfFormFields = [...formFields];
       copyOfFormFields.forEach((formField) => {
-        if (formField.formField_id === formFieldId) {
+        if (formField.id === formFieldId) {
           formField.description = newFormFieldDescription;
         }
       });
@@ -432,7 +367,7 @@ export const InspectionPlan: React.FC = () => {
         .filter((fieldset) => {
           return fieldset.description === "";
         })
-        .map((fieldset) => fieldset.formField_id)
+        .map((fieldset) => fieldset.id)
     );
   }, [formFields]);
 
