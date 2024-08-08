@@ -58,7 +58,7 @@ export const EditSubCategoryDialog: React.FC<EditSubCategoryDialogProps> = ({
             </Label>
             <Input
               id="name"
-              placeholder="e.g. Elektrik"
+              placeholder={prevName}
               className="col-span-3"
               value={subCategoryName}
               onChange={(e) => setSubCategoryName(e.target.value)}

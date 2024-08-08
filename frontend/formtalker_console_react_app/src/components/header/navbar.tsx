@@ -29,14 +29,19 @@ import { pageLinks } from "@/utils/pageLinks";
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "All Folders",
+    title: "Cars",
     href: pageLinks.inspectionPlanFolders,
-    description: "A list of all your Inspection plans",
+    description: "A list of all your Car folders",
   },
   {
-    title: "config",
+    title: "Motorcycles",
     href: pageLinks.inspectionPlanFolders,
-    description: "A list of all your Inspection plans",
+    description: "A list of all your Motorcycle folders",
+  },
+  {
+    title: "Trucks",
+    href: pageLinks.inspectionPlanFolders,
+    description: "A list of all your Truck folders",
   },
 ];
 interface NavBarProps {
@@ -84,7 +89,9 @@ export function NavigationBar({ loggedIn, setUser }: NavBarProps) {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>InspectionPlans</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="text-lg">
+                  Folders
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="w-[200px]  p-4 md:w-[100px] lg:w-[300px] ">
                     {components.map((component) => (

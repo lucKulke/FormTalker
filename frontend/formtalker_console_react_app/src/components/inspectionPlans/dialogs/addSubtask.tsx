@@ -62,17 +62,19 @@ export const AddSubtaskDialog: React.FC<AddSubtaskDialogProps> = ({
           {successMessage && <p className="text-green-600">{successMessage}</p>}
         </div>
 
-        <div className="mb-4">
-          <Label htmlFor="taskdescription" className="text-right">
-            Task description
-          </Label>
-          <Input
-            id="taskdescription"
-            placeholder="e.g. Fernlicht prüfen"
-            className="col-span-3"
-            value={taskDescription}
-            onChange={(e) => setTaskDescription(e.target.value)}
-          />
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="taskdescription" className="text-right">
+              Task
+            </Label>
+            <Input
+              id="taskdescription"
+              placeholder="e.g. Fernlicht prüfen"
+              className="col-span-3"
+              value={taskDescription}
+              onChange={(e) => setTaskDescription(e.target.value)}
+            />
+          </div>
         </div>
 
         <DialogFooter>
