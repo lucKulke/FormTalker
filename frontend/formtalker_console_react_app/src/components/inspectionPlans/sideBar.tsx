@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AddMainCategoryDialog } from "./dialogs/addMainCategoryDialog";
+import { AddMainCategoryDialog } from "./dialogs/addMainCategory";
 
 import { MainCategoryInterface, SubCategoryInterface } from "./interfaces";
 import { MainCategoryInSidebar } from "./sidebarComponents/mainCategorys";

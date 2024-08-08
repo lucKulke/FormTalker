@@ -23,13 +23,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-interface AddSubtaskProps {
+interface AddSubtaskDialogProps {
   children: ReactNode;
   fieldsetId: string;
   onSave: (fieldsetId: string, taskDescription: string) => void;
 }
 
-export const AddSubtask: React.FC<AddSubtaskProps> = ({
+export const AddSubtaskDialog: React.FC<AddSubtaskDialogProps> = ({
   children,
   fieldsetId,
   onSave,
@@ -68,7 +68,7 @@ export const AddSubtask: React.FC<AddSubtaskProps> = ({
           </Label>
           <Input
             id="taskdescription"
-            placeholder="e.g. Elektrik"
+            placeholder="e.g. Fernlicht prüfen"
             className="col-span-3"
             value={taskDescription}
             onChange={(e) => setTaskDescription(e.target.value)}

@@ -16,11 +16,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { IoAddCircle } from "react-icons/io5";
-import { AddFieldset } from "./dialogs/addFieldset";
+import { AddFieldsetDialog } from "./dialogs/addFieldset";
 import { FaMinusCircle } from "react-icons/fa";
-import { AddNewFormField } from "./dialogs/addNewField";
-import { AddSubtask } from "./dialogs/addSubtask";
-import { EditFormField } from "./dialogs/editFormField";
+import { AddNewFormFieldDialog } from "./dialogs/addNewField";
+import { AddSubtaskDialog } from "./dialogs/addSubtask";
+import { EditFormFieldDialog } from "./dialogs/editFormField";
 
 interface InspectionPlanConfigProps {
   categorys: MainCategoryInterface[] | null;
@@ -104,7 +104,7 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                     {availableFieldsetTypesForSubcategorys[subcategory.id] &&
                       availableFieldsetTypesForSubcategorys[subcategory.id]
                         .length !== 0 && (
-                        <AddFieldset
+                        <AddFieldsetDialog
                           subcategoryId={subcategory.id}
                           onSave={onAddFieldset}
                           addableFieldsetTypes={
@@ -116,19 +116,19 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                           <button className="ml-1 mt-1">
                             <IoAddCircle className="h-6 w-6 text-gray-400 hover:text-black hidden group-hover:block" />
                           </button>
-                        </AddFieldset>
+                        </AddFieldsetDialog>
                       )}
                   </div>
                   {fieldsets?.sort(sortFieldsets).map((fieldset) => (
                     <div key={fieldset.id}>
                       {fieldset.subcategory_id == subcategory.id && (
-                        <div className="mt-2 border-2 rounded-lg p-2 hover:border-black">
+                        <div className="mt-2 border-2 rounded-lg p-2 hover:border-black mr-2">
                           <div className="flex group">
                             <h3 className="ml-2 font-mono">
                               {fieldset.fieldsetType}
                             </h3>
                             <button
-                              className="ml-1 mt-1"
+                              className="ml-1"
                               onClick={() => onDeleteFieldset(fieldset.id)}
                             >
                               <FaMinusCircle className="h-4 w-4 text-gray-400 hover:text-black hidden group-hover:block" />
@@ -138,7 +138,7 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                             <div className="ml-7">
                               <div className="flex group">
                                 <p className="font-bold">Fields</p>
-                                <AddNewFormField
+                                <AddNewFormFieldDialog
                                   fieldsetId={fieldset.id}
                                   onSave={onAddFormField}
                                   availableIds={allAvailableFormFieldIds}
@@ -146,7 +146,7 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                                   <button className="ml-1">
                                     <IoAddCircle className="h-5 w-5 text-gray-400 hover:text-black hidden group-hover:block" />
                                   </button>
-                                </AddNewFormField>
+                                </AddNewFormFieldDialog>
                               </div>
                               {fieldset?.formField_ids.map((formField_id) => (
                                 <div>
@@ -157,7 +157,7 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                                       );
                                     })
                                     .map((formField) => (
-                                      <EditFormField
+                                      <EditFormFieldDialog
                                         key={formField.formField_id}
                                         onSave={onEditFormField}
                                         onDelete={onDeleteFormField}
@@ -173,7 +173,7 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                                           </p>
                                           <p>{formField.description}</p>
                                         </button>
-                                      </EditFormField>
+                                      </EditFormFieldDialog>
                                     ))}
                                 </div>
                               ))}
@@ -182,14 +182,14 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                               {fieldset.fieldsetType === "Checkbox" && (
                                 <div className="flex group">
                                   <p className="font-bold">Tasks</p>
-                                  <AddSubtask
+                                  <AddSubtaskDialog
                                     fieldsetId={fieldset.id}
                                     onSave={onAddSubtask}
                                   >
                                     <button className="ml-1">
                                       <IoAddCircle className="h-5 w-5 text-gray-400 hover:text-black hidden group-hover:block" />
                                     </button>
-                                  </AddSubtask>
+                                  </AddSubtaskDialog>
                                 </div>
                               )}
                               {tasks

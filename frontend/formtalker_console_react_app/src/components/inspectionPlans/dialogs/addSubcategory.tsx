@@ -12,13 +12,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-interface AddCategoryDialogProps {
+interface AddSubcategoryDialogProps {
   onSave: (name: string) => void;
   openDialog: boolean;
   setOpenChange: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export const AddSubcategoryDialog: React.FC<AddCategoryDialogProps> = ({
+export const AddSubcategoryDialog: React.FC<AddSubcategoryDialogProps> = ({
   onSave,
   openDialog,
   setOpenChange,
@@ -56,7 +56,7 @@ export const AddSubcategoryDialog: React.FC<AddCategoryDialogProps> = ({
             </Label>
             <Input
               id="name"
-              placeholder="e.g. Elektrik"
+              placeholder="e.g. Heckbeleuchtung"
               className="col-span-3"
               value={subcategoryName}
               onChange={(e) => setSubcategoryName(e.target.value)}
@@ -65,7 +65,7 @@ export const AddSubcategoryDialog: React.FC<AddCategoryDialogProps> = ({
         </div>
         <DialogFooter>
           <Button type="button" onClick={handleSave}>
-            Save changes
+            Create
           </Button>
         </DialogFooter>
       </DialogContent>

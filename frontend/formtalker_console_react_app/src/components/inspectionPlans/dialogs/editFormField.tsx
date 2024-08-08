@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-interface EditFormFieldProps {
+interface EditFormFieldDialogProps {
   children: ReactNode;
   prevFormFieldDescription: string;
   formFieldId: string;
@@ -32,7 +32,7 @@ interface EditFormFieldProps {
   onDelete: (formFieldId: string, fieldsetId: string) => void;
 }
 
-export const EditFormField: React.FC<EditFormFieldProps> = ({
+export const EditFormFieldDialog: React.FC<EditFormFieldDialogProps> = ({
   children,
   formFieldId,
   prevFormFieldDescription,

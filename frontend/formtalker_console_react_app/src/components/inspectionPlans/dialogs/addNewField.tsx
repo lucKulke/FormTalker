@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-interface AddNewFormFieldProps {
+interface AddNewFormFieldDialogProps {
   children: ReactNode;
   availableIds: string[];
   fieldsetId: string;
@@ -34,7 +34,7 @@ interface AddNewFormFieldProps {
   ) => void;
 }
 
-export const AddNewFormField: React.FC<AddNewFormFieldProps> = ({
+export const AddNewFormFieldDialog: React.FC<AddNewFormFieldDialogProps> = ({
   children,
   availableIds,
   fieldsetId,
@@ -65,8 +65,10 @@ export const AddNewFormField: React.FC<AddNewFormFieldProps> = ({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create new field</DialogTitle>
-          <DialogDescription>Create a new field and save it.</DialogDescription>
+          <DialogTitle>Create new form field</DialogTitle>
+          <DialogDescription>
+            Create a new form field and save it.
+          </DialogDescription>
         </DialogHeader>
         <div className="h-3 flex justify-center ">
           {successMessage && <p className="text-green-600">{successMessage}</p>}
@@ -96,7 +98,7 @@ export const AddNewFormField: React.FC<AddNewFormFieldProps> = ({
               </Label>
               <Input
                 id="name"
-                placeholder="e.g. Elektrik"
+                placeholder="e.g. in ordnung"
                 className="col-span-3"
                 value={formFieldDescription}
                 onChange={(e) => setFormFieldDescription(e.target.value)}
@@ -107,7 +109,7 @@ export const AddNewFormField: React.FC<AddNewFormFieldProps> = ({
 
         <DialogFooter>
           <Button type="button" onClick={handleSave}>
-            Save changes
+            Create
           </Button>
         </DialogFooter>
       </DialogContent>

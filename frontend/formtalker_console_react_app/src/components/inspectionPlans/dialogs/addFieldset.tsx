@@ -13,14 +13,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 
-interface FieldsetProps {
+interface AddFieldsetDialogProps {
   children: ReactNode;
   addableFieldsetTypes: string[];
   onSave: (typesToAdd: string[], subcategoryId: string) => void;
   subcategoryId: string;
 }
 
-export const AddFieldset: React.FC<FieldsetProps> = ({
+export const AddFieldsetDialog: React.FC<AddFieldsetDialogProps> = ({
   children,
   onSave,
   addableFieldsetTypes,
@@ -38,7 +38,7 @@ export const AddFieldset: React.FC<FieldsetProps> = ({
     });
 
     onSave(fieldsetTypesToAdd, subcategoryId); // Call the onSave function passed as a prop with the input value
-    setSuccessMessage(`successfully added ${fieldsetTypesToAdd}`);
+    setSuccessMessage(`successfully added '${fieldsetTypesToAdd}'`);
   };
 
   useEffect(() => {
@@ -105,7 +105,7 @@ export const AddFieldset: React.FC<FieldsetProps> = ({
 
         <DialogFooter>
           <Button type="button" onClick={handleSave}>
-            Save changes
+            Create
           </Button>
         </DialogFooter>
       </DialogContent>

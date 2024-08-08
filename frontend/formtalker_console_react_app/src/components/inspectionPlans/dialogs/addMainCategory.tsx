@@ -25,7 +25,7 @@ export const AddMainCategoryDialog: React.FC<AddMainCategoryDialogProps> = ({
   const [successMessage, setSuccessMessage] = useState<string | null>("");
   const handleSave = () => {
     onSave(categoryName); // Call the onSave function passed as a prop with the input value
-    setSuccessMessage(`successfully saved ${categoryName}`);
+    setSuccessMessage(`successfully saved '${categoryName}'`);
   };
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const AddMainCategoryDialog: React.FC<AddMainCategoryDialogProps> = ({
         </div>
         <DialogFooter>
           <Button type="button" onClick={handleSave}>
-            Save changes
+            Create
           </Button>
         </DialogFooter>
       </DialogContent>

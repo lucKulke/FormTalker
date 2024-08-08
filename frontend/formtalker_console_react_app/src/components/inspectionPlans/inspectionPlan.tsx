@@ -446,7 +446,7 @@ export const InspectionPlan: React.FC = () => {
   };
   //
   return (
-    <div className="mt-5 border-2 rounded-xl shadow-md border-black p-2">
+    <div className="mt-5 border-2 rounded-xl shadow-md border-black p-2 ">
       <div className="flex h-[calc(100vh-9rem)]">
         <Sidebar
           categorys={categorys}

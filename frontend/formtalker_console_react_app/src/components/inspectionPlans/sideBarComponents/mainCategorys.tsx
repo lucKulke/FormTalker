@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { AddSubcategoryDialog } from "../dialogs/addSubcategory";
-import { EditCategoryDialog } from "../dialogs/editCategoryDialog";
+import { EditCategoryDialog } from "../dialogs/editCategory";
 
 interface MainCategoryProps {
   children: ReactNode;
