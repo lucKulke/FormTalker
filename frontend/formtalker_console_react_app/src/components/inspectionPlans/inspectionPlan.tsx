@@ -79,11 +79,15 @@ const subCategorysData = [
 ];
 
 const tasksData = [
-  { fieldset_id: "23", description: "Reifenart eintragen" },
+  { fieldset_id: "23", description: "Reifenart eintragen", id: "34" },
 
-  { fieldset_id: "26", description: "Luftdruck aller 4 räder prüfen" },
-  { fieldset_id: "27", description: "Zustand" },
-  { fieldset_id: "27", description: "Laufbild" },
+  {
+    fieldset_id: "26",
+    description: "Luftdruck aller 4 räder prüfen",
+    id: "32",
+  },
+  { fieldset_id: "27", description: "Zustand", id: "14" },
+  { fieldset_id: "27", description: "Laufbild", id: "44" },
 ];
 const fieldsetsData = [
   {
@@ -173,7 +177,16 @@ const formFieldsData = [
   },
   { formField_id: "55", description: "" },
   { formField_id: "66", description: "" },
+  { formField_id: "73", description: "" },
+  { formField_id: "74", description: "" },
+  { formField_id: "75", description: "" },
+  { formField_id: "76", description: "" },
   { formField_id: "77", description: "" },
+  { formField_id: "78", description: "" },
+  { formField_id: "79", description: "" },
+  { formField_id: "80", description: "" },
+  { formField_id: "81", description: "" },
+  { formField_id: "82", description: "" },
 ];
 
 const availableFieldsetTypesData = ["Checkbox", "Individual checkbox", "Text"];
@@ -316,6 +329,63 @@ export const InspectionPlan: React.FC = () => {
     }
   };
 
+  const handleDeleteFormField = (formFieldId: string, fieldsetId: string) => {
+    if (formFields && fieldsets) {
+      let copyOfFormFields = [...formFields];
+      copyOfFormFields = copyOfFormFields.filter((formField) => {
+        return formField.formField_id !== formFieldId;
+      });
+
+      let copyOfFieldsets = [...fieldsets];
+      copyOfFieldsets.forEach((fieldset) => {
+        if (fieldset.id === fieldsetId) {
+          fieldset.formField_ids = fieldset.formField_ids.filter((id) => {
+            return id !== formFieldId;
+          });
+        }
+      });
+      setFormFields(copyOfFormFields);
+      setFieldsets(copyOfFieldsets);
+    }
+  };
+
+  const handleEditFormField = (
+    formFieldId: string,
+    newFormFieldDescription: string
+  ) => {
+    if (formFields) {
+      let copyOfFormFields = [...formFields];
+      copyOfFormFields.forEach((formField) => {
+        if (formField.formField_id === formFieldId) {
+          formField.description = newFormFieldDescription;
+        }
+      });
+      setFormFields(copyOfFormFields);
+    }
+  };
+
+  const handleAddSubtask = (fieldsetId: string, taskDescription: string) => {
+    if (tasks) {
+      let copyOfTasks = [...tasks];
+      copyOfTasks.push({
+        id: uuidv4(),
+        fieldset_id: fieldsetId,
+        description: taskDescription,
+      });
+      setTasks(copyOfTasks);
+    }
+  };
+
+  const handleDeleteSubtask = (subtaskId: string) => {
+    if (tasks) {
+      let copyOfTasks = [...tasks];
+      copyOfTasks = copyOfTasks.filter((task) => {
+        return task.id !== subtaskId;
+      });
+      setTasks(copyOfTasks);
+    }
+  };
+
   const [allAvailableFieldsetTypes, setAllAvailableFieldsetTypes] = useState(
     availableFieldsetTypesData
   );
@@ -404,6 +474,10 @@ export const InspectionPlan: React.FC = () => {
             sectionRefs={sectionRefs}
             allAvailableFormFieldIds={allAvailableFormFieldIds}
             onAddFormField={handleAddFormField}
+            onAddSubtask={handleAddSubtask}
+            onDeleteSubtask={handleDeleteSubtask}
+            onEditFormField={handleEditFormField}
+            onDeleteFormField={handleDeleteFormField}
           />
         </div>
       </div>

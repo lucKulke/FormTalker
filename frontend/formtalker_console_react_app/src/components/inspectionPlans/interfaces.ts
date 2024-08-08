@@ -10,6 +10,7 @@ export interface SubCategoryInterface {
 }
 
 export interface TaskInterface {
+  id: string
   fieldset_id: string;
   description: string;
 }

@@ -44,7 +44,7 @@ export const AddNewFormField: React.FC<AddNewFormFieldProps> = ({
 
   const handleSave = () => {
     onSave(fieldsetId, formFieldDescription, formFieldId); // Call the onSave function passed as a prop with the input value
-    setSuccessMessage(`successfully added `);
+    setSuccessMessage(`successfully added '${formFieldDescription}'`);
   };
   useEffect(() => {
     if (successMessage) {
