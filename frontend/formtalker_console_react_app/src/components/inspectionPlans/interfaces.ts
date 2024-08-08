@@ -10,19 +10,19 @@ export interface SubCategoryInterface {
 }
 
 export interface TaskInterface {
-  id: string
+  id: string;
   fieldset_id: string;
   description: string;
 }
 
 export interface FormFieldInterface {
-  formField_id: string;
+  id: string;
   description: string;
+  fieldset_id: string;
 }
 
 export interface FieldsetInterface {
   id: string;
   fieldsetType: string;
   subcategory_id: string;
-  formField_ids: string[];
 }

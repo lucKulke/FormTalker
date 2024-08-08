@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { EditSubCategoryDialog } from "../dialogs/editSubCategory";
+import { EditSubCategoryDialog } from "../dialogs/editSubcategory";
 
 interface SubCategoryProps {
   children: ReactNode;

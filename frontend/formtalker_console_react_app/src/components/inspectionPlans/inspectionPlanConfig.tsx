@@ -122,7 +122,7 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                   {fieldsets?.sort(sortFieldsets).map((fieldset) => (
                     <div key={fieldset.id}>
                       {fieldset.subcategory_id == subcategory.id && (
-                        <div className="mt-2 border-2 rounded-lg p-2 hover:border-black mr-2">
+                        <div className="mt-2 border-2 rounded-lg p-2 hover:border-black hover:shadow-xl mr-2">
                           <div className="flex group">
                             <h3 className="ml-2 font-mono">
                               {fieldset.fieldsetType}
@@ -148,35 +148,29 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
                                   </button>
                                 </AddNewFormFieldDialog>
                               </div>
-                              {fieldset?.formField_ids.map((formField_id) => (
-                                <div>
-                                  {formFields
-                                    ?.filter(function (formField) {
-                                      return (
-                                        formField.formField_id === formField_id
-                                      );
-                                    })
-                                    .map((formField) => (
-                                      <EditFormFieldDialog
-                                        key={formField.formField_id}
-                                        onSave={onEditFormField}
-                                        onDelete={onDeleteFormField}
-                                        fieldsetId={fieldset.id}
-                                        formFieldId={formField.formField_id}
-                                        prevFormFieldDescription={
-                                          formField.description
-                                        }
-                                      >
-                                        <button className="border-2 mb-2 mt-2 flex pl-2 pr-2 border-gray-300 hover:border-black shadow-xl rounded-lg">
-                                          <p className="mr-2 font-bold">
-                                            {formField.formField_id}
-                                          </p>
-                                          <p>{formField.description}</p>
-                                        </button>
-                                      </EditFormFieldDialog>
-                                    ))}
-                                </div>
-                              ))}
+                              {formFields
+                                ?.filter(function (formField) {
+                                  return formField.fieldset_id === fieldset.id;
+                                })
+                                .map((formField) => (
+                                  <EditFormFieldDialog
+                                    key={formField.id}
+                                    onSave={onEditFormField}
+                                    onDelete={onDeleteFormField}
+                                    fieldsetId={fieldset.id}
+                                    formFieldId={formField.id}
+                                    prevFormFieldDescription={
+                                      formField.description
+                                    }
+                                  >
+                                    <button className="border-2 mb-2 mt-2 flex pl-2 pr-2 border-gray-300 hover:border-black hover:shadow-xl rounded-lg">
+                                      <p className="mr-2 font-bold">
+                                        {formField.id}
+                                      </p>
+                                      <p>{formField.description}</p>
+                                    </button>
+                                  </EditFormFieldDialog>
+                                ))}
                             </div>
                             <div className="ml-7">
                               {fieldset.fieldsetType === "Checkbox" && (
