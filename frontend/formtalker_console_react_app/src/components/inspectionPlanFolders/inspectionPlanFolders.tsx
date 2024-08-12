@@ -13,7 +13,7 @@ import { pageLinks } from "@/utils/pageLinks";
 import { supabase } from "@/utils/supabaseCleint";
 import { IoMdAdd } from "react-icons/io";
 
-export function InspectionPlanFolders() {
+export const InspectionPlanFolders: React.FC = () => {
   const [folders, setFolders] = useState<InspectionPlanFolder[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<number>(20);
@@ -121,4 +121,4 @@ export function InspectionPlanFolders() {
       </div>
     </>
   );
-}
+};

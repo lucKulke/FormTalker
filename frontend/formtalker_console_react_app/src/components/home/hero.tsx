@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import HeroRobot from "@/assets/herorobot.png";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { getCurrentUser } from "@/services/supabase";
 
 interface HeroProps {
   user: any;
 }
 
-export function Hero({ user }: HeroProps) {
-  console.log(user);
+export const Hero: React.FC<HeroProps> = ({ user }) => {
   return (
     <div className="flex justify-center mt-4 p-3">
       <div className="w-screen h-screen rounded-xl border-solid border-2 border-slate-100 flex justify-items-start p-7">
@@ -38,4 +36,4 @@ export function Hero({ user }: HeroProps) {
       </div>
     </div>
   );
-}
+};

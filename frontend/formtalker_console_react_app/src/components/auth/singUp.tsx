@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { signUp } from "@/services/supabase/auth";
 import AlertBox from "@/components/share/alert";
 
-export function SingUp() {
+export const SingUp: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -56,4 +56,4 @@ export function SingUp() {
       </div>
     </>
   );
-}
+};

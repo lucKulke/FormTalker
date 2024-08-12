@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-export function Filter() {
+export const Filter: React.FC = () => {
   const carBrands = ["Merceds", "Audi", "BMW"];
   const [carBrand, setCarBrand] = useState<string>("");
   const [model, setModel] = useState<string>("");
@@ -47,4 +47,4 @@ export function Filter() {
       </li>
     </ul>
   );
-}
+};
