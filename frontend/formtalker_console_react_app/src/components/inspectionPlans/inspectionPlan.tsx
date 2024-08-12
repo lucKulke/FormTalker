@@ -143,21 +143,19 @@ const formFieldsData = [
 const availableFieldsetTypesData = ["Checkbox", "Individual checkbox", "Text"];
 
 export const InspectionPlan: React.FC = () => {
-  const [tasks, setTasks] = useState<TaskInterface[] | null>(tasksData);
-  const [fieldsets, setFieldsets] = useState<FieldsetInterface[] | null>(
-    fieldsetsData
-  );
+  const [tasks, setTasks] = useState<TaskInterface[] | null>(null);
+  const [fieldsets, setFieldsets] = useState<FieldsetInterface[] | null>(null);
   const [formFields, setFormFields] = useState<FormFieldInterface[] | null>(
     formFieldsData
   );
 
   const [categorys, setCategorys] = useState<MainCategoryInterface[] | null>(
-    categorysData
+    null
   );
 
   const [subcategorys, setSubcategorys] = useState<
     SubCategoryInterface[] | null
-  >(subCategorysData);
+  >(null);
 
   const [allAvailableFormFieldIds, setAllAvailableFormFieldIds] = useState(
     formFieldsData
@@ -232,17 +230,19 @@ export const InspectionPlan: React.FC = () => {
   };
 
   const handleAddFieldset = (typesToAdd: string[], subcategoryId: string) => {
-    if (fieldsets) {
-      let copyOfFieldsets = [...fieldsets];
-      typesToAdd.forEach((fieldsetTypeName) => {
-        copyOfFieldsets.push({
-          id: uuidv4(),
-          fieldsetType: fieldsetTypeName,
-          subcategory_id: subcategoryId,
-        });
-      });
-      setFieldsets(copyOfFieldsets);
-    }
+    let copyOfFieldsets = fieldsets ? [...fieldsets] : [];
+
+    typesToAdd.forEach((fieldsetTypeName) => {
+      const newFieldset: FieldsetInterface = {
+        id: uuidv4(),
+        fieldsetType: fieldsetTypeName,
+        subcategory_id: subcategoryId,
+      };
+
+      copyOfFieldsets.push(newFieldset);
+    });
+
+    setFieldsets(copyOfFieldsets);
   };
 
   const handleDeleteFieldset = (fieldsetId: string) => {
@@ -300,15 +300,14 @@ export const InspectionPlan: React.FC = () => {
   };
 
   const handleAddSubtask = (fieldsetId: string, taskDescription: string) => {
-    if (tasks) {
-      let copyOfTasks = [...tasks];
-      copyOfTasks.push({
-        id: uuidv4(),
-        fieldset_id: fieldsetId,
-        description: taskDescription,
-      });
-      setTasks(copyOfTasks);
-    }
+    let copyOfTasks = tasks ? [...tasks] : [];
+
+    copyOfTasks.push({
+      id: uuidv4(),
+      fieldset_id: fieldsetId,
+      description: taskDescription,
+    });
+    setTasks(copyOfTasks);
   };
 
   const handleDeleteSubtask = (subtaskId: string) => {
