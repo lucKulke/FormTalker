@@ -22,7 +22,7 @@ import { NewInspectionPlanFolderCard } from "@/components/inspectionPlanFolders/
 import { toast, Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
 
-export function CreateInspectionPlanFolder() {
+export const CreateInspectionPlanFolder: React.FC = () => {
   const navigate = useNavigate();
   const [canceld, setCanceld] = useState<boolean>(false);
   const [model, setCarName] = useState<string>("");
@@ -112,4 +112,4 @@ export function CreateInspectionPlanFolder() {
       />
     </>
   );
-}
+};

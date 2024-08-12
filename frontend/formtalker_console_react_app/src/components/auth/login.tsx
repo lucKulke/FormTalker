@@ -10,7 +10,7 @@ interface LoginProps {
   setUser: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export function Login({ loggedIn, setUser }: LoginProps) {
+export const Login: React.FC<LoginProps> = ({ loggedIn, setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -72,4 +72,4 @@ export function Login({ loggedIn, setUser }: LoginProps) {
       </div>
     </>
   );
-}
+};

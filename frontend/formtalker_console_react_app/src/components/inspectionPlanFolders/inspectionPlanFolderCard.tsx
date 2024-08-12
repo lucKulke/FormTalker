@@ -25,7 +25,7 @@ import { deleteInspectionPlanFolder } from "@/services/supabase/inspectionPlanFo
 import { useNavigate } from "react-router-dom";
 import { pageLinks } from "@/utils/pageLinks";
 
-interface inspectionPlanFolderCardProps {
+interface InspectionPlanFolderCardProps {
   model: string;
   id: string;
   brand: string;
@@ -33,21 +33,20 @@ interface inspectionPlanFolderCardProps {
   typeCode: string;
 }
 
-export function InspectionPlanFolderCard(
-  params: inspectionPlanFolderCardProps
-) {
+export const InspectionPlanFolderCard: React.FC<
+  InspectionPlanFolderCardProps
+> = ({ model, id, brand, manufacturerCode, typeCode }) => {
   const navigate = useNavigate();
-  const [model, setCarName] = useState<string>(params.model);
-  const [brand, setCarBrand] = useState<string>(params.brand);
-  const [manufacturerCode, setManufacturerCode] = useState<string>(
-    params.manufacturerCode
-  );
-  const [typeCode, setTypeCode] = useState<string>(params.typeCode);
+  const [vehicleModel, setVehicleModel] = useState<string>(model);
+  const [vehicleBrand, setVehicleBrand] = useState<string>(brand);
+  const [vehicleManufacturerCode, setVehicleManufacturerCode] =
+    useState<string>(manufacturerCode);
+  const [vehicleTypeCode, setVehicleTypeCode] = useState<string>(typeCode);
 
   const handleDelete = () => {
-    console.log(`delete ${params.id}`);
+    console.log(`delete ${id}`);
     const deleteFolder = async () => {
-      const fetchedFolders = await deleteInspectionPlanFolder(params.id);
+      const fetchedFolders = await deleteInspectionPlanFolder(id);
       if (fetchedFolders) {
       } else {
         console.log("error");
@@ -61,14 +60,14 @@ export function InspectionPlanFolderCard(
   };
 
   const handleNavigateToFolder = () => {
-    navigate(pageLinks.inspectionPlanFolder + `${params.id}`);
+    navigate(pageLinks.inspectionPlanFolder + `${id}`);
   };
   return (
     <Card className="w-[300px]">
       <CardHeader>
         <ul className="flex justify-between">
           <li>
-            <CardTitle>{model}</CardTitle>
+            <CardTitle>{vehicleModel}</CardTitle>
           </li>
           <li>
             <DropdownMenu>
@@ -92,12 +91,12 @@ export function InspectionPlanFolderCard(
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Brand</Label>
-              <p className="text-sm">{brand}</p>
+              <p className="text-sm">{vehicleBrand}</p>
             </div>
             <div className="">
               <Label htmlFor="vehicleTypes">Vehicle Type Codes</Label>
               <p className="text-sm">
-                {manufacturerCode} {typeCode}
+                {vehicleManufacturerCode} {vehicleTypeCode}
               </p>
             </div>
           </div>
@@ -109,4 +108,4 @@ export function InspectionPlanFolderCard(
       </CardFooter>
     </Card>
   );
-}
+};

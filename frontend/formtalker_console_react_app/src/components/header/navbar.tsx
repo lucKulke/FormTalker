@@ -49,7 +49,7 @@ interface NavBarProps {
   setUser: Dispatch<React.SetStateAction<any>>;
 }
 
-export function NavigationBar({ loggedIn, setUser }: NavBarProps) {
+export const NavigationBar: React.FC<NavBarProps> = ({ loggedIn, setUser }) => {
   const [error, setError] = useState<string | null>(null);
   const [successfullyLoggedOut, setSuccessfullyLoggedOut] =
     useState<boolean>(false);
@@ -121,7 +121,7 @@ export function NavigationBar({ loggedIn, setUser }: NavBarProps) {
       </ul>
     </>
   );
-}
+};
 
 const ListItem = forwardRef<ElementRef<"a">, ComponentPropsWithoutRef<"a">>(
   ({ className, title, children, ...props }, ref) => {

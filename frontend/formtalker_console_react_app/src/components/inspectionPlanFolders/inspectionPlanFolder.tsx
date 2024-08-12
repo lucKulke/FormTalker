@@ -18,7 +18,7 @@ import {
   fetchInspectionPlanFolderItems,
   InspectionPlanFolderItems,
 } from "@/services/supabase/inspectionPlanFolders";
-export function InspectionPlanFolder() {
+export const InspectionPlanFolder: React.FC = () => {
   const { folderId } = useParams();
   const [error, setError] = useState<string>();
   const [inspectionPlans, setInspectionPlans] =
@@ -151,4 +151,4 @@ export function InspectionPlanFolder() {
       </div>
     </>
   );
-}
+};

@@ -26,9 +26,19 @@ interface NewInspectionPlanFolderCardProps {
   handleCreate: () => void;
 }
 
-export function NewInspectionPlanFolderCard(
-  params: NewInspectionPlanFolderCardProps
-) {
+export const NewInspectionPlanFolderCard: React.FC<
+  NewInspectionPlanFolderCardProps
+> = ({
+  model,
+  brand,
+  hsn,
+  tsn,
+  setCarName,
+  setBrand,
+  setHsn,
+  setTsn,
+  handleCreate,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -48,8 +58,8 @@ export function NewInspectionPlanFolderCard(
                 <Input
                   id="model"
                   placeholder="e.g. x5"
-                  value={params.model}
-                  onChange={(e) => params.setCarName(e.target.value)}
+                  value={model}
+                  onChange={(e) => setCarName(e.target.value)}
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
@@ -57,8 +67,8 @@ export function NewInspectionPlanFolderCard(
                 <Input
                   id="brand"
                   placeholder="e.g. BMW"
-                  value={params.brand}
-                  onChange={(e) => params.setBrand(e.target.value)}
+                  value={brand}
+                  onChange={(e) => setBrand(e.target.value)}
                 />
               </div>
               <ul className="flex space-x-5">
@@ -68,8 +78,8 @@ export function NewInspectionPlanFolderCard(
                     <Input
                       id="hsn"
                       placeholder="e.g. 0005"
-                      value={params.hsn}
-                      onChange={(e) => params.setHsn(e.target.value)}
+                      value={hsn}
+                      onChange={(e) => setHsn(e.target.value)}
                     />
                   </div>
                 </li>
@@ -79,8 +89,8 @@ export function NewInspectionPlanFolderCard(
                     <Input
                       id="tsn"
                       placeholder="e.g. ALQ"
-                      value={params.tsn}
-                      onChange={(e) => params.setTsn(e.target.value)}
+                      value={tsn}
+                      onChange={(e) => setTsn(e.target.value)}
                     />
                   </div>
                 </li>
@@ -97,9 +107,9 @@ export function NewInspectionPlanFolderCard(
           >
             Cancel
           </Button>
-          <Button onClick={params.handleCreate}>Create</Button>
+          <Button onClick={handleCreate}>Create</Button>
         </CardFooter>
       </Card>
     </div>
   );
-}
+};

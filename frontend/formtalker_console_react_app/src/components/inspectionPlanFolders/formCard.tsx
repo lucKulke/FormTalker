@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export function CardWithForm() {
+export const CardWithForm: React.FC = () => {
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -55,4 +55,4 @@ export function CardWithForm() {
       </CardFooter>
     </Card>
   );
-}
+};
