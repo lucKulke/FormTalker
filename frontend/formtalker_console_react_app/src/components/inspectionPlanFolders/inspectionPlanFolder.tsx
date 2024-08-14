@@ -18,6 +18,8 @@ import {
   fetchInspectionPlanFolderItems,
   InspectionPlanFolderItems,
 } from "@/services/supabase/inspectionPlanFolders";
+import { AddInspectionPlanDialog } from "@/components/inspectionPlanFolders/dialogs/addInspectionPlan";
+
 export const InspectionPlanFolder: React.FC = () => {
   const { folderId } = useParams();
   const [error, setError] = useState<string>();
@@ -90,9 +92,11 @@ export const InspectionPlanFolder: React.FC = () => {
       <div className="container mx-auto mt-10">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Inspection Plans</h2>
-          <Button className="rounded-full">
-            <IoMdAdd className="h-7 w-7" />
-          </Button>
+          <AddInspectionPlanDialog>
+            <Button className="rounded-full">
+              <IoMdAdd className="h-7 w-7" />
+            </Button>
+          </AddInspectionPlanDialog>
         </div>
         <div className="overflow-x-auto mt-5">
           <div className="inline-block min-w-full shadow overflow-hidden">

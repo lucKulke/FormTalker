@@ -27,7 +27,8 @@ export const AddFieldsetDialog: React.FC<AddFieldsetDialogProps> = ({
   subcategoryId,
 }) => {
   const [fieldsetType, setFieldsetType] = useState<string>("");
-  const [successMessage, setSuccessMessage] = useState<string | null>("");
+  const [errorMessage, setErrorMessage] = useState<string | null>("");
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const handleSave = () => {
     let fieldsetTypesToAdd: string[] = [];
@@ -36,18 +37,21 @@ export const AddFieldsetDialog: React.FC<AddFieldsetDialogProps> = ({
         fieldsetTypesToAdd.push(fieldsetTypeName);
       }
     });
-
-    onSave(fieldsetTypesToAdd, subcategoryId); // Call the onSave function passed as a prop with the input value
-    setSuccessMessage(`successfully added '${fieldsetTypesToAdd}'`);
+    if (fieldsetTypesToAdd.length <= 0) {
+      setErrorMessage("Nothing was selected");
+    } else {
+      onSave(fieldsetTypesToAdd, subcategoryId);
+      setOpenDialog(false);
+    }
   };
 
   useEffect(() => {
-    if (successMessage) {
+    if (errorMessage) {
       setTimeout(() => {
-        setSuccessMessage(null);
+        setErrorMessage(null);
       }, 5000);
     }
-  }, [successMessage]);
+  }, [errorMessage]);
 
   // Initialize state with an object where keys are the checkbox labels and values are booleans
   const [checkedState, setCheckedState] = useState(
@@ -69,7 +73,7 @@ export const AddFieldsetDialog: React.FC<AddFieldsetDialogProps> = ({
   // Step 3: Add onChange event handler
 
   return (
-    <Dialog>
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -79,7 +83,7 @@ export const AddFieldsetDialog: React.FC<AddFieldsetDialogProps> = ({
           </DialogDescription>
         </DialogHeader>
         <div className="h-3 flex justify-center ">
-          {successMessage && <p className="text-green-600">{successMessage}</p>}
+          {errorMessage && <p className="text-red-600">{errorMessage}</p>}
         </div>
 
         <ul className="space-y-2 mb-3">

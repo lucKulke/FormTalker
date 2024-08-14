@@ -35,18 +35,32 @@ export const AddSubtaskDialog: React.FC<AddSubtaskDialogProps> = ({
   onSave,
 }) => {
   const [successMessage, setSuccessMessage] = useState<string | null>("");
-
+  const [errorMessage, setErrorMessage] = useState<string | null>("");
   const handleSave = () => {
-    onSave(fieldsetId, taskDescription); // Call the onSave function passed as a prop with the input value
-    setSuccessMessage(`successfully added '${taskDescription}'`);
+    if (taskDescription.length <= 2) {
+      setErrorMessage("Error! Task description to short..");
+    } else {
+      onSave(fieldsetId, taskDescription); // Call the onSave function passed as a prop with the input value
+      setSuccessMessage(`successfully added '${taskDescription}'`);
+    }
   };
   useEffect(() => {
     if (successMessage) {
+      setErrorMessage(null);
       setTimeout(() => {
         setSuccessMessage(null);
       }, 5000);
     }
   }, [successMessage]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      setSuccessMessage(null);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+    }
+  }, [errorMessage]);
 
   const [taskDescription, setTaskDescription] = useState<string>("");
 
@@ -60,6 +74,7 @@ export const AddSubtaskDialog: React.FC<AddSubtaskDialogProps> = ({
         </DialogHeader>
         <div className="h-3 flex justify-center ">
           {successMessage && <p className="text-green-600">{successMessage}</p>}
+          {errorMessage && <p className="text-red-600">{errorMessage}</p>}
         </div>
 
         <div className="grid gap-4 py-4">

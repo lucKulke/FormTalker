@@ -40,28 +40,40 @@ export const AddNewFormFieldDialog: React.FC<AddNewFormFieldDialogProps> = ({
   fieldsetId,
   onSave,
 }) => {
-  const [successMessage, setSuccessMessage] = useState<string | null>("");
-
+  const [errorMessage, setErrorMessage] = useState<string | null>("");
   const handleSave = () => {
-    onSave(fieldsetId, formFieldDescription, formFieldId); // Call the onSave function passed as a prop with the input value
-    setSuccessMessage(`successfully added '${formFieldDescription}'`);
+    const isNumeric = (string: string) => /^[+-]?\d+(\.\d+)?$/.test(string);
+    if (isNumeric(formFieldId)) {
+      if (formFieldDescription.length < 2) {
+        setErrorMessage(`Error! Field description to short..`);
+      } else {
+        onSave(fieldsetId, formFieldDescription, formFieldId);
+        setFormFieldId("nothing selected");
+        setOpenDialog(false);
+      }
+      // Call the onSave function passed as a prop with the input value
+    } else {
+      setErrorMessage(`Error! No ID was selected..`);
+    }
   };
+
   useEffect(() => {
-    if (successMessage) {
+    if (errorMessage) {
       setTimeout(() => {
-        setSuccessMessage(null);
+        setErrorMessage(null);
       }, 5000);
     }
-  }, [successMessage]);
+  }, [errorMessage]);
 
   const [formFieldDescription, setFormFieldDescription] = useState<string>("");
-  const [formFieldId, setFormFieldId] = useState<string>("");
+  const [formFieldId, setFormFieldId] = useState<string>("Select ID");
 
   const handleSelectChange = (id: string) => {
     setFormFieldId(id);
   };
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
   return (
-    <Dialog>
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -71,7 +83,7 @@ export const AddNewFormFieldDialog: React.FC<AddNewFormFieldDialogProps> = ({
           </DialogDescription>
         </DialogHeader>
         <div className="h-3 flex justify-center ">
-          {successMessage && <p className="text-green-600">{successMessage}</p>}
+          {errorMessage && <p className="text-red-600">{errorMessage}</p>}
         </div>
 
         <div>
@@ -79,7 +91,7 @@ export const AddNewFormFieldDialog: React.FC<AddNewFormFieldDialogProps> = ({
             <li>
               <Select onValueChange={handleSelectChange}>
                 <SelectTrigger className="w-[130px]">
-                  <SelectValue placeholder="Select an ID" />
+                  <SelectValue placeholder="Select ID" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
