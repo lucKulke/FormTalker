@@ -2,20 +2,20 @@ import { Terminal } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-interface MyComponentProps {
-  title: string;
-  description: string;
+interface AlertBoxProps {
+  message: { title: string; description: string } | null;
 }
 
-const AlertBox: React.FC<MyComponentProps> = ({ title, description }) => {
+export const AlertBox: React.FC<AlertBoxProps> = ({ message }) => {
   return (
     <div className="fixed top-3 left-1/4 right-1/4 z-50">
       <Alert>
         <Terminal className="h-4 w-4" />
-        <AlertTitle>{title}</AlertTitle>
-        <AlertDescription>{description}</AlertDescription>
+        <AlertTitle>{message ? message.title : "Unknown"}</AlertTitle>
+        <AlertDescription>
+          {message ? message.description : "Unkonwn"}
+        </AlertDescription>
       </Alert>
     </div>
   );
 };
-export default AlertBox;

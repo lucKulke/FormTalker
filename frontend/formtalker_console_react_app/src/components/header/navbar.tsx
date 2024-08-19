@@ -21,7 +21,7 @@ import {
 import { AvatarComponent } from "./avatar";
 import { Button } from "../ui/button";
 import { signOut } from "@/services/supabase/auth";
-import AlertBox from "../share/alert";
+import { AlertBox } from "../share/alert";
 import { Navigate, Link } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 
@@ -78,7 +78,9 @@ export const NavigationBar: React.FC<NavBarProps> = ({ loggedIn, setUser }) => {
   return (
     <>
       {successfullyLoggedOut && <Navigate to="/" />}
-      {error && <AlertBox title="SignOut error!" description={error} />}
+      {error && (
+        <AlertBox message={{ title: "SignOut error!", description: error }} />
+      )}
       <ul className="flex justify-between">
         <li className="mt-6 ml-5">
           <Link to="/">

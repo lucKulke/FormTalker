@@ -23,21 +23,49 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-interface AddInspectionPlanDialogProps {
+interface AddInspectionPlanHeadDataDialogProps {
   children: ReactNode;
+  onSave: (
+    inspectionType: string,
+    description: string,
+    millage: number | null
+  ) => void;
 }
 
-export const AddInspectionPlanDialog: React.FC<
-  AddInspectionPlanDialogProps
-> = ({ children }) => {
+export const AddInspectionPlanHeadDataDialog: React.FC<
+  AddInspectionPlanHeadDataDialogProps
+> = ({ children, onSave }) => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [inspectionsType, setInspectionsType] = useState<string>("");
-  const [formFieldDescription, setFormFieldDescription] = useState();
+  const [description, setDescription] = useState<string>("");
+  const [millage, setMillage] = useState<string>("");
+  const [millageError, setMillageError] = useState<boolean>(false);
   const availableInspectionTypes = ["Millage Inspection", "test2"];
 
-  const handleSelectChange = (id: string) => {
-    setInspectionsType(id);
+  const handleSelectChange = (inspectionType: string) => {
+    setInspectionsType(inspectionType);
   };
+
+  const handleCreate = () => {
+    if (inspectionsType === "Millage Inspection" && millage.length === 0) {
+      setMillageError(true);
+    } else {
+      const convertedMillage = millage.length === 0 ? null : Number(millage);
+      onSave(inspectionsType, description, convertedMillage);
+      setInspectionsType("");
+      setDescription("");
+      setMillage("");
+      setOpenDialog(false);
+    }
+  };
+
+  useEffect(() => {
+    if (millageError) {
+      setTimeout(() => {
+        setMillageError(false);
+      }, 5000);
+    }
+  }, [millageError]);
 
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -82,9 +110,9 @@ export const AddInspectionPlanDialog: React.FC<
                   <Input
                     id="millage"
                     placeholder="e.g. 10000"
-                    className="col-span-3"
-                    value={formFieldDescription}
-                    onChange={(e) => setFormFieldDescription(e.target.value)}
+                    className={`col-span-3 ${millageError && "bg-red-300"}`}
+                    value={millage}
+                    onChange={(e) => setMillage(e.target.value)}
                   />
                 </div>
               )}
@@ -98,15 +126,15 @@ export const AddInspectionPlanDialog: React.FC<
                 id="name"
                 placeholder="e.g. in ordnung"
                 className="col-span-3"
-                value={formFieldDescription}
-                onChange={(e) => setFormFieldDescription(e.target.value)}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </li>
           </ul>
         </div>
 
         <DialogFooter>
-          <Button type="button" onClick={() => {}}>
+          <Button type="button" onClick={() => handleCreate()}>
             Create
           </Button>
         </DialogFooter>

@@ -1,7 +1,7 @@
 import { supabase } from "@/utils/supabaseCleint";
 
 const inspection_plan_folders_table_name = "folders";
-const inspection_plan_heads_table_name = "inspection_plan_heads";
+const inspection_plan_head_data_table_name = "inspection_plan_head_data";
 
 export interface AddInspectionPlanFolder {
   model: string;
@@ -16,17 +16,6 @@ export interface InspectionPlanFolder {
   brand: string;
   manufacturer_code: string;
   type_code: string;
-  // Add any other fields that might be returned by the Supabase query
-}
-
-export interface InspectionPlanFolderItems {
-  id: string; // Assuming there's an 'id' field for the folder
-  created_at: string;
-  milage: string;
-  inspection_type: string;
-  created_from: string;
-  folder_id: string;
-  status: string;
   // Add any other fields that might be returned by the Supabase query
 }
 
@@ -109,7 +98,7 @@ export async function deleteAllInspectionPlan(
 ): Promise<boolean> {
   try {
     const { error } = await supabase
-      .from(inspection_plan_heads_table_name)
+      .from(inspection_plan_head_data_table_name)
       .delete()
       .eq("folder_id", folder_id);
 
@@ -125,50 +114,5 @@ export async function deleteAllInspectionPlan(
       console.error("An unknown error occurred");
     }
     return false;
-  }
-}
-
-export async function deleteInspectionPlan(id: string): Promise<boolean> {
-  try {
-    const { error } = await supabase
-      .from(inspection_plan_heads_table_name)
-      .delete()
-      .eq("id", id);
-
-    if (error) {
-      console.error(error);
-      throw new Error(error.message);
-    }
-    return true;
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error fetching inspection plan folders: " + error.message);
-    } else {
-      console.error("An unknown error occurred");
-    }
-    return false;
-  }
-}
-
-export async function fetchInspectionPlanFolderItems(): Promise<
-  InspectionPlanFolderItems[] | null
-> {
-  try {
-    let { data: inspection_plans, error } = await supabase
-      .from(inspection_plan_heads_table_name)
-      .select("*");
-
-    if (error) {
-      console.error(error);
-      throw new Error(error.message);
-    }
-    return inspection_plans;
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error fetching inspection plan folders: " + error.message);
-    } else {
-      console.error("An unknown error occurred");
-    }
-    return null;
   }
 }

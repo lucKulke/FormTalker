@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { signUp } from "@/services/supabase/auth";
-import AlertBox from "@/components/share/alert";
+import { AlertBox } from "@/components/share/alert";
 
 export const SingUp: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -25,7 +25,9 @@ export const SingUp: React.FC = () => {
 
   return (
     <>
-      {error && <AlertBox title="SignIn error!" description={error} />}
+      {error && (
+        <AlertBox message={{ title: "SignIn error!", description: error }} />
+      )}
       <div className="flex h-screen">
         <div className="m-auto">
           <ul className=" space-y-5">

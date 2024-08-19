@@ -15,88 +15,211 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import {
-  fetchInspectionPlanFolderItems,
-  InspectionPlanFolderItems,
-} from "@/services/supabase/inspectionPlanFolders";
-import { AddInspectionPlanDialog } from "@/components/inspectionPlanFolders/dialogs/addInspectionPlan";
+  InspectionPlanHeadData,
+  fetchFolderInspectionPlansHeadData,
+  addInspectionPlanHeadData,
+  InspectionPlanHeadDataResponse,
+  deleteInspectionPlanHeadData,
+  updateStatusFromInspectionPlanHeadData,
+  updateInspectionPlanHeadData,
+} from "@/services/supabase/inspectionPlans";
+import { AddInspectionPlanHeadDataDialog } from "@/components/inspectionPlanFolders/dialogs/addInspectionPlanHeadData";
+import { getCurrentUser } from "@/services/supabase/auth";
+import { AlertBox } from "@/components/share/alert";
 
-export const InspectionPlanFolder: React.FC = () => {
-  const { folderId } = useParams();
-  const [error, setError] = useState<string>();
-  const [inspectionPlans, setInspectionPlans] =
-    useState<InspectionPlanFolderItems[]>();
+import { Input } from "@/components/ui/input";
+import { CiSquareCheck } from "react-icons/ci";
 
-  const inspections = [
-    {
-      inspectionPlanId: "32",
-      brand: "Toyota",
-      vehicleModel: "Corolla",
-      createDate: "2024-07-15",
-      mileage: 45000,
-      inspectionType: "Annual",
-      createdFrom: "meister",
-    },
-    {
-      inspectionPlanId: "32",
-      brand: "Toyota",
-      vehicleModel: "Corolla",
-      createDate: "2024-07-15",
-      mileage: 45000,
-      inspectionType: "Annual",
-      createdFrom: "meister",
-    },
-    // Add more inspection objects as needed
-  ];
+interface InspectionPlanFolderProps {
+  user: any;
+}
+
+export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
+  user,
+}) => {
+  const { folderId } = useParams<{ folderId: string }>();
+
+  const [alert, setAlert] = useState<{
+    title: string;
+    description: string;
+  } | null>(null);
+
+  const [inspectionPlansHeadData, setInspectionPlansHeadData] = useState<
+    InspectionPlanHeadDataResponse[] | null
+  >();
+  const [editId, setEditId] = useState<string>("");
+  const [openEdit, setOpenEdit] = useState<boolean>(false);
+  const [editInspectionType, setEditInspectionType] = useState<string>("");
+  const [editDescription, setEditDescription] = useState<string>("");
+  const [editMillage, setEditMillage] = useState<string>("");
+  const [millageInputError, setMillageInputError] = useState<boolean>(false);
 
   const loadInspectionPlans = async () => {
+    if (!folderId) return false;
     try {
-      const fetchedItems = await fetchInspectionPlanFolderItems();
-
+      const fetchedItems = await fetchFolderInspectionPlansHeadData(folderId);
+      console.log(fetchedItems);
       if (fetchedItems) {
-        setInspectionPlans(fetchedItems);
+        setInspectionPlansHeadData(fetchedItems);
       } else {
         console.log("error");
-        setError("No folders found");
+        setAlert({ title: "Error", description: "No items found" });
       }
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "An unknown error occurred"
-      );
+      setAlert({
+        title: "Error",
+        description:
+          err instanceof Error ? err.message : "An unknown error occurred",
+      });
+    }
+  };
+  useEffect(() => {
+    if (editId.length !== 0) {
+      console.log(editId);
+      setOpenEdit(true);
+    }
+  }, [editId]);
+
+  useEffect(() => {
+    loadInspectionPlans();
+  }, []);
+
+  useEffect(() => {
+    if (alert) {
+      setTimeout(() => {
+        setAlert(null);
+      }, 5000);
+    }
+  }, [alert]);
+  const handleAddNewInspectionHead = async (
+    inspectionType: string,
+    description: string,
+    millage: number | null
+  ) => {
+    if (!folderId) return null;
+    const newInspectionPlansHeadData: InspectionPlanHeadData = {
+      folder_id: folderId,
+      inspection_type: inspectionType,
+      description: description,
+      millage: millage,
+      status: false,
+      created_from: user.email,
+    };
+
+    const fetchedInspectionPlanHeads = await addInspectionPlanHeadData(
+      newInspectionPlansHeadData
+    );
+    if (fetchedInspectionPlanHeads) {
+      let copyOfInspectionPlansHeadData = inspectionPlansHeadData
+        ? [...inspectionPlansHeadData]
+        : [];
+
+      fetchedInspectionPlanHeads.forEach((HeadData) => {
+        copyOfInspectionPlansHeadData.push(HeadData);
+      });
+      setInspectionPlansHeadData(copyOfInspectionPlansHeadData);
     }
   };
 
-  useEffect(() => {
-    const subscription = supabase
-      .channel("custom-all-channel")
-      .on(
-        "postgres_changes",
-        { event: "DELETE", schema: "public", table: "inspection_plans" },
-        (payload) => {
-          console.log("Change received!", payload);
+  const handleDeleteInspectionHead = async (id: string) => {
+    const isDeleted = await deleteInspectionPlanHeadData(id);
+    if (isDeleted && inspectionPlansHeadData) {
+      let copyOfInspectionPlansHeadData = [...inspectionPlansHeadData];
+      setInspectionPlansHeadData(
+        copyOfInspectionPlansHeadData.filter((headData) => {
+          return headData.id !== id;
+        })
+      );
+    } else {
+    }
+  };
 
-          loadInspectionPlans();
+  const handleUpdateStatus = async (id: string, status: boolean) => {
+    const newStatus = !status;
+    const response = await updateStatusFromInspectionPlanHeadData(
+      id,
+      newStatus
+    );
+    if (response && inspectionPlansHeadData) {
+      let copyOfInspectionPlansHeadData = [...inspectionPlansHeadData];
+      copyOfInspectionPlansHeadData.forEach((headData) => {
+        if (headData.id === id) {
+          headData.status = newStatus;
         }
-      )
-      .subscribe();
+      });
+      setInspectionPlansHeadData(copyOfInspectionPlansHeadData);
+    }
+  };
 
-    loadInspectionPlans();
+  function isOnlyDigits(str: string) {
+    return /^\d+$/.test(str);
+  }
 
-    return () => {
-      // Cleanup subscription on component unmount
-      supabase.removeChannel(subscription);
-    };
-  }, []);
+  const handleUpdateHeadData = async (
+    headDataId: string,
+    inspectionType: string,
+    description: string,
+    millage: string
+  ) => {
+    if (!inspectionPlansHeadData) return false;
+
+    if (!isOnlyDigits(millage)) {
+      setMillageInputError(true);
+      return false;
+    }
+
+    const newMillageValue = Number(millage);
+
+    const response = await updateInspectionPlanHeadData(
+      headDataId,
+      inspectionType,
+      description,
+      newMillageValue
+    );
+
+    const copyOfInspectionPlanHeadData = [...inspectionPlansHeadData];
+    copyOfInspectionPlanHeadData.forEach((headData) => {
+      if (headData.id === headDataId) {
+        headData.inspection_type = inspectionType;
+        headData.description = description;
+        headData.millage = newMillageValue;
+      }
+    });
+
+    setInspectionPlansHeadData(copyOfInspectionPlanHeadData);
+    setOpenEdit(false);
+    setEditId("");
+    setMillageInputError(false);
+    setAlert({
+      title: "Update",
+      description: "Successfully updated Head Data",
+    });
+  };
+
+  function sortByTimestamp(
+    a: InspectionPlanHeadDataResponse,
+    b: InspectionPlanHeadDataResponse
+  ) {
+    if (a.created_at < b.created_at) {
+      return -1;
+    }
+    if (a.created_at > b.created_at) {
+      return 1;
+    }
+    return 0;
+  }
 
   return (
     <>
+      {alert && <AlertBox message={alert} />}
       <div className="container mx-auto mt-10">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Inspection Plans</h2>
-          <AddInspectionPlanDialog>
+          <AddInspectionPlanHeadDataDialog onSave={handleAddNewInspectionHead}>
             <Button className="rounded-full">
               <IoMdAdd className="h-7 w-7" />
             </Button>
-          </AddInspectionPlanDialog>
+          </AddInspectionPlanHeadDataDialog>
         </div>
         <div className="overflow-x-auto mt-5">
           <div className="inline-block min-w-full shadow overflow-hidden">
@@ -104,6 +227,7 @@ export const InspectionPlanFolder: React.FC = () => {
               <thead>
                 <tr>
                   <th className="px-4 py-2 text-left">Inspection Type</th>
+                  <th className="px-4 py-2 text-left">Description</th>
                   <th className="px-4 py-2 text-left">Mileage</th>
                   <th className="px-4 py-2 text-left">Status</th>
                   <th className="px-4 py-2 text-left">Created at</th>
@@ -111,43 +235,128 @@ export const InspectionPlanFolder: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {inspectionPlans &&
-                  inspectionPlans.map((inspection) => (
-                    <tr
-                      key={inspection.id}
-                      className="border-t border-gray-200"
-                    >
-                      <td className="px-4 py-2 text-left">
-                        {inspection.inspection_type}
-                      </td>
-                      <td className="px-4 py-2 text-left">
-                        {inspection.milage}
-                      </td>
-                      <td className="px-4 py-2 text-left">
-                        {inspection.status}
-                      </td>
-                      <td className="px-4 py-2 text-left">
-                        {inspection.created_at}
-                      </td>
-                      <td className="px-4 py-2 text-left">
-                        {inspection.created_from}
-                      </td>
+                {inspectionPlansHeadData &&
+                  inspectionPlansHeadData
+                    .sort(sortByTimestamp)
+                    .map((inspection) => (
+                      <tr
+                        key={inspection.id}
+                        className="border-t border-gray-200"
+                      >
+                        <td className="px-4 py-2 text-left">
+                          {openEdit && inspection.id === editId ? (
+                            <Input
+                              id="inspectionType"
+                              placeholder="e.g. Millage Inspection"
+                              value={editInspectionType}
+                              onChange={(e) =>
+                                setEditInspectionType(e.target.value)
+                              }
+                            />
+                          ) : (
+                            inspection.inspection_type
+                          )}
+                        </td>
+                        <td className="px-4 py-2 text-left">
+                          {openEdit && inspection.id === editId ? (
+                            <Input
+                              id="description"
+                              placeholder="test description"
+                              value={editDescription}
+                              onChange={(e) =>
+                                setEditDescription(e.target.value)
+                              }
+                            />
+                          ) : (
+                            inspection.description
+                          )}
+                        </td>
+                        <td className="px-4 py-2 text-left">
+                          {openEdit && inspection.id === editId ? (
+                            <Input
+                              id="millage"
+                              className={millageInputError ? "bg-red-500" : ""}
+                              placeholder="e.g. 10000"
+                              value={editMillage}
+                              onChange={(e) => {
+                                setEditMillage(e.target.value);
+                              }}
+                            />
+                          ) : (
+                            inspection.millage
+                          )}
+                        </td>
+                        <td className="px-4 py-2 text-left">
+                          <button
+                            onClick={() =>
+                              handleUpdateStatus(
+                                inspection.id,
+                                inspection.status
+                              )
+                            }
+                          >
+                            {inspection.status ? (
+                              <p className="text-green-500">active</p>
+                            ) : (
+                              <p className="text-red-500">inactive</p>
+                            )}
+                          </button>
+                        </td>
+                        <td className="px-4 py-2 text-left">
+                          {inspection.created_at}
+                        </td>
+                        <td className="px-4 py-2 text-left">
+                          {inspection.created_from}
+                        </td>
 
-                      <td className="px-4 py-2 text-left">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger>
-                            <MoreHorizontal />
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent>
-                            <DropdownMenuLabel>Options</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Edit</DropdownMenuItem>
-                            <DropdownMenuItem>Delete</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </td>
-                    </tr>
-                  ))}
+                        <td className="px-4 py-2 text-left">
+                          {openEdit && inspection.id === editId ? (
+                            <button
+                              onClick={() => {
+                                handleUpdateHeadData(
+                                  editId,
+                                  editInspectionType,
+                                  editDescription,
+                                  editMillage
+                                );
+                              }}
+                            >
+                              <CiSquareCheck className="bg-green-500 h-6 w-6 rounded hover:bg-green-400" />
+                            </button>
+                          ) : (
+                            <DropdownMenu>
+                              <DropdownMenuTrigger>
+                                <MoreHorizontal />
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent>
+                                <DropdownMenuLabel>Options</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                  onClick={() => {
+                                    setEditId(inspection.id);
+                                    setEditInspectionType(
+                                      inspection.inspection_type
+                                    );
+                                    setEditDescription(inspection.description);
+                                    setEditMillage(String(inspection.millage));
+                                  }}
+                                >
+                                  Edit
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                  onClick={() =>
+                                    handleDeleteInspectionHead(inspection.id)
+                                  }
+                                  className="text-red-500"
+                                >
+                                  Delete
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
               </tbody>
             </table>
           </div>
