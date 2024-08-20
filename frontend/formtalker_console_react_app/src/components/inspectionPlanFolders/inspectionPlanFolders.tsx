@@ -21,6 +21,7 @@ export const InspectionPlanFolders: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [startCreatingNewFolder, setStartCreatingNewFolder] =
     useState<boolean>(false);
+  const [allAvailableBrands, setAllAvailableBrands] = useState<string[]>([])
 
   const addButton = async () => {
     setStartCreatingNewFolder(true);
@@ -46,28 +47,12 @@ export const InspectionPlanFolders: React.FC = () => {
     }
   };
   useEffect(() => {
-    const subscription = supabase
-      .channel("custom-all-channel")
-      .on(
-        "postgres_changes",
-        { event: "DELETE", schema: "public", table: "folders" },
-        (payload) => {
-          console.log("Change received!", payload);
-
-          loadFolders();
-        }
-      )
-      .subscribe();
-
     setLoading(true);
     setProgress(30);
     loadFolders();
 
     setStartCreatingNewFolder(false);
-    return () => {
-      // Cleanup subscription on component unmount
-      supabase.removeChannel(subscription);
-    };
+   
   }, []);
 
   return (
