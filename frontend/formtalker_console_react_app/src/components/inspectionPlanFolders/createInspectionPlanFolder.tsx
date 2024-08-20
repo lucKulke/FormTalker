@@ -17,7 +17,7 @@ import {
   AddInspectionPlanFolder,
   addInspectionPlanFolder,
 } from "@/services/supabase/inspectionPlanFolders";
-import AlertBox from "@/components/share/alert";
+import { AlertBox } from "@/components/share/alert";
 import { NewInspectionPlanFolderCard } from "@/components/inspectionPlanFolders/newInspectionPlanFolderCard";
 import { toast, Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -56,8 +56,10 @@ export const CreateInspectionPlanFolder: React.FC = () => {
         <>
           {alert && (
             <AlertBox
-              title="New Folder"
-              description={`New Folder with car name ${model} was created succesfully!`}
+              message={{
+                title: "New Foler",
+                description: `New Folder with car name ${model} was created succesfully!`,
+              }}
             />
           )}
           <Dialog

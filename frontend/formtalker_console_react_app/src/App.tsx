@@ -52,8 +52,8 @@ function App() {
           element={<CreateInspectionPlanFolder />}
         />
         <Route
-          path={pageLinks.inspectionPlanFolder + ":id"}
-          element={<InspectionPlanFolder />}
+          path={pageLinks.inspectionPlanFolder + ":folderId"}
+          element={<InspectionPlanFolder user={user} />}
         />
         <Route
           path={pageLinks.inspectionPlan + ":id"}

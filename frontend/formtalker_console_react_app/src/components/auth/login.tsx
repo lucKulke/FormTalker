@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { Link, Navigate } from "react-router-dom";
 import { getCurrentUser, signIn } from "@/services/supabase/auth";
-import AlertBox from "@/components/share/alert";
+import { AlertBox } from "@/components/share/alert";
 import { pageLinks } from "@/utils/pageLinks";
 interface LoginProps {
   loggedIn: boolean;
@@ -31,7 +31,9 @@ export const Login: React.FC<LoginProps> = ({ loggedIn, setUser }) => {
   };
   return (
     <>
-      {error && <AlertBox title="SignIn error!" description={error} />}
+      {error && (
+        <AlertBox message={{ title: "SignIn error!", description: error }} />
+      )}
       {loggedIn && <Navigate to={pageLinks.home}></Navigate>}
       <div className="flex h-screen">
         <div className="m-auto">
