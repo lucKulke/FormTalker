@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/utils/supabaseCleint";
 import { MoreHorizontal } from "lucide-react";
 import { IoMdAdd } from "react-icons/io";
@@ -26,9 +26,11 @@ import {
 import { AddInspectionPlanHeadDataDialog } from "@/components/inspectionPlanFolders/dialogs/addInspectionPlanHeadData";
 import { getCurrentUser } from "@/services/supabase/auth";
 import { AlertBox } from "@/components/share/alert";
+import { isOnlyDigits } from "@/utils/helperFunctions";
 
 import { Input } from "@/components/ui/input";
 import { CiSquareCheck } from "react-icons/ci";
+import { pageLinks } from "@/utils/pageLinks";
 
 interface InspectionPlanFolderProps {
   user: any;
@@ -38,6 +40,7 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
   user,
 }) => {
   const { folderId } = useParams<{ folderId: string }>();
+  const navigate = useNavigate();
 
   const [alert, setAlert] = useState<{
     title: string;
@@ -54,6 +57,7 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
   const [editMillage, setEditMillage] = useState<string>("");
   const [millageInputError, setMillageInputError] = useState<boolean>(false);
 
+ 
   const loadInspectionPlans = async () => {
     if (!folderId) return false;
     try {
@@ -97,6 +101,9 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
     millage: number | null
   ) => {
     if (!folderId) return null;
+
+    
+
     const newInspectionPlansHeadData: InspectionPlanHeadData = {
       folder_id: folderId,
       inspection_type: inspectionType,
@@ -150,10 +157,6 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
       setInspectionPlansHeadData(copyOfInspectionPlansHeadData);
     }
   };
-
-  function isOnlyDigits(str: string) {
-    return /^\d+$/.test(str);
-  }
 
   const handleUpdateHeadData = async (
     headDataId: string,
@@ -331,6 +334,9 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
                               <DropdownMenuContent>
                                 <DropdownMenuLabel>Options</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
+                                <DropdownMenuItem onClick={()=> navigate(pageLinks.inspectionPlan + inspection.id)}>
+                                  Form Editor
+                                </DropdownMenuItem>
                                 <DropdownMenuItem
                                   onClick={() => {
                                     setEditId(inspection.id);
@@ -351,6 +357,7 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
                                 >
                                   Delete
                                 </DropdownMenuItem>
+                               
                               </DropdownMenuContent>
                             </DropdownMenu>
                           )}

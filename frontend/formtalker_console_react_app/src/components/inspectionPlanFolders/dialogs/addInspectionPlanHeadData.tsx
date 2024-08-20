@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { isOnlyDigits } from "@/utils/helperFunctions";
 
 import {
   Select,
@@ -40,14 +41,14 @@ export const AddInspectionPlanHeadDataDialog: React.FC<
   const [description, setDescription] = useState<string>("");
   const [millage, setMillage] = useState<string>("");
   const [millageError, setMillageError] = useState<boolean>(false);
-  const availableInspectionTypes = ["Millage Inspection", "test2"];
+  const availableInspectionTypes = ["Millage Inspection", "Annual inspection"];
 
   const handleSelectChange = (inspectionType: string) => {
     setInspectionsType(inspectionType);
   };
 
-  const handleCreate = () => {
-    if (inspectionsType === "Millage Inspection" && millage.length === 0) {
+  const handleCreate = (): void => {
+    if (inspectionsType === "Millage Inspection" && (millage.length === 0 || !isOnlyDigits(millage))) {
       setMillageError(true);
     } else {
       const convertedMillage = millage.length === 0 ? null : Number(millage);

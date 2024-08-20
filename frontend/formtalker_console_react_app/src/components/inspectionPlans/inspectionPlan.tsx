@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Sidebar } from "@/components/inspectionPlans/sidebar";
+import { Sidebar } from "@/components/inspectionPlans/sideBar";
 import { InspectionPlanConfig } from "@/components/inspectionPlans/inspectionPlanConfig";
 import {
   MainCategoryInterface,
