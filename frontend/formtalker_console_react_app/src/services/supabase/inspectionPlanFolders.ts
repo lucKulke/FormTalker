@@ -72,7 +72,7 @@ export async function addInspectionPlanFolder(
 export async function deleteInspectionPlanFolder(id: string): Promise<boolean> {
   try {
     await deleteAllInspectionPlan(id);
-    console.log("deleted all inspection plans");
+
     const { error } = await supabase
       .from(inspection_plan_folders_table_name)
       .delete()

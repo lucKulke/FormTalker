@@ -24,6 +24,7 @@ import { MoreHorizontal } from "lucide-react";
 import { deleteInspectionPlanFolder } from "@/services/supabase/inspectionPlanFolders";
 import { useNavigate } from "react-router-dom";
 import { pageLinks } from "@/utils/pageLinks";
+import { CiSquareCheck } from "react-icons/ci";
 
 interface InspectionPlanFolderCardProps {
   model: string;
@@ -31,30 +32,28 @@ interface InspectionPlanFolderCardProps {
   brand: string;
   manufacturerCode: string;
   typeCode: string;
+  onDelete: (id: string) => void;
+  onUpdate: (
+    id: string,
+    model: string,
+    brand: string,
+    hsn: string,
+    tsn: string
+  ) => void;
 }
 
 export const InspectionPlanFolderCard: React.FC<
   InspectionPlanFolderCardProps
-> = ({ model, id, brand, manufacturerCode, typeCode }) => {
+> = ({ model, id, brand, manufacturerCode, typeCode, onDelete }) => {
   const navigate = useNavigate();
+
   const [vehicleModel, setVehicleModel] = useState<string>(model);
   const [vehicleBrand, setVehicleBrand] = useState<string>(brand);
   const [vehicleManufacturerCode, setVehicleManufacturerCode] =
     useState<string>(manufacturerCode);
   const [vehicleTypeCode, setVehicleTypeCode] = useState<string>(typeCode);
+  const [editMode, setEditMode] = useState<boolean>(false);
 
-  const handleDelete = () => {
-    console.log(`delete ${id}`);
-    const deleteFolder = async () => {
-      const fetchedFolders = await deleteInspectionPlanFolder(id);
-      if (fetchedFolders) {
-      } else {
-        console.log("error");
-      }
-    };
-
-    deleteFolder();
-  };
   const handleEdit = () => {
     console.log("edit");
   };
@@ -63,44 +62,95 @@ export const InspectionPlanFolderCard: React.FC<
     navigate(pageLinks.inspectionPlanFolder + `${id}`);
   };
   return (
-    <Card className="w-[300px]">
+    <Card className="w-[300px] hover:border-black hover:shadow-xl">
       <CardHeader>
         <ul className="flex justify-between">
-          <li>
-            <CardTitle>{vehicleModel}</CardTitle>
-          </li>
-          <li>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <MoreHorizontal />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Options</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
-                <DropdownMenuItem onClick={handleDelete}>
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </li>
+          {editMode ? (
+            <li>
+              <Input
+                value={vehicleModel}
+                onChange={(e) => setVehicleModel(e.target.value)}
+              />
+            </li>
+          ) : (
+            <li>
+              <CardTitle>{vehicleModel}</CardTitle>
+            </li>
+          )}
+          {editMode ? (
+            <li className="pt-1">
+              <button>
+                <CiSquareCheck className="w-7 h-7 bg-green-500 rounded-md hover:bg-green-300 active:bg-green-500" />
+              </button>
+            </li>
+          ) : (
+            <li>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <MoreHorizontal />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>Options</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setEditMode(true)}>
+                    Edit
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="text-red-500"
+                    onClick={() => onDelete(id)}
+                  >
+                    Delete
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </li>
+          )}
         </ul>
       </CardHeader>
-      <CardContent>
-        <form>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Brand</Label>
-              <p className="text-sm">{vehicleBrand}</p>
-            </div>
-            <div className="">
-              <Label htmlFor="vehicleTypes">Vehicle Type Codes</Label>
-              <p className="text-sm">
+      <CardContent className={`${editMode ? "" : "mb-8"}`}>
+        <ul className="space-y-3">
+          <li>
+            <Label htmlFor="brand">Brand</Label>
+            {editMode ? (
+              <Input
+                value={vehicleBrand}
+                onChange={(e) => setVehicleBrand(e.target.value)}
+              />
+            ) : (
+              <p id="brand" className="text-xl">
+                {vehicleBrand}
+              </p>
+            )}
+          </li>
+
+          {editMode ? (
+            <li className="flex space-x-2">
+              <div>
+                <Label htmlFor="hsn">HSN</Label>
+                <Input
+                  id="hsn"
+                  value={vehicleManufacturerCode}
+                  onChange={(e) => setVehicleManufacturerCode(e.target.value)}
+                />
+              </div>
+              <div>
+                <Label htmlFor="tsn">TSN</Label>
+                <Input
+                  id="tsn"
+                  value={vehicleTypeCode}
+                  onChange={(e) => setVehicleTypeCode(e.target.value)}
+                />
+              </div>
+            </li>
+          ) : (
+            <li>
+              <Label htmlFor="typecodes">Vehicle Type Codes</Label>
+              <p id="typecodes" className="text-xl">
                 {vehicleManufacturerCode} {vehicleTypeCode}
               </p>
-            </div>
-          </div>
-        </form>
+            </li>
+          )}
+        </ul>
       </CardContent>
       <CardFooter className="flex justify-between">
         <div></div>
