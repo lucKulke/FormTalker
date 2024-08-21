@@ -44,7 +44,7 @@ interface InspectionPlanFolderCardProps {
 
 export const InspectionPlanFolderCard: React.FC<
   InspectionPlanFolderCardProps
-> = ({ model, id, brand, manufacturerCode, typeCode, onDelete }) => {
+> = ({ model, id, brand, manufacturerCode, typeCode, onDelete, onUpdate }) => {
   const navigate = useNavigate();
 
   const [vehicleModel, setVehicleModel] = useState<string>(model);
@@ -54,9 +54,7 @@ export const InspectionPlanFolderCard: React.FC<
   const [vehicleTypeCode, setVehicleTypeCode] = useState<string>(typeCode);
   const [editMode, setEditMode] = useState<boolean>(false);
 
-  const handleEdit = () => {
-    console.log("edit");
-  };
+ 
 
   const handleNavigateToFolder = () => {
     navigate(pageLinks.inspectionPlanFolder + `${id}`);
@@ -79,7 +77,10 @@ export const InspectionPlanFolderCard: React.FC<
           )}
           {editMode ? (
             <li className="pt-1">
-              <button>
+              <button onClick={() => {
+                onUpdate(id, vehicleModel, vehicleBrand, vehicleManufacturerCode, vehicleTypeCode)
+                setEditMode(false)
+                }}>
                 <CiSquareCheck className="w-7 h-7 bg-green-500 rounded-md hover:bg-green-300 active:bg-green-500" />
               </button>
             </li>

@@ -6,6 +6,7 @@ import {
   addInspectionPlanFolder,
   InspectionPlanFolder,
   AddInspectionPlanFolder,
+  updateFolder,
 } from "@/services/supabase/inspectionPlanFolders";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -19,16 +20,20 @@ import { AddNewFolderDialog } from "./dialogs/addNewFolder";
 export const InspectionPlanFolders: React.FC = () => {
   const navigate = useNavigate();
   const [folders, setFolders] = useState<InspectionPlanFolder[] | null>(null);
+  const [copyOfOriginalFolders, setCopyOfOriginalFolders] = useState<InspectionPlanFolder[] | null>(null)
   const [progress, setProgress] = useState<number>(20);
   const [loading, setLoading] = useState<boolean>(false);
   const [startCreatingNewFolder, setStartCreatingNewFolder] =
     useState<boolean>(false);
   const [allAvailableBrands, setAllAvailableBrands] = useState<string[]>([]);
+  const [selcetedBrand, setSelectedBrand] = useState<string>("")
+  const [selectedModel, setSelectedModel] = useState<string>("")
+  const [filterdFolders, setFilterdFolders] = useState<InspectionPlanFolder[] | null>(null)
+  
   const [alert, setAlert] = useState<{
     title: string;
     description: string;
   } | null>();
-
   const addButton = async () => {
     navigate(pageLinks.inspectionPlanFolderCreate);
   };
@@ -59,6 +64,11 @@ export const InspectionPlanFolders: React.FC = () => {
 
     setStartCreatingNewFolder(false);
   }, []);
+
+  useEffect(() => {
+    if (folders){
+    setAllAvailableBrands(getAllAvailableBrands(folders))}
+  }, [folders])
 
   useEffect(() => {
     if (alert) {
@@ -132,6 +142,80 @@ export const InspectionPlanFolders: React.FC = () => {
     }
   };
 
+  const handleUpdateFolder = async (id: string,
+    model: string,
+    brand: string,
+    hsn: string,
+    tsn: string) => {
+
+
+    const newFolderData = {
+      id: id,
+      model: model,
+      brand: brand,
+      manufacturer_code: hsn,
+      type_code: tsn,
+    };
+    const data = await updateFolder(newFolderData)
+
+    if (!data || !folders) return false
+
+    const copyOfFolders = [...folders]
+    data.forEach((responseFolder) => {
+      let updatedFolder: InspectionPlanFolder = { id: responseFolder.id, created_at: responseFolder.created_at, model: responseFolder.model, brand: responseFolder.brand, manufacturer_code: responseFolder.manufacturer_code, type_code: responseFolder.type_code }
+      copyOfFolders.forEach((folder)=>{
+        if(folder.id === updatedFolder.id){
+          folder.model = updatedFolder.model
+          folder.brand = updatedFolder.brand
+          folder.manufacturer_code = updatedFolder.manufacturer_code
+          folder.type_code = updatedFolder.type_code
+        }
+      })
+    })
+
+    setFolders(copyOfFolders)
+
+    setAlert({title: "Update", description: "Successfully updated Folder"})
+  }
+  
+  function sortByTimestamp(
+    a: InspectionPlanFolder,
+    b: InspectionPlanFolder
+  ): number {
+    if (a.created_at < b.created_at) {
+      return -1;
+    }
+    if (a.created_at > b.created_at) {
+      return 1;
+    }
+    return 0;
+  }
+
+
+  function getAllAvailableBrands(folders: InspectionPlanFolder[]): string[] {
+    const brands = folders.map((folder)=> {
+      return folder.brand
+    })
+    return Array.from(new Set(brands));
+
+  }
+
+  const handleFilter = (model: string, brand: string) => {
+    if(!folders) return null
+    const modelRegex = new RegExp(`^${model}.*$`); // Create a dynamic regex
+  
+  // Filter based on the model using the dynamic regex
+  let matchingFolders = folders.filter(folder => modelRegex.test(folder.model));
+  console.log(matchingFolders)
+  matchingFolders = matchingFolders.filter((folder) => folder.brand === brand)
+  setCopyOfOriginalFolders([...folders])
+  setFolders(matchingFolders)
+  }
+
+  const handleCloseFilter = (): void => {
+    setFolders(copyOfOriginalFolders)
+  }
+
   return (
     <>
       {alert && <AlertBox message={alert} />}
@@ -142,7 +226,7 @@ export const InspectionPlanFolders: React.FC = () => {
               <ul className="flex justify-evenly">
                 <div></div>
                 <li>
-                  <Filter></Filter>
+                  <Filter onFilter={handleFilter} allAvailableBrands={allAvailableBrands} onCloseFilter={handleCloseFilter} />
                 </li>
                 <li>
                   <AddNewFolderDialog onSave={handleAddNewFolder}>
@@ -162,7 +246,7 @@ export const InspectionPlanFolders: React.FC = () => {
                 <>
                   {folders && folders.length > 0 ? (
                     <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                      {folders.map((folder) => (
+                      {folders.sort(sortByTimestamp).map((folder) => (
                         <InspectionPlanFolderCard
                           key={folder.id}
                           model={folder.model}
@@ -171,7 +255,7 @@ export const InspectionPlanFolders: React.FC = () => {
                           manufacturerCode={folder.manufacturer_code}
                           typeCode={folder.type_code}
                           onDelete={handleDeleteFolder}
-                          onUpdate={() => {}}
+                          onUpdate={handleUpdateFolder}
                         />
                       ))}
                     </div>
