@@ -16,6 +16,7 @@ export interface InspectionPlanFolder {
   brand: string;
   manufacturer_code: string;
   type_code: string;
+  created_at: string;
   // Add any other fields that might be returned by the Supabase query
 }
 
@@ -72,7 +73,7 @@ export async function addInspectionPlanFolder(
 export async function deleteInspectionPlanFolder(id: string): Promise<boolean> {
   try {
     await deleteAllInspectionPlan(id);
-    console.log("deleted all inspection plans");
+
     const { error } = await supabase
       .from(inspection_plan_folders_table_name)
       .delete()
@@ -115,4 +116,29 @@ export async function deleteAllInspectionPlan(
     }
     return false;
   }
+}
+
+export async function updateFolder(folder: {id: string, model: string,brand: string, manufacturer_code: string, type_code: string}): Promise<InspectionPlanFolder[] | null> {
+  try {
+    const { data, error } = await supabase
+    .from(inspection_plan_folders_table_name)
+    .update({  model: folder.model,
+      brand: folder.brand,
+      manufacturer_code: folder.manufacturer_code,
+      type_code: folder.type_code})
+    .eq("id", folder.id)
+    .select();
+    
+    if (error) {
+      console.error(error);
+      throw new Error(error.message);
+    }
+    return data || null;
+  } catch (err) {
+    return null
+  }
+
+
+  
+
 }

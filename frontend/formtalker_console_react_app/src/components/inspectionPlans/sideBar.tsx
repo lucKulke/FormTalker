@@ -4,7 +4,7 @@ import { AddMainCategoryDialog } from "./dialogs/addMainCategory";
 
 import { MainCategoryInterface, SubCategoryInterface } from "./interfaces";
 import { MainCategoryInSidebar } from "@/components/inspectionPlans/sideBarComponents/mainCategorys";
-import { SubCategoryInSidebar } from "./sideBarComponents/subCategorys";
+import { SubCategoryInSidebar} from "@/components/inspectionPlans/sideBarComponents/subCategorys"
 import { IoAddCircle } from "react-icons/io5";
 import { HeadData } from "./inspectionPlanConfigComponents/headData";
 interface SidebarProps {

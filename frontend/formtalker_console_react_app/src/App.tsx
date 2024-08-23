@@ -7,7 +7,6 @@ import { NavigationBar } from "@/components/header/navbar";
 import { useEffect, useState } from "react";
 import { getCurrentUser } from "@/services/supabase/auth";
 import { InspectionPlanFolders } from "@/components/inspectionPlanFolders/inspectionPlanFolders";
-import { CreateInspectionPlanFolder } from "@/components/inspectionPlanFolders/createInspectionPlanFolder";
 import { pageLinks } from "@/utils/pageLinks";
 import { InspectionPlanFolder } from "@/components/inspectionPlanFolders/inspectionPlanFolder";
 import { NotFound } from "@/components/notFound";
@@ -46,10 +45,6 @@ function App() {
         <Route
           path={pageLinks.inspectionPlanFolders}
           element={<InspectionPlanFolders />}
-        />
-        <Route
-          path={pageLinks.inspectionPlanFolderCreate}
-          element={<CreateInspectionPlanFolder />}
         />
         <Route
           path={pageLinks.inspectionPlanFolder + ":folderId"}

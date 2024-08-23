@@ -5,24 +5,35 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-export const Filter: React.FC = () => {
-  const carBrands = ["Merceds", "Audi", "BMW"];
-  const [carBrand, setCarBrand] = useState<string>("");
+import { IoIosCloseCircle } from "react-icons/io";
+
+interface FilterProps {
+  onFilter: (brand: string, model: string) => void;
+  allAvailableBrands: string[];
+  onCloseFilter: () => void;
+}
+
+export const Filter: React.FC<FilterProps> = ({
+  onFilter,
+  allAvailableBrands,
+  onCloseFilter,
+}) => {
+  const [brand, setBrand] = useState<string>("");
   const [model, setModel] = useState<string>("");
+  const [filterModeOn, setFilterModeOn] = useState<boolean>(false);
 
   return (
     <ul className="flex space-x-5">
       <li>
         <Select
-          value={carBrand}
+          value={brand}
           onValueChange={(value) => {
-            setCarBrand(value);
+            setBrand(value);
           }}
         >
           <SelectTrigger className="w-[180px]">
@@ -30,7 +41,7 @@ export const Filter: React.FC = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {carBrands.map((brand, index) => (
+              {allAvailableBrands.map((brand, index) => (
                 <SelectItem key={index} value={brand}>
                   {brand}
                 </SelectItem>
@@ -40,11 +51,43 @@ export const Filter: React.FC = () => {
         </Select>
       </li>
       <li>
-        <Input type="model" placeholder="Car model" />
+        <Input
+          type="model"
+          placeholder="Car model"
+          value={model}
+          onChange={(e) => setModel(e.target.value)}
+        />
       </li>
       <li>
-        <Button>Filter</Button>
+        <Button
+          onClick={() => {
+            onFilter(model, brand);
+            setFilterModeOn(true);
+          }}
+        >
+          Filter
+        </Button>
       </li>
+      {filterModeOn ? (
+        <li>
+          <Button
+            onClick={() => {
+              setFilterModeOn(false);
+              onCloseFilter();
+              setBrand("");
+              setModel("");
+            }}
+          >
+            <IoIosCloseCircle className="h-7 w-7" />
+          </Button>
+        </li>
+      ) : (
+        <li>
+          <Button disabled>
+            <IoIosCloseCircle className="h-7 w-7" />
+          </Button>
+        </li>
+      )}
     </ul>
   );
 };
