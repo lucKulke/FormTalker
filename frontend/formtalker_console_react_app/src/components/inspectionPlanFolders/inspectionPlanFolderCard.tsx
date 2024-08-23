@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -21,7 +20,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { MoreHorizontal } from "lucide-react";
-import { deleteInspectionPlanFolder } from "@/services/supabase/inspectionPlanFolders";
 import { useNavigate } from "react-router-dom";
 import { pageLinks } from "@/utils/pageLinks";
 import { CiSquareCheck } from "react-icons/ci";
@@ -54,8 +52,6 @@ export const InspectionPlanFolderCard: React.FC<
   const [vehicleTypeCode, setVehicleTypeCode] = useState<string>(typeCode);
   const [editMode, setEditMode] = useState<boolean>(false);
 
- 
-
   const handleNavigateToFolder = () => {
     navigate(pageLinks.inspectionPlanFolder + `${id}`);
   };
@@ -77,10 +73,18 @@ export const InspectionPlanFolderCard: React.FC<
           )}
           {editMode ? (
             <li className="pt-1">
-              <button onClick={() => {
-                onUpdate(id, vehicleModel, vehicleBrand, vehicleManufacturerCode, vehicleTypeCode)
-                setEditMode(false)
-                }}>
+              <button
+                onClick={() => {
+                  onUpdate(
+                    id,
+                    vehicleModel,
+                    vehicleBrand,
+                    vehicleManufacturerCode,
+                    vehicleTypeCode
+                  );
+                  setEditMode(false);
+                }}
+              >
                 <CiSquareCheck className="w-7 h-7 bg-green-500 rounded-md hover:bg-green-300 active:bg-green-500" />
               </button>
             </li>
@@ -111,33 +115,37 @@ export const InspectionPlanFolderCard: React.FC<
       <CardContent className={`${editMode ? "" : "mb-8"}`}>
         <ul className="space-y-3">
           <li>
-            <Label htmlFor="brand">Brand</Label>
             {editMode ? (
-              <Input
-                value={vehicleBrand}
-                onChange={(e) => setVehicleBrand(e.target.value)}
-              />
+              <li>
+                <Label htmlFor={`brandInput${id}`}>Brand</Label>
+                <Input
+                  id={`brandInput${id}`}
+                  value={vehicleBrand}
+                  onChange={(e) => setVehicleBrand(e.target.value)}
+                />
+              </li>
             ) : (
-              <p id="brand" className="text-xl">
-                {vehicleBrand}
-              </p>
+              <li>
+                <h2 className="text-sm font-mono text-slate-600">Brand</h2>
+                <p className="text-xl">{vehicleBrand}</p>
+              </li>
             )}
           </li>
 
           {editMode ? (
             <li className="flex space-x-2">
               <div>
-                <Label htmlFor="hsn">HSN</Label>
+                <Label htmlFor={`hsn${id}`}>HSN</Label>
                 <Input
-                  id="hsn"
+                  id={`hsn${id}`}
                   value={vehicleManufacturerCode}
                   onChange={(e) => setVehicleManufacturerCode(e.target.value)}
                 />
               </div>
               <div>
-                <Label htmlFor="tsn">TSN</Label>
+                <Label htmlFor={`tsn${id}`}>TSN</Label>
                 <Input
-                  id="tsn"
+                  id={`tsn${id}`}
                   value={vehicleTypeCode}
                   onChange={(e) => setVehicleTypeCode(e.target.value)}
                 />
@@ -145,8 +153,10 @@ export const InspectionPlanFolderCard: React.FC<
             </li>
           ) : (
             <li>
-              <Label htmlFor="typecodes">Vehicle Type Codes</Label>
-              <p id="typecodes" className="text-xl">
+              <h2 className="text-sm font-mono text-slate-600">
+                Vehicle Type Codes
+              </h2>
+              <p className="text-xl">
                 {vehicleManufacturerCode} {vehicleTypeCode}
               </p>
             </li>

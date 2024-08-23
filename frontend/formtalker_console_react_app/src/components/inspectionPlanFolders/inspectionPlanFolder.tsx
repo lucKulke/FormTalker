@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-
 import { useNavigate, useParams } from "react-router-dom";
-import { supabase } from "@/utils/supabaseCleint";
 import { MoreHorizontal } from "lucide-react";
 import { IoMdAdd } from "react-icons/io";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+
 import {
   InspectionPlanHeadData,
   fetchFolderInspectionPlansHeadData,
@@ -24,10 +21,8 @@ import {
   updateInspectionPlanHeadData,
 } from "@/services/supabase/inspectionPlans";
 import { AddInspectionPlanHeadDataDialog } from "@/components/inspectionPlanFolders/dialogs/addInspectionPlanHeadData";
-import { getCurrentUser } from "@/services/supabase/auth";
 import { AlertBox } from "@/components/share/alert";
 import { isOnlyDigits } from "@/utils/helperFunctions";
-
 import { Input } from "@/components/ui/input";
 import { CiSquareCheck } from "react-icons/ci";
 import { pageLinks } from "@/utils/pageLinks";
@@ -57,7 +52,6 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
   const [editMillage, setEditMillage] = useState<string>("");
   const [millageInputError, setMillageInputError] = useState<boolean>(false);
 
- 
   const loadInspectionPlans = async () => {
     if (!folderId) return false;
     try {
@@ -101,8 +95,6 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
     millage: number | null
   ) => {
     if (!folderId) return null;
-
-    
 
     const newInspectionPlansHeadData: InspectionPlanHeadData = {
       folder_id: folderId,
@@ -173,7 +165,7 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
 
     const newMillageValue = Number(millage);
 
-    const response = await updateInspectionPlanHeadData(
+    await updateInspectionPlanHeadData(
       headDataId,
       inspectionType,
       description,
@@ -218,11 +210,6 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
       <div className="container mx-auto mt-10">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Inspection Plans</h2>
-          <AddInspectionPlanHeadDataDialog onSave={handleAddNewInspectionHead}>
-            <Button className="rounded-full">
-              <IoMdAdd className="h-7 w-7" />
-            </Button>
-          </AddInspectionPlanHeadDataDialog>
         </div>
         <div className="overflow-x-auto mt-5">
           <div className="inline-block min-w-full shadow overflow-hidden">
@@ -334,7 +321,13 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
                               <DropdownMenuContent>
                                 <DropdownMenuLabel>Options</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem onClick={()=> navigate(pageLinks.inspectionPlan + inspection.id)}>
+                                <DropdownMenuItem
+                                  onClick={() =>
+                                    navigate(
+                                      pageLinks.inspectionPlan + inspection.id
+                                    )
+                                  }
+                                >
                                   Form Editor
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
@@ -357,7 +350,6 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
                                 >
                                   Delete
                                 </DropdownMenuItem>
-                               
                               </DropdownMenuContent>
                             </DropdownMenu>
                           )}
@@ -368,6 +360,13 @@ export const InspectionPlanFolder: React.FC<InspectionPlanFolderProps> = ({
             </table>
           </div>
         </div>
+      </div>
+      <div className="fixed bottom-6 right-6">
+        <AddInspectionPlanHeadDataDialog onSave={handleAddNewInspectionHead}>
+          <button className="fixed bottom-6 right-6 bg-gray-900 border-2 rounded-full p-2 shadow-2xl hover:bg-gray-700  border-gray-400 text-white">
+            <IoMdAdd className="h-9 w-9" />
+          </button>
+        </AddInspectionPlanHeadDataDialog>
       </div>
     </>
   );
