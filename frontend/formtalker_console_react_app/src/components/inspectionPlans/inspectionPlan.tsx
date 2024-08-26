@@ -12,6 +12,10 @@ import { v4 as uuidv4 } from "uuid";
 import { Transition } from "@headlessui/react";
 import { FormField } from "../ui/form";
 import { Description } from "@radix-ui/react-dialog";
+import {
+  fetchMainCategorys,
+  fetchSubCategorys,
+} from "@/services/supabase/inspectionPlanFormData";
 
 const exampleData = {
   "Elektrik und elektronische Fahrzeugsysteme": {
@@ -156,6 +160,17 @@ export const InspectionPlan: React.FC = () => {
   const [subcategorys, setSubcategorys] = useState<
     SubCategoryInterface[] | null
   >(null);
+
+  const fetchData = async () => {
+    const mainCategorysData = await fetchMainCategorys();
+    setCategorys(mainCategorysData);
+    const subCategorysData = await fetchSubCategorys();
+    setSubcategorys(subCategorysData);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const [allAvailableFormFieldIds, setAllAvailableFormFieldIds] = useState(
     formFieldsData

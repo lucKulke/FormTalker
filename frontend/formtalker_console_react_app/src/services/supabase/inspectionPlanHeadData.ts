@@ -73,6 +73,32 @@ export async function fetchFolderInspectionPlansHeadData(
   }
 }
 
+
+export async function fetchSepcificInspectionPlanHeadData(
+  head_data_id: string
+): Promise<InspectionPlanHeadDataResponse[] | null> {
+  try {
+    let { data: inspection_plan_head_data, error } = await supabase
+      .from(inspection_plan_head_data_table_name)
+      .select("*")
+      .eq("id", head_data_id);
+
+    if (error) {
+      console.error(error);
+      throw new Error(error.message);
+    }
+    return inspection_plan_head_data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error fetching inspection plan head data: " + error.message);
+    } else {
+      console.error("An unknown error occurred");
+    }
+    return null;
+  }
+}
+
+
 export async function addInspectionPlanHeadData(
   headData: InspectionPlanHeadData
 ): Promise<InspectionPlanHeadDataResponse[] | null> {

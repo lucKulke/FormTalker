@@ -19,7 +19,7 @@ import {
   deleteInspectionPlanHeadData,
   updateStatusFromInspectionPlanHeadData,
   updateInspectionPlanHeadData,
-} from "@/services/supabase/inspectionPlans";
+} from "@/services/supabase/inspectionPlanHeadData";
 import { AddInspectionPlanHeadDataDialog } from "@/components/inspectionPlanFolders/dialogs/addInspectionPlanHeadData";
 import { AlertBox } from "@/components/share/alert";
 import { isOnlyDigits } from "@/utils/helperFunctions";

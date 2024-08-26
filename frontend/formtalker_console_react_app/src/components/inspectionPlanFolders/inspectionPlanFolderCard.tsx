@@ -114,23 +114,21 @@ export const InspectionPlanFolderCard: React.FC<
       </CardHeader>
       <CardContent className={`${editMode ? "" : "mb-8"}`}>
         <ul className="space-y-3">
-          <li>
-            {editMode ? (
-              <li>
-                <Label htmlFor={`brandInput${id}`}>Brand</Label>
-                <Input
-                  id={`brandInput${id}`}
-                  value={vehicleBrand}
-                  onChange={(e) => setVehicleBrand(e.target.value)}
-                />
-              </li>
-            ) : (
-              <li>
-                <h2 className="text-sm font-mono text-slate-600">Brand</h2>
-                <p className="text-xl">{vehicleBrand}</p>
-              </li>
-            )}
-          </li>
+          {editMode ? (
+            <li>
+              <Label htmlFor={`brandInput${id}`}>Brand</Label>
+              <Input
+                id={`brandInput${id}`}
+                value={vehicleBrand}
+                onChange={(e) => setVehicleBrand(e.target.value)}
+              />
+            </li>
+          ) : (
+            <li>
+              <h2 className="text-sm font-mono text-slate-600">Brand</h2>
+              <p className="text-xl">{vehicleBrand}</p>
+            </li>
+          )}
 
           {editMode ? (
             <li className="flex space-x-2">

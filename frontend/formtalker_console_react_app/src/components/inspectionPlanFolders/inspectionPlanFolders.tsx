@@ -225,7 +225,7 @@ export const InspectionPlanFolders: React.FC = () => {
           <li className="felx justify-center">
             <div className="w-full">
               <ul className="flex justify-evenly">
-                <div></div>
+                <li></li>
                 <li>
                   <Filter
                     onFilter={handleFilter}
