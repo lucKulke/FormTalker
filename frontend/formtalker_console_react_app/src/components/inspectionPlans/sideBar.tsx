@@ -2,14 +2,17 @@ import React from "react";
 
 import { AddMainCategoryDialog } from "./dialogs/addMainCategory";
 
-import { MainCategoryInterface, SubCategoryInterface } from "./interfaces";
 import { MainCategoryInSidebar } from "@/components/inspectionPlans/sideBarComponents/mainCategorys";
-import { SubCategoryInSidebar} from "@/components/inspectionPlans/sideBarComponents/subCategorys"
+import { SubCategoryInSidebar } from "@/components/inspectionPlans/sideBarComponents/subCategorys";
 import { IoAddCircle } from "react-icons/io5";
 import { HeadData } from "./inspectionPlanConfigComponents/headData";
+import {
+  MainCategoryResponseInterface,
+  SubCategoryResponseInterface,
+} from "@/services/supabase/inspectionPlanFormData";
 interface SidebarProps {
-  categorys: MainCategoryInterface[] | null;
-  subcategorys: SubCategoryInterface[] | null;
+  categorys: MainCategoryResponseInterface[] | null;
+  subcategorys: SubCategoryResponseInterface[] | null;
   onAddCategory: (name: string) => void;
   onDeleteCategory: (id: string) => void;
   onDeleteSubcategory: (id: string) => void;
@@ -60,11 +63,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 key={subcategory.id}
                 onClick={() => scrollToSection(subcategory.id)}
               >
-                {subcategory.category_id === category.id && (
+                {subcategory.main_category_id === category.id && (
                   <SubCategoryInSidebar
                     key={subcategory.id}
                     id={subcategory.id}
-                    category_id={subcategory.category_id}
+                    category_id={subcategory.main_category_id}
                     onDelete={onDeleteSubcategory}
                     onEditSubCategoryName={onEditSubCategoryName}
                   >

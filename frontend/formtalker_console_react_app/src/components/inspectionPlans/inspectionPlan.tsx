@@ -2,8 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { Sidebar } from "@/components/inspectionPlans/sideBar";
 import { InspectionPlanConfig } from "@/components/inspectionPlans/inspectionPlanConfig";
 import {
-  MainCategoryInterface,
-  SubCategoryInterface,
   TaskInterface,
   FieldsetInterface,
   FormFieldInterface,
@@ -15,7 +13,15 @@ import { Description } from "@radix-ui/react-dialog";
 import {
   fetchMainCategorys,
   fetchSubCategorys,
+  SubCategoryResponseInterface,
+  SubCategoryInterface,
+  MainCategoryResponseInterface,
+  MainCategoryInterface,
+  addMainCategory,
+  addSubCategory,
 } from "@/services/supabase/inspectionPlanFormData";
+import { useParams } from "react-router-dom";
+import { IoEllipsisHorizontalCircleSharp } from "react-icons/io5";
 
 const exampleData = {
   "Elektrik und elektronische Fahrzeugsysteme": {
@@ -147,24 +153,26 @@ const formFieldsData = [
 const availableFieldsetTypesData = ["Checkbox", "Individual checkbox", "Text"];
 
 export const InspectionPlan: React.FC = () => {
+  const { inspectionPlanId } = useParams<{ inspectionPlanId: string }>();
   const [tasks, setTasks] = useState<TaskInterface[] | null>(null);
   const [fieldsets, setFieldsets] = useState<FieldsetInterface[] | null>(null);
   const [formFields, setFormFields] = useState<FormFieldInterface[] | null>(
     formFieldsData
   );
 
-  const [categorys, setCategorys] = useState<MainCategoryInterface[] | null>(
-    null
-  );
+  const [categorys, setCategorys] = useState<
+    MainCategoryResponseInterface[] | null
+  >(null);
 
   const [subcategorys, setSubcategorys] = useState<
-    SubCategoryInterface[] | null
+    SubCategoryResponseInterface[] | null
   >(null);
 
   const fetchData = async () => {
-    const mainCategorysData = await fetchMainCategorys();
+    if (!inspectionPlanId) return false;
+    const mainCategorysData = await fetchMainCategorys(inspectionPlanId);
     setCategorys(mainCategorysData);
-    const subCategorysData = await fetchSubCategorys();
+    const subCategorysData = await fetchSubCategorys(inspectionPlanId);
     setSubcategorys(subCategorysData);
   };
 
@@ -180,24 +188,40 @@ export const InspectionPlan: React.FC = () => {
       .map((fieldset) => fieldset.id)
   );
 
-  const handleAddCategory = (name: string) => {
-    const newItem: MainCategoryInterface = { name: name, id: uuidv4() };
-    setCategorys((prevState) => {
-      const updatedState = prevState ? [...prevState, newItem] : [newItem];
-      return updatedState;
-    });
+  const handleAddCategory = async (name: string) => {
+    if (!inspectionPlanId) return null;
+    const newItem: MainCategoryInterface = {
+      name: name,
+      inspection_plan_id: inspectionPlanId,
+    };
+
+    const responseItem = await addMainCategory(newItem);
+    let updatedMainCategorys = categorys ? [...categorys] : [];
+
+    if (responseItem) {
+      responseItem.forEach((Item) => {
+        updatedMainCategorys.push(Item);
+      });
+
+      setCategorys(updatedMainCategorys);
+    }
   };
 
-  const handleAddSubcategory = (category_id: string, name: string) => {
+  const handleAddSubcategory = async (category_id: string, name: string) => {
+    if (!inspectionPlanId) return null;
     const newItem: SubCategoryInterface = {
       name: name,
-      id: uuidv4(),
-      category_id: category_id,
+      main_category_id: category_id,
+      inspection_plan_id: inspectionPlanId,
     };
-    setSubcategorys((prevState) => {
-      const updatedState = prevState ? [...prevState, newItem] : [newItem];
-      return updatedState;
-    });
+    const responseSubCategory = await addSubCategory(newItem);
+    let updatedState = subcategorys ? [...subcategorys] : [];
+    if (responseSubCategory) {
+      responseSubCategory.forEach((subCategory) => {
+        updatedState.push(subCategory);
+      });
+      setSubcategorys(updatedState);
+    }
   };
 
   const handleDeleteCategory = (id: string) => {

@@ -51,7 +51,7 @@ function App() {
           element={<InspectionPlanFolder user={user} />}
         />
         <Route
-          path={pageLinks.inspectionPlan + ":id"}
+          path={pageLinks.inspectionPlan + ":inspectionPlanId"}
           element={<InspectionPlan />}
         />
         <Route path="*" element={<NotFound />} />

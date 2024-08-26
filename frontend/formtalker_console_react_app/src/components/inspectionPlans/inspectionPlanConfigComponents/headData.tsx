@@ -4,13 +4,15 @@ import { useParams } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 
 export const HeadData: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { inspectionPlanId } = useParams<{ inspectionPlanId: string }>();
   const [type, setType] = useState<string>("");
   const [millage, setMillage] = useState<number | null>(null);
   const [createdFrom, setCreatedFrom] = useState<string>("");
   const getHeadData = async () => {
-    if (id) {
-      const response = await fetchSepcificInspectionPlanHeadData(id);
+    if (inspectionPlanId) {
+      const response = await fetchSepcificInspectionPlanHeadData(
+        inspectionPlanId
+      );
       console.log(response);
       if (!response) return false;
       setType(response[0].inspection_type);

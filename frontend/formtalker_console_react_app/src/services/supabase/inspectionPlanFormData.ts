@@ -33,19 +33,21 @@ interface FormFieldInterface {
 
 }
 
-interface MainCategoryInterface {
+export interface MainCategoryInterface {
     name: string
+    inspection_plan_id: string
 }
-interface MainCategoryResponseInterface extends MainCategoryInterface {
+export interface MainCategoryResponseInterface extends MainCategoryInterface {
     id: string
     created_at: string
 }
-interface SubCategoryInterface {
+export interface SubCategoryInterface {
   name: string
   main_category_id: string
+  inspection_plan_id: string
 
 }
-interface SubCategoryResponseInterface extends SubCategoryInterface {
+export interface SubCategoryResponseInterface extends SubCategoryInterface {
   id: string
   created_at: string
 }
@@ -57,12 +59,13 @@ interface TaskInterface {
 }
 
 export async function fetchMainCategorys(
+  inspectionPlanId: string
     
   ): Promise<MainCategoryResponseInterface[]> {
     try {
       const { data, error } = await supabase.schema(form_representation_data_schema_name)
         .from(main_categorys_table_name)
-        .select("*")
+        .select("*").eq('inspection_plan_id', inspectionPlanId)
   
       if (error) {
         console.error(error);
@@ -79,25 +82,74 @@ export async function fetchMainCategorys(
     }
   }
 
-  export async function fetchSubCategorys(
-    
-  ): Promise<SubCategoryInterface[]> {
-    try {
-      const { data, error } = await supabase.schema(form_representation_data_schema_name)
-        .from(sub_categorys_table_name)
-        .select("*")
-  
-      if (error) {
-        console.error(error);
-        throw new Error(error.message);
-      }
-      return data;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error("Error fetching inspection plan folders: " + error.message);
-      } else {
-        console.error("An unknown error occurred");
-      }
-      return [];
+export async function addMainCategory(newMainCategory: MainCategoryInterface): Promise<MainCategoryResponseInterface[]> {
+  try {
+    const { data, error } = await supabase.schema(form_representation_data_schema_name)
+      .from(main_categorys_table_name)
+      .insert([newMainCategory]).select()
+
+    if (error) {
+      console.error(error);
+      throw new Error(error.message);
     }
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error fetching inspection plan folders: " + error.message);
+    } else {
+      console.error("An unknown error occurred");
+    }
+    return [];
   }
+}
+
+  
+
+export async function fetchSubCategorys(
+  inspectionPlanId: string
+): Promise<SubCategoryResponseInterface[]> {
+  try {
+    const { data, error } = await supabase.schema(form_representation_data_schema_name)
+      .from(sub_categorys_table_name)
+      .select("*").eq('inspection_plan_id', inspectionPlanId)
+
+    if (error) {
+      console.error(error);
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error fetching inspection plan folders: " + error.message);
+    } else {
+      console.error("An unknown error occurred");
+    }
+    return [];
+  }
+}
+
+export async function addSubCategory(
+  newSubCategory: SubCategoryInterface
+): Promise<SubCategoryResponseInterface[]> {
+  try {
+    const { data, error } = await supabase.schema(form_representation_data_schema_name)
+      .from(sub_categorys_table_name)
+      .insert(newSubCategory).select()
+
+    if (error) {
+      console.error(error);
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error fetching inspection plan folders: " + error.message);
+    } else {
+      console.error("An unknown error occurred");
+    }
+    return [];
+  }
+}
+
+
+  

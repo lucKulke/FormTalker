@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  MainCategoryInterface,
-  SubCategoryInterface,
   TaskInterface,
   FieldsetInterface,
   FormFieldInterface,
@@ -21,10 +19,14 @@ import { FaMinusCircle } from "react-icons/fa";
 import { AddNewFormFieldDialog } from "./dialogs/addNewField";
 import { AddSubtaskDialog } from "./dialogs/addSubtask";
 import { EditFormFieldDialog } from "./dialogs/editFormField";
+import {
+  MainCategoryResponseInterface,
+  SubCategoryResponseInterface,
+} from "@/services/supabase/inspectionPlanFormData";
 
 interface InspectionPlanConfigProps {
-  categorys: MainCategoryInterface[] | null;
-  subcategorys: SubCategoryInterface[] | null;
+  categorys: MainCategoryResponseInterface[] | null;
+  subcategorys: SubCategoryResponseInterface[] | null;
   tasks: TaskInterface[] | null;
   fieldsets: FieldsetInterface[] | null;
   formFields: FormFieldInterface[] | null;
@@ -91,7 +93,7 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
           <h1 className="underline text-3xl font-bold">{category.name}</h1>
           {subcategorys?.map((subcategory) => (
             <div className="ml-3">
-              {subcategory.category_id === category.id && (
+              {subcategory.main_category_id === category.id && (
                 <>
                   <div className="flex group mt-4">
                     <h2
