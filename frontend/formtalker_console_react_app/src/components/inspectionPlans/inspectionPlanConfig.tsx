@@ -92,7 +92,7 @@ export const InspectionPlanConfig: React.FC<InspectionPlanConfigProps> = ({
         >
           <h1 className="underline text-3xl font-bold">{category.name}</h1>
           {subcategorys?.map((subcategory) => (
-            <div className="ml-3">
+            <div className="ml-3" key={subcategory.id}>
               {subcategory.main_category_id === category.id && (
                 <>
                   <div className="flex group mt-4">
