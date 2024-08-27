@@ -103,6 +103,27 @@ export async function addMainCategory(newMainCategory: MainCategoryInterface): P
   }
 }
 
+export async function deleteMainCategory(mainCategoryId: string, inspectionPlanId: string): Promise<MainCategoryResponseInterface[]> {
+  try {
+    const { data, error } = await supabase.schema(form_representation_data_schema_name)
+      .from(main_categorys_table_name)
+      .delete().eq('id', mainCategoryId).eq('inspection_plan_id', inspectionPlanId).select()
+
+    if (error) {
+      console.error(error);
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error fetching inspection plan folders: " + error.message);
+    } else {
+      console.error("An unknown error occurred");
+    }
+    return [];
+  }
+}
+
   
 
 export async function fetchSubCategorys(
