@@ -19,6 +19,8 @@ import {
   MainCategoryInterface,
   addMainCategory,
   addSubCategory,
+  deleteMainCategory,
+  deleteSubCategory,
 } from "@/services/supabase/inspectionPlanFormData";
 import { useParams } from "react-router-dom";
 import { IoEllipsisHorizontalCircleSharp } from "react-icons/io5";
@@ -224,7 +226,9 @@ export const InspectionPlan: React.FC = () => {
     }
   };
 
-  const handleDeleteCategory = (id: string) => {
+  const handleDeleteCategory = async (id: string) => {
+    if (!inspectionPlanId) return null;
+    const deletedMainCategory = await deleteMainCategory(id, inspectionPlanId);
     if (categorys) {
       const newCategorysArray = [...categorys].filter(function (category) {
         return category.id !== id;
@@ -233,7 +237,9 @@ export const InspectionPlan: React.FC = () => {
     }
   };
 
-  const handleDeleteSubcategory = (id: string) => {
+  const handleDeleteSubcategory = async (id: string) => {
+    if (!inspectionPlanId) return null;
+    const deletedSubCategory = await deleteSubCategory(id, inspectionPlanId);
     if (subcategorys) {
       const newSubcategorysArray = [...subcategorys].filter(function (
         subcategory

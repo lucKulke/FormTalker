@@ -172,5 +172,27 @@ export async function addSubCategory(
   }
 }
 
+export async function deleteSubCategory(
+  subCategoryId: string, inspectionPlanId: string
+): Promise<SubCategoryResponseInterface[]> {
+  try {
+    const { data, error } = await supabase.schema(form_representation_data_schema_name)
+      .from(sub_categorys_table_name)
+      .delete().eq('id', subCategoryId).eq('inspection_plan_id', inspectionPlanId).select()
+
+    if (error) {
+      console.error(error);
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error fetching inspection plan folders: " + error.message);
+    } else {
+      console.error("An unknown error occurred");
+    }
+    return [];
+  }
+}
 
   
